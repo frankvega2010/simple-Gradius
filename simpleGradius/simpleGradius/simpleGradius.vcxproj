@@ -18,6 +18,27 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\controls.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\credits.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameover.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameplay.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\menu.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\settings.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Game.cpp" />
+    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Player.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\controls.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\credits.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameover.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameplay.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\menu.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\settings.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Game.h" />
+    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Player.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{90523447-EB2D-4CE2-8AF9-38FBF08AF19B}</ProjectGuid>
@@ -69,7 +90,16 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(SolutionDir)src/Game/;$(SolutionDir)lib\raylib-2.0.0-Win32-msvc15\include\;$(SolutionDir)src/Game/Screens/;$(SolutionDir)src/Game/Setup/;$(SolutionDir)src/;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)bin/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)obj/$(Platform)/$(Configuration)/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(SolutionDir)src/Game/;$(SolutionDir)lib\raylib-2.0.0-Win32-msvc15\include\;$(SolutionDir)src/Game/Screens/;$(SolutionDir)src/Game/Setup/;$(SolutionDir)src/;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)bin/$(Platform)/$(Configuration)/</OutDir>
+    <IntDir>$(SolutionDir)obj/$(Platform)/$(Configuration)/</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -77,6 +107,15 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <PostBuildEvent>
+      <Command>MKDIR "$(TargetDir)res"
+XCOPY "$(SolutionDir)res" "$(TargetDir)res" /E /Y /S</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -98,7 +137,15 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>raylib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <SubSystem>Windows</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>MKDIR "$(TargetDir)res"
+XCOPY "$(SolutionDir)res" "$(TargetDir)res" /E /Y /S</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -114,8 +161,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
