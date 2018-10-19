@@ -25,55 +25,61 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Game.cpp">
+    <ClCompile Include="..\src\Game\Setup\Game.cpp">
       <Filter>Game\Setup</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Player.cpp">
+    <ClCompile Include="..\src\Game\Setup\Player.cpp">
       <Filter>Game\Setup</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\controls.cpp">
+    <ClCompile Include="..\src\Game\Screens\controls.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\credits.cpp">
+    <ClCompile Include="..\src\Game\Screens\credits.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameover.cpp">
+    <ClCompile Include="..\src\Game\Screens\gameover.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameplay.cpp">
+    <ClCompile Include="..\src\Game\Screens\gameplay.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\menu.cpp">
+    <ClCompile Include="..\src\Game\Screens\menu.cpp">
       <Filter>Game\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\settings.cpp">
+    <ClCompile Include="..\src\Game\Screens\settings.cpp">
       <Filter>Game\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Game\Setup\Enemy.cpp">
+      <Filter>Game\Setup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Game.h">
+    <ClInclude Include="..\src\Game\Setup\Game.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Player.h">
+    <ClInclude Include="..\src\Game\Setup\Player.h">
       <Filter>Game\Setup</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\controls.h">
+    <ClInclude Include="..\src\Game\Screens\controls.h">
       <Filter>Game\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\credits.h">
+    <ClInclude Include="..\src\Game\Screens\credits.h">
       <Filter>Game\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameover.h">
+    <ClInclude Include="..\src\Game\Screens\gameover.h">
       <Filter>Game\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameplay.h">
+    <ClInclude Include="..\src\Game\Screens\gameplay.h">
       <Filter>Game\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\menu.h">
+    <ClInclude Include="..\src\Game\Screens\menu.h">
       <Filter>Game\Screens</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\settings.h">
+    <ClInclude Include="..\src\Game\Screens\settings.h">
       <Filter>Game\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Game\Setup\Enemy.h">
+      <Filter>Game\Setup</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

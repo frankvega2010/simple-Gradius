@@ -19,25 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\controls.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\credits.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameover.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameplay.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\menu.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Screens\settings.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Game.cpp" />
-    <ClCompile Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Player.cpp" />
+    <ClCompile Include="..\src\Game\Screens\controls.cpp" />
+    <ClCompile Include="..\src\Game\Screens\credits.cpp" />
+    <ClCompile Include="..\src\Game\Screens\gameover.cpp" />
+    <ClCompile Include="..\src\Game\Screens\gameplay.cpp" />
+    <ClCompile Include="..\src\Game\Screens\menu.cpp" />
+    <ClCompile Include="..\src\Game\Screens\settings.cpp" />
+    <ClCompile Include="..\src\Game\Setup\Enemy.cpp" />
+    <ClCompile Include="..\src\Game\Setup\Game.cpp" />
+    <ClCompile Include="..\src\Game\Setup\Player.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\controls.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\credits.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameover.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\gameplay.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\menu.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Screens\settings.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Game.h" />
-    <ClInclude Include="..\..\..\Asteroids\asteroids\src\Game\Setup\Player.h" />
+    <ClInclude Include="..\src\Game\Screens\controls.h" />
+    <ClInclude Include="..\src\Game\Screens\credits.h" />
+    <ClInclude Include="..\src\Game\Screens\gameover.h" />
+    <ClInclude Include="..\src\Game\Screens\gameplay.h" />
+    <ClInclude Include="..\src\Game\Screens\menu.h" />
+    <ClInclude Include="..\src\Game\Screens\settings.h" />
+    <ClInclude Include="..\src\Game\Setup\Enemy.h" />
+    <ClInclude Include="..\src\Game\Setup\Game.h" />
+    <ClInclude Include="..\src\Game\Setup\Player.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -106,6 +108,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src/Game/;$(SolutionDir)src/Game/Setup/;$(SolutionDir)src/Game/Screens/;$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -133,6 +136,7 @@ XCOPY "$(SolutionDir)res" "$(TargetDir)res" /E /Y /S</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)src/Game/;$(SolutionDir)src/Game/Setup/;$(SolutionDir)src/Game/Screens/;$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

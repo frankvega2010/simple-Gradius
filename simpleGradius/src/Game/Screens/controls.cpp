@@ -4,7 +4,6 @@
 
 #include "Setup/Game.h"
 #include "Screens/gameplay.h"
-#include "Setup/Asteroid.h"
 #include "Screens/settings.h"
 
 using namespace Juego;
@@ -65,7 +64,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				PlaySound(button_navigate01);
+				//PlaySound(button_navigate01);
 				if (buttonSelect > maxButtonsControls - 1)
 				{
 					buttonSelect--;
@@ -76,7 +75,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				PlaySound(button_navigate01);
+				//PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -87,7 +86,7 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonsControls[i].selected || IsKeyPressed(KEY_ENTER) && buttonsControls[i].selected)
 				{
-					PlaySound(button_select01);
+				//	PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -109,7 +108,7 @@ namespace Juego
 			UpdateMusicStream(song_alert);
 			#endif
 
-			asteroidUpdate();
+			//asteroidUpdate();
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			ControlsInput();
@@ -136,7 +135,7 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
-						PlaySound(button_navigate01);
+						//PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}
@@ -147,7 +146,7 @@ namespace Juego
 		void DrawControls()
 		{
 			DrawBackground();
-			asteroidDraw();
+			//asteroidDraw();
 
 			for (int i = 0; i < maxButtonsControls; i++)
 			{
@@ -187,16 +186,6 @@ namespace Juego
 
 			DrawText(FormatText("MORE"), buttonsControls[0].position.x + 50, buttonsControls[0].position.y + 5, defaultFontSize, buttonsControls[0].defaultColor);
 			DrawText(FormatText("MENU"), buttonsControls[1].position.x + 50, buttonsControls[1].position.y + 5, defaultFontSize, buttonsControls[1].defaultColor);
-
-			// Background Properties
-			backgroundGameSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
-			backgroundGameDestination = { 0,0, (float)screenWidth,(float)screenHeight };
-			backgroundGameOrigin = { 0,0 };
-
-			if (!moreControls)
-			{
-				DrawTexturePro(controlScheme, backgroundGameSource, backgroundGameDestination, backgroundGameOrigin, 0, WHITE);
-			}
 			
 		}
 

@@ -12,12 +12,6 @@ namespace Juego
 		buttonQuitToMenu
 	};
 
-	extern Texture2D asteroidExplosion;
-	extern Texture2D ship;
-	extern Texture2D shipMoving;
-	extern Texture2D powerupMaxRapidFire;
-	extern Texture2D powerupInvincibility;
-
 	extern bool gameON;
 
 	extern int scoreMultiplier;

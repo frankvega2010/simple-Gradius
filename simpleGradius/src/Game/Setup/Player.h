@@ -8,10 +8,11 @@ namespace Juego
 	struct rocketShip
 	{
 		Vector2 position;
-		Vector2 acceleration;
-		float rotation;
+		Vector2 size;
+		//Vector2 acceleration;
+		//float rotation;
 		float defaultSpeed;
-		int score;
+		//int score;
 		bool isAlive;
 		bool inputActive;
 		Color textureTint;
@@ -29,13 +30,9 @@ namespace Juego
 	extern rocketShip player;
 	extern Circle collisionCircle;
 
-	extern float shipHeight;
-	extern float shipHeightCircle;
-
 	namespace Gameplay_Section
 	{
 		void createPlayer();
-		void createCollisionCircle();
 		void playerInput();
 		void playerUpdate();
 		void collisionCircleUpdate();

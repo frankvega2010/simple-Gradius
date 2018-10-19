@@ -29,13 +29,6 @@ namespace Juego
 		Color defaultColor;
 	};
 
-	extern Image explosionImage;
-	extern Image asteroidImage;
-	extern Texture2D asteroid;
-	extern Texture2D asteroidMedium;
-	extern Texture2D asteroidSmall;
-	extern Texture2D backgroundGame;
-
 	#ifdef AUDIO
 
 	extern Sound ship_explode01;

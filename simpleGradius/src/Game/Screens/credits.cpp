@@ -3,7 +3,6 @@
 #include "raylib.h"
 
 #include "Setup/Game.h"
-#include "Setup/Asteroid.h"
 #include "Screens/gameplay.h"
 #include "Screens/controls.h"
 #include "Screens/settings.h"
@@ -54,7 +53,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				PlaySound(button_navigate01);
+				//PlaySound(button_navigate01);
 				if (buttonSelect > maxButtons - 1)
 				{
 					buttonSelect--;
@@ -65,7 +64,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				PlaySound(button_navigate01);
+				//PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -76,7 +75,7 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 				{
-					PlaySound(button_select01);
+					//PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -96,7 +95,7 @@ namespace Juego
 			#endif
 			
 			
-			asteroidUpdate();
+			//asteroidUpdate();
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			CreditosInput();
@@ -123,7 +122,7 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
-						PlaySound(button_navigate01);
+						//PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}
@@ -134,7 +133,7 @@ namespace Juego
 		void DrawCredits()
 		{
 			DrawBackground();
-			asteroidDraw();
+			//asteroidDraw();
 
 			for (int i = 0; i < maxButtons; i++)
 			{

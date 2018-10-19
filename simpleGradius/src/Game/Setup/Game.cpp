@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include "Setup/Asteroid.h"
 #include "Setup/Player.h"
 #include "Screens/gameplay.h"
 #include "Screens/menu.h"
@@ -29,20 +28,6 @@ namespace Juego
 	int defaultFontSize = 60;
 	bool isScreenFinished;
 
-	Rectangle backgroundGameSource;
-	Rectangle backgroundGameDestination;
-	Vector2 backgroundGameOrigin;
-
-	Image asteroidImage;
-	Image asteroidSmallImage;
-	Image asteroidMediumImage;
-	Image backgroundGameImage;
-
-	Texture2D asteroid;
-	Texture2D asteroidMedium;
-	Texture2D asteroidSmall;
-	Texture2D backgroundGame;
-
 	#ifdef AUDIO
 
 	Sound ship_explode01;
@@ -69,43 +54,15 @@ namespace Juego
 
 	void resolutionBackground()
 	{
-		backgroundGameImage = LoadImage("res/textures/backgroundgame.png");
-		ImageResize(&backgroundGameImage, screenWidth, screenHeight);
-		backgroundGame = LoadTextureFromImage(backgroundGameImage);
-		UnloadImage(backgroundGameImage);
 	}
 
 	void checkAsteroidSprite()
 	{
 		if (resolutionNormal)
 		{
-			asteroidImage = LoadImage("res/textures/asteroid.png");
-
-			ImageResize(&asteroidImage, 90, 90);
-			asteroid = LoadTextureFromImage(asteroidImage);
-
-			ImageResize(&asteroidImage, 45, 45);
-			asteroidMedium = LoadTextureFromImage(asteroidImage);
-
-			ImageResize(&asteroidImage, 22.5, 22.5);
-			asteroidSmall = LoadTextureFromImage(asteroidImage);
-
-			UnloadImage(asteroidImage);
 		}
 		else if (resolutionSmall)
 		{
-			asteroidImage = LoadImage("res/textures/asteroid.png");
-
-			ImageResize(&asteroidImage, 90 / 2, 90 / 2);
-			asteroid = LoadTextureFromImage(asteroidImage);
-
-			ImageResize(&asteroidImage, 45 / 2, 45 / 2);
-			asteroidMedium = LoadTextureFromImage(asteroidImage);
-
-			ImageResize(&asteroidImage, 22.5 / 2, 22.5 / 2);
-			asteroidSmall = LoadTextureFromImage(asteroidImage);
-
-			UnloadImage(asteroidImage);
 		}
 	}
 
@@ -119,20 +76,7 @@ namespace Juego
 		createMouse();
 
 		InitWindow(screenWidth, screenHeight, "Simple! Asteroids");
-		
-
-		asteroidImage = LoadImage("res/textures/asteroid.png");
-
-		ImageResize(&asteroidImage, 90, 90);
-		asteroid = LoadTextureFromImage(asteroidImage);
-
-		ImageResize(&asteroidImage, 45, 45);
-		asteroidMedium = LoadTextureFromImage(asteroidImage);
-
-		ImageResize(&asteroidImage, 22.5, 22.5);
-		asteroidSmall = LoadTextureFromImage(asteroidImage);
-
-		UnloadImage(asteroidImage);
+	
 
 		resolutionBackground();
 
@@ -149,7 +93,6 @@ namespace Juego
 		#endif
 
 		InitMenuScreen();
-		createAsteroid();
 	}
 
 	static void Update()
@@ -299,11 +242,6 @@ namespace Juego
 
 	void DrawBackground()
 	{
-		backgroundGameSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
-		backgroundGameDestination = { 0,0, (float)screenWidth,(float)screenHeight };
-		backgroundGameOrigin = { 0,0 };
-
-		DrawTexturePro(backgroundGame, backgroundGameSource, backgroundGameDestination, backgroundGameOrigin, 0, WHITE);
 	}
 
 	static void Draw()
@@ -333,10 +271,6 @@ namespace Juego
 		UnloadSound(button_select01);
 		CloseAudioDevice();
 #endif
-		UnloadTexture(asteroid);
-		UnloadTexture(asteroidMedium);
-		UnloadTexture(asteroidSmall);
-		UnloadTexture(backgroundGame);
 
 		CloseWindow();
 	}

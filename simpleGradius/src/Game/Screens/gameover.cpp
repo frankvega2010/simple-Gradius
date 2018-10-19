@@ -3,8 +3,6 @@
 #include "Setup/Game.h"
 #include "Screens/gameplay.h"
 #include "Setup/Player.h"
-#include "Setup/Asteroid.h"
-#include "Setup/PlayerShoot.h"
 #include "Screens/settings.h"
 
 using namespace Juego;
@@ -72,19 +70,11 @@ namespace Juego
 		{
 			if (resolutionNormal)
 			{
-				explosionImage = LoadImage("res/textures/explosion01.png");
-				ImageResize(&explosionImage, 60, 60);
-				shipExplosion = LoadTextureFromImage(explosionImage);
 			}
 			else if (resolutionSmall)
 			{
-				explosionImage = LoadImage("res/textures/explosion01.png");
-				ImageResize(&explosionImage, 60/2, 60/2);
-				shipExplosion = LoadTextureFromImage(explosionImage);
 			}
 			
-
-			UnloadImage(explosionImage);
 
 			#ifdef AUDIO
 			ship_explode01 = LoadSound("res/sounds/ship_explode01fix.wav");
@@ -97,7 +87,6 @@ namespace Juego
 			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
-			finalScore = (gameScore * scoreMultiplier);
 			increasingFinalScore = 0;
 			finalScoreTimer = 0;
 
@@ -118,7 +107,6 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				PlaySound(button_navigate01);
 				if (buttonSelect > maxButtons - 1)
 				{
 					buttonSelect--;
@@ -129,7 +117,6 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -140,7 +127,6 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 				{
-					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -148,7 +134,6 @@ namespace Juego
 						break;
 					case 1:
 						buttonOption = buttonQuitToMenu;
-						createAsteroid();
 						break;
 					}
 					buttons[i].selected = false;
@@ -160,7 +145,6 @@ namespace Juego
 		void UpdateGameOverScreen()
 		{
 			GameOverInput(); 
-			asteroidUpdate();
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 			
 
@@ -187,7 +171,6 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
-						PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}
@@ -237,7 +220,6 @@ namespace Juego
 		void DrawGameOver()
 		{
 			DrawBackground();
-			asteroidDraw();
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -247,14 +229,14 @@ namespace Juego
 			DrawText(FormatText("RESTART"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize / 1.3, buttons[0].defaultColor);
 			DrawText(FormatText("MENU"), buttons[1].position.x + 10, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
 
-			if (destroyedAsteroidsCount >= (asteroidsSmallLimit + asteroidsMediumLimit + asteroidsBigLimit) && player.isAlive)
+			/*if (destroyedAsteroidsCount >= (asteroidsSmallLimit + asteroidsMediumLimit + asteroidsBigLimit) && player.isAlive)
 			{
 				DrawText("YOU WON!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, YELLOW);
 			}
 			else
 			{
 				DrawText("YOU LOST!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, RED);
-			}
+			}*/
 
 			DrawText(FormatText("Final Score: %i", increasingFinalScore), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 90, defaultFontSize / 1.2, YELLOW);
 			DrawText(FormatText("Final Time:"), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 135, defaultFontSize / 1.2, YELLOW);

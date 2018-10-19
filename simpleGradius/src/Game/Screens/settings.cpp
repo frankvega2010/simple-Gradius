@@ -3,7 +3,6 @@
 #include "raylib.h"
 #include "Setup/Game.h"
 #include "Screens/gameplay.h"
-#include "Setup/Asteroid.h"
 #include "Screens\controls.h"
 #include "Setup\Player.h"
 
@@ -162,7 +161,6 @@ namespace Juego
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
 			checkAsteroidSprite();
-			createAsteroid();
 		}
 
 		static void ChangeResolutionNormal(int screenW, int screenH)
@@ -177,7 +175,6 @@ namespace Juego
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
 			checkAsteroidSprite();
-			createAsteroid();
 		}
 
 		static void ChangeResolutionBig(int screenW, int screenH)
@@ -192,7 +189,6 @@ namespace Juego
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
 			checkAsteroidSprite();
-			createAsteroid();
 		}
 
 		static void SettingsInput()
@@ -201,7 +197,6 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				PlaySound(button_navigate01);
 				if (buttonSelect > maxButtons - 1)
 				{
 					buttonSelect--;
@@ -212,7 +207,6 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -224,7 +218,6 @@ namespace Juego
 			{
 				volumeSliders[Music].shape.x = mouse.position.x;
 
-				SetMusicVolume(song_alert, songVolume);
 				for (int i = 0; i < maxVolumeValues; i++)
 				{
 					if (volumeSliders[Music].shape.x >= musicLine.PosStart.x + musicLineCounter) songVolume = musicLineCounterVolume;
@@ -243,28 +236,9 @@ namespace Juego
 			//Sound Effects Volume Settings
 			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && volumeSliders[Effects].Selected)
 			{
-				volumeSliders[Effects].shape.x = mouse.position.x;
-				
-				for (int i = 0; i < maxVolumeValues; i++)
-				{
-					if (volumeSliders[Effects].shape.x >= effectsLine.PosStart.x + effectsLineCounter) soundVolume = effectsLineCounterVolume;
-					effectsLineCounter = effectsLineCounter + sliderDistance;
-					effectsLineCounterVolume = effectsLineCounterVolume + sliderVolumeAmount;
-					PlayMusicStream(ship_rocket01);
-					SetMusicVolume(ship_rocket01, soundVolume);
-				}
-				effectsLineCounter = 0;
-				effectsLineCounterVolume = 0.0;
-
-				SetSoundVolume(button_select01, soundVolume);
-				SetSoundVolume(button_navigate01, soundVolume);
-
-				if (volumeSliders[Effects].shape.x < effectsLine.PosStart.x) volumeSliders[Effects].shape.x = effectsLine.PosStart.x;
-				else if (volumeSliders[Effects].shape.x > effectsLine.PosEnd.x) volumeSliders[Effects].shape.x = effectsLine.PosEnd.x;
 			}
 			else
 			{
-				StopMusicStream(ship_rocket01);
 			}
 
 			for (int i = 0; i < maxButtons; i++)
@@ -272,7 +246,6 @@ namespace Juego
 
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonsSettings[i].selected || IsKeyPressed(KEY_ENTER) && buttonsSettings[i].selected && !(volumeSliders[Effects].Selected) && !(volumeSliders[Music].Selected))
 				{
-					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -313,10 +286,6 @@ namespace Juego
 			UpdateMusicStream(ship_rocket01);
 			#endif
 
-			volumeSliders[Music].shape.x = musicLine.PosStart.x + ((songVolume*100)*5);
-			volumeSliders[Effects].shape.x = effectsLine.PosStart.x + ((soundVolume * 100) * 5);
-
-			asteroidUpdate();
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			SettingsInput();
@@ -359,7 +328,6 @@ namespace Juego
 					{
 						if (!(isButtonSoundPlaying))
 						{
-							PlaySound(button_navigate01);
 							isButtonSoundPlaying = true;
 							buttonSelectSaveNumber = i;
 						}
@@ -371,7 +339,6 @@ namespace Juego
 		void DrawSettings()
 		{
 			DrawBackground();
-			asteroidDraw();
 
 			DrawLineEx(musicLine.PosStart, musicLine.PosEnd, musicLine.Thick, musicLine.Color);
 			DrawLineEx(effectsLine.PosStart, effectsLine.PosEnd, effectsLine.Thick, effectsLine.Color);

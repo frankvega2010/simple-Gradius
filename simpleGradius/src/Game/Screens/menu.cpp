@@ -3,7 +3,6 @@
 #include "raylib.h"
 #include "Setup/Game.h"
 #include "Setup/Player.h"
-#include "Setup/Asteroid.h"
 #include "Screens/settings.h"
 
 using namespace Juego;
@@ -63,7 +62,6 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				PlaySound(button_navigate01);
 				if (buttonSelect > maxButtons - 1)
 				{
 					buttonSelect--;
@@ -74,7 +72,6 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -85,7 +82,6 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 				{
-					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -115,7 +111,6 @@ namespace Juego
 			#ifdef AUDIO
 			UpdateMusicStream(song_alert);
 			#endif
-			asteroidUpdate();
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			MenuInput();
@@ -145,7 +140,6 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
-						PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}
@@ -157,7 +151,6 @@ namespace Juego
 		void DrawMenu()
 		{
 			DrawBackground();
-			asteroidDraw();
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -170,8 +163,8 @@ namespace Juego
 					switch (i)
 					{
 					case 0:
-						DrawText("Start playing a match", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("of Simple! Asteroids!", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawText("null", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
+						DrawText("null", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
 						break;
 					case 1:
 						DrawText("Learn how to play ", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
@@ -198,9 +191,9 @@ namespace Juego
 			}
 
 			DrawText(FormatText("Welcome to.."), buttons[0].position.x + 10, screenHeight / 20, defaultFontSize / 2, WHITE);
-			DrawText(FormatText("Simple! Asteroids"), buttons[0].position.x * 0.63f, screenHeight / 10, defaultFontSize + 20, WHITE);
+			DrawText(FormatText("Simple! Gradius"), buttons[0].position.x * 0.63f, screenHeight / 10, defaultFontSize + 20, WHITE);
 			DrawText(FormatText("By frankvega"), buttons[0].position.x * 1.4f, screenHeight / 5, defaultFontSize / 2, WHITE);
-			DrawText(FormatText("Version 1.0"), buttons[0].position.x * 0.63f, screenHeight / 5, defaultFontSize / 2, WHITE);
+			DrawText(FormatText("Version 0.1 Prototype"), buttons[0].position.x * 0.63f, screenHeight / 5, defaultFontSize / 2, WHITE);
 			DrawText(FormatText("PLAY"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize, buttons[0].defaultColor);
 			DrawText(FormatText("CONTROLS"), buttons[1].position.x + 8, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
 			DrawText(FormatText("SETTINGS"), buttons[2].position.x + 10, buttons[2].position.y + 5, defaultFontSize / 1.3, buttons[2].defaultColor);
