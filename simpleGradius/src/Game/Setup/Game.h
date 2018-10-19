@@ -57,7 +57,6 @@ namespace Juego
 
 	void resolutionBackground();
 	void checkAsteroidSprite();
-	void DrawBackground();
 	void Execute();
 }
 #endif // GAME_H

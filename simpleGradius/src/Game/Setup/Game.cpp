@@ -240,9 +240,6 @@ namespace Juego
 		}
 	}
 
-	void DrawBackground()
-	{
-	}
 
 	static void Draw()
 	{
