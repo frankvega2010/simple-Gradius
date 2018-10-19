@@ -34,6 +34,9 @@ namespace Juego
 	static bool isButtonSoundPlaying = false;
 	static int buttonSelectSaveNumber = 0;
 
+	//static Rectangle playerRec;
+	//static Rectangle enemyRec;
+
 	namespace Gameplay_Section
 	{
 		static void createPauseButtons()
@@ -81,7 +84,7 @@ namespace Juego
 		{
 			timerON = true;
 
-			HideCursor();
+			//HideCursor();
 			createPauseButtons();
 			createPlayer();
 			createEnemy();
@@ -222,52 +225,19 @@ namespace Juego
 			{
 				pauseButton.defaultColor = GOLD;
 				pauseButton.selected = false;
-			}
+			} 
 
 			if (gameON)
 			{
-				if (timerON)
+				if(CheckCollisionRecs({player.position.x,player.position.y,player.size.x,player.size.y}, {enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y}))
 				{
-					matchTimer += 1 * GetFrameTime();
-				}
-
-				if (matchTimer > 1)
-				{
-					matchTimer = 0;
-					if (matchSeconds < 58)
-					{
-						if (matchSeconds == 29)
-						{
-							if (scoreMultiplier > 1)
-							{
-								scoreMultiplier--;
-							}
-							else
-							{
-								scoreMultiplier = 1;
-							}
-						}
-						matchSeconds++;
-					}
-					else
-					{
-						matchSeconds = 0;
-						if (matchMinutes < 58)
-						{
-							matchMinutes++;
-						}
-						else
-						{
-							matchMinutes = 0;
-							matchHours++;
-						}
-					}
+					gameON = false;
+					buttonOption = buttonGameOver;
+					isScreenFinished = true;
 				}
 
 				playerUpdate();
 				EnemyUpdate();
-				//asteroidUpdate();
-
 
 			}
 			else if (gamePaused)
