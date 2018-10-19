@@ -338,7 +338,6 @@ namespace Juego
 
 		void DrawSettings()
 		{
-			DrawBackground();
 
 			DrawLineEx(musicLine.PosStart, musicLine.PosEnd, musicLine.Thick, musicLine.Color);
 			DrawLineEx(effectsLine.PosStart, effectsLine.PosEnd, effectsLine.Thick, effectsLine.Color);

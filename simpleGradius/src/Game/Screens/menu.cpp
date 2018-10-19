@@ -150,7 +150,6 @@ namespace Juego
 
 		void DrawMenu()
 		{
-			DrawBackground();
 
 			for (int i = 0; i < maxButtons; i++)
 			{

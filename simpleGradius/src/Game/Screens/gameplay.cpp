@@ -134,7 +134,7 @@ namespace Juego
 			{
 				timerON = true;
 				crosshairColor = WHITE;
-				HideCursor();
+				//HideCursor();
 				playerInput();
 			}
 			else ShowCursor();
@@ -288,7 +288,6 @@ namespace Juego
 
 		void DrawGameplay()
 		{
-			DrawBackground();
 			playerDraw();
 			EnemyDraw();
 

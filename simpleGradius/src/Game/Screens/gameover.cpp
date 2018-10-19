@@ -219,7 +219,6 @@ namespace Juego
 
 		void DrawGameOver()
 		{
-			DrawBackground();
 
 			for (int i = 0; i < maxButtons; i++)
 			{
