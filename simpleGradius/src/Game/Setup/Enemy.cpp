@@ -13,6 +13,7 @@ namespace Juego
 		void createEnemy()
 		{
 			enemy01.position = { (float)screenWidth + enemy01.size.x, (float)screenHeight / 2 };
+			enemy01.position.y = GetRandomValue(0, screenHeight);
 			enemy01.size = { 100, 100 };
 			enemy01.defaultSpeed = 500.0f;
 			enemy01.isAlive = true;
@@ -22,11 +23,13 @@ namespace Juego
 
 		void EnemyUpdate()
 		{
-			//enemy01
 			enemy01.position.x -= player.defaultSpeed * GetFrameTime();
-			//enemy01.position.y += player.defaultSpeed * GetFrameTime();
 
-			if (enemy01.position.x < 0 - enemy01.size.x) enemy01.position.x = (float)screenWidth + enemy01.size.x;
+			if (enemy01.position.x < 0 - enemy01.size.x) 
+			{
+				enemy01.position.x = (float)screenWidth + enemy01.size.x;
+				enemy01.position.y = GetRandomValue(0, screenHeight);
+			}
 		}
 
 		void EnemyDraw()
