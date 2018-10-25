@@ -48,6 +48,8 @@ namespace Juego
 	static Image backgroundLayer5Image;
 	static Image backgroundLayer6Image;
 
+	static Image shipImage;
+
 
 	static float parallaxLayersPosition[maxLayers];
 	static float parallaxLayersSpeed[maxLayers];
@@ -56,6 +58,7 @@ namespace Juego
 
 
 	Texture2D backgroundLayers[maxLayers];
+	Texture2D ship;
 
 	namespace Gameplay_Section
 	{
@@ -156,12 +159,17 @@ namespace Juego
 				ImageResize(&backgroundLayer6Image, screenWidth, screenHeight);
 				backgroundLayers[5] = LoadTextureFromImage(backgroundLayer6Image);
 
+				shipImage = LoadImage("res/textures/player_ship01.png");
+				ImageResize(&shipImage, 150, 70);
+				ship = LoadTextureFromImage(shipImage);
+
 				UnloadImage(backgroundLayer1Image);
 				UnloadImage(backgroundLayer2Image);
 				UnloadImage(backgroundLayer3Image);
 				UnloadImage(backgroundLayer4Image);
 				UnloadImage(backgroundLayer5Image);
 				UnloadImage(backgroundLayer6Image);
+				UnloadImage(shipImage);
 			}
 			else if (resolutionSmall)
 			{

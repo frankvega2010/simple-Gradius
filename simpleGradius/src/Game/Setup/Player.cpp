@@ -7,12 +7,12 @@
 namespace Juego
 {
 	rocketShip player;
-	Circle collisionCircle;
+	//Circle collisionCircle;
 
-	static int defaultRotationSpeed = 280;
-	static int defaultAcceleration = 1.0f;
-	static int defaultDeacceleration = 0.01f;
-	static int defaultBreakSpeed = 2.0f;
+	static Rectangle shipSource = { 0.0f,0.0f, 150,70 };
+	static Rectangle shipDestination;
+
+	static Vector2 shipOrigin = { 0,15 };
 
 	
 	//Player movement with mouse
@@ -28,17 +28,29 @@ namespace Juego
 		void createPlayer()
 		{
 			player.position = { (float)screenWidth / 30, (float)screenHeight / 2 };
-			player.size = { 100, 100 };
+			player.size = { 150, 50 };
 			player.defaultSpeed = 500.0f;
 			player.isAlive = true;
 			player.inputActive = false;
-			player.textureTint = WHITE;
+			player.rotation = 0;
+			//player.textureTint = {255, 0, 0, 150};
+			player.textureTint = { 0, 0, 0, 0 };
 		}
 		
 		void playerInput()
 		{
-			if (IsKeyDown(KEY_UP)) player.position.y -= player.defaultSpeed * GetFrameTime();
-			if (IsKeyDown(KEY_DOWN)) player.position.y += player.defaultSpeed * GetFrameTime();
+			if (IsKeyDown(KEY_UP))
+			{
+				player.position.y -= player.defaultSpeed * GetFrameTime();
+				player.rotation = 350;
+			}
+			else if (IsKeyDown(KEY_DOWN))
+			{
+				player.position.y += player.defaultSpeed * GetFrameTime();
+				player.rotation = 10;
+			}
+			else player.rotation = 0;
+			
 		}
 
 		void playerUpdate()
@@ -69,8 +81,10 @@ namespace Juego
 
 		void playerDraw()
 		{
-
-			DrawRectangle(player.position.x, player.position.y, player.size.x, player.size.y, RED);
+			shipDestination = { player.position.x,player.position.y, 150,70 };
+			
+			DrawRectangle(player.position.x, player.position.y, player.size.x, player.size.y, player.textureTint);
+			DrawTexturePro(ship, shipSource, shipDestination, shipOrigin, player.rotation, WHITE);
 
 			if (resolutionNormal)
 			{

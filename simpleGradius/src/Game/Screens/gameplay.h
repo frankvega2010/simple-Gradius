@@ -18,6 +18,8 @@ namespace Juego
 	extern int scoreMultiplier;
 	extern bool isExplosionActive;
 
+	extern Texture2D ship;
+
 	namespace Gameplay_Section
 	{
 		void InitGameplayVariables();
