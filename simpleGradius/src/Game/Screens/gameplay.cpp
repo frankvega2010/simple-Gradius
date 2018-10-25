@@ -7,6 +7,8 @@
 
 namespace Juego
 {
+	static const int maxLayers = 6;
+
 	bool gameON = true;
 
 	int scoreMultiplier = 5;
@@ -34,8 +36,26 @@ namespace Juego
 	static bool isButtonSoundPlaying = false;
 	static int buttonSelectSaveNumber = 0;
 
-	//static Rectangle playerRec;
-	//static Rectangle enemyRec;
+	Rectangle backgroundGameSource;
+	Vector2 backgroundGameOrigin;
+
+	Rectangle backgroundGameDestinationLayers[maxLayers];
+
+	static Image backgroundLayer1Image;
+	static Image backgroundLayer2Image;
+	static Image backgroundLayer3Image;
+	static Image backgroundLayer4Image;
+	static Image backgroundLayer5Image;
+	static Image backgroundLayer6Image;
+
+
+	static float parallaxLayersPosition[maxLayers];
+	static float parallaxLayersSpeed[maxLayers];
+
+	static int parallaxLayersSpeedDecreaser;
+
+
+	Texture2D backgroundLayers[maxLayers];
 
 	namespace Gameplay_Section
 	{
@@ -92,9 +112,56 @@ namespace Juego
 
 		void InitGameplayScreen()
 		{
+			parallaxLayersSpeedDecreaser = 0;
+
+			for (int i = maxLayers - 1; i >= 0; i--)
+			{
+				parallaxLayersPosition[i] = 0;
+				backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth * 2,(float)screenHeight };
+			}
+
+			for (int i = maxLayers - 1; i >= 0; i--)
+			{
+				parallaxLayersSpeed[i] = 50 + parallaxLayersSpeedDecreaser;
+				parallaxLayersSpeedDecreaser = parallaxLayersSpeedDecreaser + 250;
+			}
+
+			backgroundGameSource = { 0.0f,0.0f, (float)screenWidth * 2,(float)screenHeight };	
+			backgroundGameOrigin = { 0,0 };
+
 
 			if (resolutionNormal)
 			{
+				backgroundLayer1Image = LoadImage("res/textures/background_layer1v2.png");
+				ImageResize(&backgroundLayer1Image, screenWidth*2, screenHeight);
+				backgroundLayers[0] = LoadTextureFromImage(backgroundLayer1Image);
+
+				backgroundLayer2Image = LoadImage("res/textures/background_layer2v2.png");
+				ImageResize(&backgroundLayer2Image, screenWidth, screenHeight);
+				backgroundLayers[1] = LoadTextureFromImage(backgroundLayer2Image);
+
+				backgroundLayer3Image = LoadImage("res/textures/background_layer3.png");
+				ImageResize(&backgroundLayer3Image, screenWidth, screenHeight);
+				backgroundLayers[2] = LoadTextureFromImage(backgroundLayer3Image);
+
+				backgroundLayer4Image = LoadImage("res/textures/background_layer4.png");
+				ImageResize(&backgroundLayer4Image, screenWidth, screenHeight);
+				backgroundLayers[3] = LoadTextureFromImage(backgroundLayer4Image);
+
+				backgroundLayer5Image = LoadImage("res/textures/background_layer5.png");
+				ImageResize(&backgroundLayer5Image, screenWidth, screenHeight);
+				backgroundLayers[4] = LoadTextureFromImage(backgroundLayer5Image);
+
+				backgroundLayer6Image = LoadImage("res/textures/background_layer6.png");
+				ImageResize(&backgroundLayer6Image, screenWidth, screenHeight);
+				backgroundLayers[5] = LoadTextureFromImage(backgroundLayer6Image);
+
+				UnloadImage(backgroundLayer1Image);
+				UnloadImage(backgroundLayer2Image);
+				UnloadImage(backgroundLayer3Image);
+				UnloadImage(backgroundLayer4Image);
+				UnloadImage(backgroundLayer5Image);
+				UnloadImage(backgroundLayer6Image);
 			}
 			else if (resolutionSmall)
 			{
@@ -208,7 +275,17 @@ namespace Juego
 		}
 
 		void UpdateGameplayScreen()
-		{
+		{	
+			for (int i = 0; i < maxLayers; i++)
+			{
+				backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth * 2,(float)screenHeight };
+				parallaxLayersPosition[i] -= parallaxLayersSpeed[i] * GetFrameTime();
+
+				if (parallaxLayersPosition[i] < 0 - screenWidth)
+				{
+					parallaxLayersPosition[i] = 0;
+				}
+			}
 			//UpdateMusicStream(ship_rocket01);
 
 			player.inputActive = false;
@@ -288,6 +365,12 @@ namespace Juego
 
 		void DrawGameplay()
 		{
+
+			for (int i = maxLayers - 1; i >= 0; i--)
+			{
+				DrawTexturePro(backgroundLayers[i], backgroundGameSource, backgroundGameDestinationLayers[i], backgroundGameOrigin, 0, WHITE);
+			}
+
 			playerDraw();
 			EnemyDraw();
 
@@ -377,7 +460,10 @@ namespace Juego
 
 		void DeInitGameplayResources()
 		{
-
+			for (int i = 0; i < maxLayers; i++)
+			{
+				UnloadTexture(backgroundLayers[i]);
+			}
 			#ifdef AUDIO
 			StopSound(asteroid_explode01);
 			StopSound(ship_shoot01);
