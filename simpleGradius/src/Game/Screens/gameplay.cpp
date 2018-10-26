@@ -48,6 +48,9 @@ namespace Juego
 	static Image backgroundLayer5Image;
 	static Image backgroundLayer6Image;
 
+	static Image backgroundLayerWaterEffectImage;
+	static Image backgroundOpacityImage;
+
 	static Image shipImage;
 
 
@@ -58,6 +61,8 @@ namespace Juego
 
 
 	Texture2D backgroundLayers[maxLayers];
+	Texture2D backgroundOpacity;
+	Texture2D backgroundLayerWaterEffect;
 	Texture2D ship;
 
 	namespace Gameplay_Section
@@ -129,14 +134,14 @@ namespace Juego
 				parallaxLayersSpeedDecreaser = parallaxLayersSpeedDecreaser + 250;
 			}
 
-			backgroundGameSource = { 0.0f,0.0f, (float)screenWidth * 2,(float)screenHeight };	
+			backgroundGameSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };	
 			backgroundGameOrigin = { 0,0 };
 
 
 			if (resolutionNormal)
 			{
 				backgroundLayer1Image = LoadImage("res/textures/background_layer1v2.png");
-				ImageResize(&backgroundLayer1Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer1Image, screenWidth, screenHeight);
 				backgroundLayers[0] = LoadTextureFromImage(backgroundLayer1Image);
 
 				backgroundLayer2Image = LoadImage("res/textures/background_layer2v2.png");
@@ -159,6 +164,14 @@ namespace Juego
 				ImageResize(&backgroundLayer6Image, screenWidth, screenHeight);
 				backgroundLayers[5] = LoadTextureFromImage(backgroundLayer6Image);
 
+				backgroundLayerWaterEffectImage = LoadImage("res/textures/background_layer2v2effect.png");
+				ImageResize(&backgroundLayerWaterEffectImage, screenWidth, screenHeight);
+				backgroundLayerWaterEffect = LoadTextureFromImage(backgroundLayerWaterEffectImage);
+
+				backgroundOpacityImage = LoadImage("res/textures/background_opacity.png");
+				ImageResize(&backgroundOpacityImage, screenWidth, screenHeight);
+				backgroundOpacity = LoadTextureFromImage(backgroundOpacityImage);
+
 				shipImage = LoadImage("res/textures/player_ship01.png");
 				ImageResize(&shipImage, 150, 70);
 				ship = LoadTextureFromImage(shipImage);
@@ -169,6 +182,8 @@ namespace Juego
 				UnloadImage(backgroundLayer4Image);
 				UnloadImage(backgroundLayer5Image);
 				UnloadImage(backgroundLayer6Image);
+				UnloadImage(backgroundLayerWaterEffectImage);
+				UnloadImage(backgroundOpacityImage);
 				UnloadImage(shipImage);
 			}
 			else if (resolutionSmall)
@@ -376,8 +391,14 @@ namespace Juego
 
 			for (int i = maxLayers - 1; i >= 0; i--)
 			{
+				if (i == 1)
+				{
+					DrawTexturePro(backgroundLayerWaterEffect, backgroundGameSource, backgroundGameDestinationLayers[2], backgroundGameOrigin, 0, WHITE);
+				}
 				DrawTexturePro(backgroundLayers[i], backgroundGameSource, backgroundGameDestinationLayers[i], backgroundGameOrigin, 0, WHITE);
 			}
+			DrawTexturePro(backgroundOpacity, backgroundGameSource, backgroundGameDestinationLayers[0], backgroundGameOrigin, 0, WHITE);
+			
 
 			playerDraw();
 			EnemyDraw();

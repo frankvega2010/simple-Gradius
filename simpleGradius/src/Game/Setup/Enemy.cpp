@@ -18,7 +18,7 @@ namespace Juego
 			enemy01.defaultSpeed = 500.0f;
 			enemy01.isAlive = true;
 			enemy01.inputActive = false;
-			enemy01.textureTint = BLACK;
+			enemy01.textureTint = PINK;
 		}
 
 		void EnemyUpdate()
