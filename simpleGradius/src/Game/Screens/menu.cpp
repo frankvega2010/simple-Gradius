@@ -192,7 +192,7 @@ namespace Juego
 			DrawText(FormatText("Welcome to.."), buttons[0].position.x + 10, screenHeight / 20, defaultFontSize / 2, WHITE);
 			DrawText(FormatText("Simple! Gradius"), buttons[0].position.x * 0.63f, screenHeight / 10, defaultFontSize + 20, WHITE);
 			DrawText(FormatText("By frankvega"), buttons[0].position.x * 1.4f, screenHeight / 5, defaultFontSize / 2, WHITE);
-			DrawText(FormatText("Version 0.1 Prototype"), buttons[0].position.x * 0.63f, screenHeight / 5, defaultFontSize / 2, WHITE);
+			DrawText(FormatText("Version 0.2"), buttons[0].position.x * 0.63f, screenHeight / 5, defaultFontSize / 2, WHITE);
 			DrawText(FormatText("PLAY"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize, buttons[0].defaultColor);
 			DrawText(FormatText("CONTROLS"), buttons[1].position.x + 8, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
 			DrawText(FormatText("SETTINGS"), buttons[2].position.x + 10, buttons[2].position.y + 5, defaultFontSize / 1.3, buttons[2].defaultColor);
