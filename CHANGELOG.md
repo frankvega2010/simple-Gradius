@@ -5,7 +5,7 @@
 
 ### Changed
 - Player hitbox has a rectangular form instead of a square.
-- Credits Section has been update with new info.
+- Credits Section has been updated with new info.
 
 ## v0.1 [2018-10-18]
 ### Added
