@@ -8,25 +8,31 @@ namespace Juego
 {
 	rocketShip enemy01;
 
+	static Rectangle enemyShipSource = { 0.0f,0.0f, 180,70 };
+	static Rectangle enemyShipDestination;
+
+	static Vector2 enemyShipOrigin = { 0,15 };
+
 	namespace Gameplay_Section
 	{
 		void createEnemy()
 		{
 			enemy01.position = { (float)screenWidth + enemy01.size.x, (float)screenHeight / 2 };
 			enemy01.position.y = GetRandomValue(0, screenHeight);
-			enemy01.size = { 100, 100 };
-			enemy01.defaultSpeed = 500.0f;
+			enemy01.size = { 180, 30 };
+			enemy01.defaultSpeed = 700.0f;
 			enemy01.isAlive = true;
 			enemy01.inputActive = false;
-			enemy01.textureTint = PINK;
+			enemy01.textureTint = { 0, 0, 0, 0 };
 		}
 
 		void EnemyUpdate()
 		{
 			enemy01.position.x -= player.defaultSpeed * GetFrameTime();
 
-			if (enemy01.position.x < 0 - enemy01.size.x) 
+			if (enemy01.position.x < 0 - enemy01.size.x || !enemy01.isAlive)
 			{
+				enemy01.isAlive = true;
 				enemy01.position.x = (float)screenWidth + enemy01.size.x;
 				enemy01.position.y = GetRandomValue(0, screenHeight);
 			}
@@ -34,7 +40,15 @@ namespace Juego
 
 		void EnemyDraw()
 		{
-			DrawRectangle(enemy01.position.x, enemy01.position.y, enemy01.size.x, enemy01.size.y, enemy01.textureTint);
+			enemyShipDestination = { enemy01.position.x,enemy01.position.y, 180,70 };
+
+			if (enemy01.isAlive)
+			{
+				DrawRectangle(enemy01.position.x, enemy01.position.y, enemy01.size.x, enemy01.size.y, enemy01.textureTint);
+			}
+
+			DrawTexturePro(enemyShip, enemyShipSource, enemyShipDestination, enemyShipOrigin, 0, WHITE);
+			
 		}
 
 	}

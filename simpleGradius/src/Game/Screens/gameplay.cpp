@@ -3,6 +3,7 @@
 #include "Setup/Game.h"
 #include "Setup/Player.h"
 #include "Setup\Enemy.h"
+#include "Setup\PlayerShoot.h"
 #include "Screens/settings.h"
 
 namespace Juego
@@ -52,6 +53,7 @@ namespace Juego
 	static Image backgroundOpacityImage;
 
 	static Image shipImage;
+	static Image enemyShipImage;
 
 
 	static float parallaxLayersPosition[maxLayers];
@@ -64,6 +66,7 @@ namespace Juego
 	Texture2D backgroundOpacity;
 	Texture2D backgroundLayerWaterEffect;
 	Texture2D ship;
+	Texture2D enemyShip;
 
 	namespace Gameplay_Section
 	{
@@ -116,6 +119,7 @@ namespace Juego
 			createPauseButtons();
 			createPlayer();
 			createEnemy();
+			createShoot();
 		}
 
 		void InitGameplayScreen()
@@ -140,41 +144,45 @@ namespace Juego
 
 			if (resolutionNormal)
 			{
-				backgroundLayer1Image = LoadImage("res/textures/background_layer1v2.png");
+				backgroundLayer1Image = LoadImage("res/assets/textures/background_layer1v2.png");
 				ImageResize(&backgroundLayer1Image, screenWidth, screenHeight);
 				backgroundLayers[0] = LoadTextureFromImage(backgroundLayer1Image);
 
-				backgroundLayer2Image = LoadImage("res/textures/background_layer2v2.png");
+				backgroundLayer2Image = LoadImage("res/assets/textures/background_layer2v2.png");
 				ImageResize(&backgroundLayer2Image, screenWidth, screenHeight);
 				backgroundLayers[1] = LoadTextureFromImage(backgroundLayer2Image);
 
-				backgroundLayer3Image = LoadImage("res/textures/background_layer3.png");
+				backgroundLayer3Image = LoadImage("res/assets/textures/background_layer3.png");
 				ImageResize(&backgroundLayer3Image, screenWidth, screenHeight);
 				backgroundLayers[2] = LoadTextureFromImage(backgroundLayer3Image);
 
-				backgroundLayer4Image = LoadImage("res/textures/background_layer4.png");
+				backgroundLayer4Image = LoadImage("res/assets/textures/background_layer4.png");
 				ImageResize(&backgroundLayer4Image, screenWidth, screenHeight);
 				backgroundLayers[3] = LoadTextureFromImage(backgroundLayer4Image);
 
-				backgroundLayer5Image = LoadImage("res/textures/background_layer5.png");
+				backgroundLayer5Image = LoadImage("res/assets/textures/background_layer5.png");
 				ImageResize(&backgroundLayer5Image, screenWidth, screenHeight);
 				backgroundLayers[4] = LoadTextureFromImage(backgroundLayer5Image);
 
-				backgroundLayer6Image = LoadImage("res/textures/background_layer6.png");
+				backgroundLayer6Image = LoadImage("res/assets/textures/background_layer6.png");
 				ImageResize(&backgroundLayer6Image, screenWidth, screenHeight);
 				backgroundLayers[5] = LoadTextureFromImage(backgroundLayer6Image);
 
-				backgroundLayerWaterEffectImage = LoadImage("res/textures/background_layer2v2effect.png");
+				backgroundLayerWaterEffectImage = LoadImage("res/assets/textures/background_layer2v2effect.png");
 				ImageResize(&backgroundLayerWaterEffectImage, screenWidth, screenHeight);
 				backgroundLayerWaterEffect = LoadTextureFromImage(backgroundLayerWaterEffectImage);
 
-				backgroundOpacityImage = LoadImage("res/textures/background_opacity.png");
+				backgroundOpacityImage = LoadImage("res/assets/textures/background_opacity.png");
 				ImageResize(&backgroundOpacityImage, screenWidth, screenHeight);
 				backgroundOpacity = LoadTextureFromImage(backgroundOpacityImage);
 
-				shipImage = LoadImage("res/textures/player_ship01.png");
+				shipImage = LoadImage("res/assets/textures/player_ship01.png");
 				ImageResize(&shipImage, 150, 70);
 				ship = LoadTextureFromImage(shipImage);
+
+				enemyShipImage = LoadImage("res/assets/textures/enemy01.png");
+				ImageResize(&enemyShipImage, 180, 70);
+				enemyShip = LoadTextureFromImage(enemyShipImage);
 
 				UnloadImage(backgroundLayer1Image);
 				UnloadImage(backgroundLayer2Image);
@@ -185,6 +193,7 @@ namespace Juego
 				UnloadImage(backgroundLayerWaterEffectImage);
 				UnloadImage(backgroundOpacityImage);
 				UnloadImage(shipImage);
+				UnloadImage(enemyShipImage);
 			}
 			else if (resolutionSmall)
 			{
@@ -338,6 +347,7 @@ namespace Juego
 
 				playerUpdate();
 				EnemyUpdate();
+				shootUpdate();
 
 			}
 			else if (gamePaused)
@@ -402,6 +412,7 @@ namespace Juego
 
 			playerDraw();
 			EnemyDraw();
+			shootDraw();
 
 			DrawRectangleLines(pauseButton.position.x, pauseButton.position.y, pauseButton.width, pauseButton.height, pauseButton.defaultColor);
 
@@ -493,6 +504,8 @@ namespace Juego
 			{
 				UnloadTexture(backgroundLayers[i]);
 			}
+			UnloadTexture(ship);
+			UnloadTexture(enemyShip);
 			#ifdef AUDIO
 			StopSound(asteroid_explode01);
 			StopSound(ship_shoot01);

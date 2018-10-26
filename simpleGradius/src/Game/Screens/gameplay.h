@@ -19,6 +19,7 @@ namespace Juego
 	extern bool isExplosionActive;
 
 	extern Texture2D ship;
+	extern Texture2D enemyShip;
 
 	namespace Gameplay_Section
 	{

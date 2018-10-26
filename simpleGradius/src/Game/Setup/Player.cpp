@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "Setup\Game.h"
+#include "Setup\PlayerShoot.h"
 #include "Screens\settings.h"
 #include "Screens\gameplay.h"
 
@@ -39,6 +40,8 @@ namespace Juego
 		
 		void playerInput()
 		{
+			shootInput();
+
 			if (IsKeyDown(KEY_UP))
 			{
 				player.position.y -= player.defaultSpeed * GetFrameTime();

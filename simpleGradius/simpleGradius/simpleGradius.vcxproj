@@ -28,6 +28,7 @@
     <ClCompile Include="..\src\Game\Setup\Enemy.cpp" />
     <ClCompile Include="..\src\Game\Setup\Game.cpp" />
     <ClCompile Include="..\src\Game\Setup\Player.cpp" />
+    <ClCompile Include="..\src\Game\Setup\PlayerShoot.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -40,6 +41,7 @@
     <ClInclude Include="..\src\Game\Setup\Enemy.h" />
     <ClInclude Include="..\src\Game\Setup\Game.h" />
     <ClInclude Include="..\src\Game\Setup\Player.h" />
+    <ClInclude Include="..\src\Game\Setup\PlayerShoot.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -116,8 +118,8 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>MKDIR "$(TargetDir)res"
-XCOPY "$(SolutionDir)res" "$(TargetDir)res" /E /Y /S</Command>
+      <Command>MKDIR "$(TargetDir)res/assets"
+XCOPY "$(SolutionDir)res/assets" "$(TargetDir)res" /E /Y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -147,8 +149,8 @@ XCOPY "$(SolutionDir)res" "$(TargetDir)res" /E /Y /S</Command>
       <SubSystem>Windows</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>MKDIR "$(TargetDir)res"
-XCOPY "$(SolutionDir)res" "$(TargetDir)res" /E /Y /S</Command>
+      <Command>MKDIR "$(TargetDir)res/assets"
+XCOPY "$(SolutionDir)res/assets" "$(TargetDir)res" /E /Y /S</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
