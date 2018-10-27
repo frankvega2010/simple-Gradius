@@ -36,16 +36,23 @@ namespace Juego
 
 			if (IsKeyDown(KEY_UP))
 			{
-				player.position.y -= player.defaultSpeed * GetFrameTime();
-				player.rotation = 350;
-				currentFrame = 1;
-				
+				if (player.position.y < 0) player.position.y = 0;
+				else
+				{
+					player.position.y -= player.defaultSpeed * GetFrameTime();
+					player.rotation = 350;
+					currentFrame = 1;
+				}					
 			}
 			else if (IsKeyDown(KEY_DOWN))
 			{
-				player.position.y += player.defaultSpeed * GetFrameTime();
-				player.rotation = 10;
-				currentFrame = 1;
+				if (player.position.y + player.size.y > screenHeight) player.position.y = screenHeight - player.size.y;
+				else
+				{
+					player.position.y += player.defaultSpeed * GetFrameTime();
+					player.rotation = 10;
+					currentFrame = 1;
+				}	
 			}
 			else 
 			{
