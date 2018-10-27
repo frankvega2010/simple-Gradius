@@ -14,15 +14,7 @@ namespace Juego
 	static Rectangle shipDestination;
 
 	static Vector2 shipOrigin = { 0,15 };
-
-	
-	//Player movement with mouse
-	static Vector2 rotationDirection;
-	static float rotationAngle = 0.0f;
-	static Vector2 normalizedDirection = {0,0};
-	static Vector2 playerNewPosition = { 0,0 };
-	static const float angleFix = 1.57f;
-	static const int accelerationDefaultSpeed = 250;
+	static int currentFrame = 0;
 
 	namespace Gameplay_Section
 	{
@@ -46,19 +38,25 @@ namespace Juego
 			{
 				player.position.y -= player.defaultSpeed * GetFrameTime();
 				player.rotation = 350;
+				currentFrame = 1;
+				
 			}
 			else if (IsKeyDown(KEY_DOWN))
 			{
 				player.position.y += player.defaultSpeed * GetFrameTime();
 				player.rotation = 10;
+				currentFrame = 1;
 			}
-			else player.rotation = 0;
-			
+			else 
+			{
+				player.rotation = 0;
+				currentFrame = 0;
+			}
 		}
 
 		void playerUpdate()
 		{
-
+			shipSource.x = (float)currentFrame*(float)ship.width / 2;
 			//player.rotation = rotationAngle;
 
 			// Player logic: movement

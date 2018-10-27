@@ -70,13 +70,12 @@ namespace Juego
 	{
 		SetExitKey(0);
 
-		screenWidth = 1300;
-		screenHeight = 800;
+		screenWidth = 1300;//1300
+		screenHeight = 800;//800
 
 		createMouse();
 
 		InitWindow(screenWidth, screenHeight, "Simple! Asteroids");
-	
 
 		resolutionBackground();
 
@@ -245,6 +244,7 @@ namespace Juego
 	{
 		BeginDrawing();
 		ClearBackground(BLACK);
+		
 
 		switch (gameScreen)
 		{
@@ -255,7 +255,7 @@ namespace Juego
 		case Credits: Credits_Section::DrawCredits(); break;
 		case Settings: Settings_Section::DrawSettings(); break;
 		}
-
+		
 		EndDrawing();
 	}
 
@@ -268,7 +268,6 @@ namespace Juego
 		UnloadSound(button_select01);
 		CloseAudioDevice();
 #endif
-
 		CloseWindow();
 	}
 

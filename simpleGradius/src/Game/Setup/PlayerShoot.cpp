@@ -155,7 +155,7 @@ namespace Juego
 					}
 				}
 
-				if ((shoots[i].active))
+				if ((shoots2[i].active))
 				{
 					if (CheckCollisionRecs({ shoots2[i].position.x,shoots2[i].position.y,shoots2[i].size.x,shoots2[i].size.y }, { enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y }))
 					{

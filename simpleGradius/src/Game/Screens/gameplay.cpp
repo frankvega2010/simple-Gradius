@@ -124,60 +124,42 @@ namespace Juego
 
 		void InitGameplayScreen()
 		{
-			parallaxLayersSpeedDecreaser = 0;
-
-			for (int i = maxLayers - 1; i >= 0; i--)
-			{
-				parallaxLayersPosition[i] = 0;
-				backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth * 2,(float)screenHeight };
-			}
-
-			for (int i = maxLayers - 1; i >= 0; i--)
-			{
-				parallaxLayersSpeed[i] = 50 + parallaxLayersSpeedDecreaser;
-				parallaxLayersSpeedDecreaser = parallaxLayersSpeedDecreaser + 250;
-			}
-
-			backgroundGameSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };	
-			backgroundGameOrigin = { 0,0 };
-
-
 			if (resolutionNormal)
 			{
 				backgroundLayer1Image = LoadImage("res/assets/textures/background_layer1v2.png");
-				ImageResize(&backgroundLayer1Image, screenWidth, screenHeight);
+				ImageResize(&backgroundLayer1Image, screenWidth*2, screenHeight);
 				backgroundLayers[0] = LoadTextureFromImage(backgroundLayer1Image);
 
 				backgroundLayer2Image = LoadImage("res/assets/textures/background_layer2v2.png");
-				ImageResize(&backgroundLayer2Image, screenWidth, screenHeight);
+				ImageResize(&backgroundLayer2Image, screenWidth*2, screenHeight);
 				backgroundLayers[1] = LoadTextureFromImage(backgroundLayer2Image);
 
 				backgroundLayer3Image = LoadImage("res/assets/textures/background_layer3.png");
-				ImageResize(&backgroundLayer3Image, screenWidth, screenHeight);
+				ImageResize(&backgroundLayer3Image, screenWidth*2, screenHeight);
 				backgroundLayers[2] = LoadTextureFromImage(backgroundLayer3Image);
 
 				backgroundLayer4Image = LoadImage("res/assets/textures/background_layer4.png");
-				ImageResize(&backgroundLayer4Image, screenWidth, screenHeight);
+				ImageResize(&backgroundLayer4Image, screenWidth*2, screenHeight);
 				backgroundLayers[3] = LoadTextureFromImage(backgroundLayer4Image);
 
 				backgroundLayer5Image = LoadImage("res/assets/textures/background_layer5.png");
-				ImageResize(&backgroundLayer5Image, screenWidth, screenHeight);
+				ImageResize(&backgroundLayer5Image, screenWidth*2, screenHeight);
 				backgroundLayers[4] = LoadTextureFromImage(backgroundLayer5Image);
 
 				backgroundLayer6Image = LoadImage("res/assets/textures/background_layer6.png");
-				ImageResize(&backgroundLayer6Image, screenWidth, screenHeight);
+				ImageResize(&backgroundLayer6Image, screenWidth*2, screenHeight);
 				backgroundLayers[5] = LoadTextureFromImage(backgroundLayer6Image);
 
 				backgroundLayerWaterEffectImage = LoadImage("res/assets/textures/background_layer2v2effect.png");
-				ImageResize(&backgroundLayerWaterEffectImage, screenWidth, screenHeight);
+				ImageResize(&backgroundLayerWaterEffectImage, screenWidth*2, screenHeight);
 				backgroundLayerWaterEffect = LoadTextureFromImage(backgroundLayerWaterEffectImage);
 
 				backgroundOpacityImage = LoadImage("res/assets/textures/background_opacity.png");
-				ImageResize(&backgroundOpacityImage, screenWidth, screenHeight);
+				ImageResize(&backgroundOpacityImage, screenWidth*2, screenHeight);
 				backgroundOpacity = LoadTextureFromImage(backgroundOpacityImage);
 
-				shipImage = LoadImage("res/assets/textures/player_ship01.png");
-				ImageResize(&shipImage, 150, 70);
+				shipImage = LoadImage("res/assets/textures/player_ship01v2.png");
+				ImageResize(&shipImage, 300, 70);// 150 70
 				ship = LoadTextureFromImage(shipImage);
 
 				enemyShipImage = LoadImage("res/assets/textures/enemy01.png");
@@ -194,6 +176,28 @@ namespace Juego
 				UnloadImage(backgroundOpacityImage);
 				UnloadImage(shipImage);
 				UnloadImage(enemyShipImage);
+
+				parallaxLayersSpeedDecreaser = 0;
+
+				for (int i = maxLayers - 1; i >= 0; i--)
+				{
+					parallaxLayersPosition[i] = 0;
+					backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth*2,(float)screenHeight };
+				}
+
+				for (int i = maxLayers - 1; i >= 0; i--)
+				{
+					//parallaxLayersSpeed[i] = 0;
+					parallaxLayersSpeed[i] = 50 + parallaxLayersSpeedDecreaser;
+					parallaxLayersSpeedDecreaser = parallaxLayersSpeedDecreaser + 25; //250
+					if (i == 0)
+					{
+						parallaxLayersSpeed[i] = 900;
+					}
+				}
+
+				backgroundGameSource = { 0.0f,0.0f, (float)screenWidth*2,(float)screenHeight };
+				backgroundGameOrigin = { 0,0 };
 			}
 			else if (resolutionSmall)
 			{
@@ -310,7 +314,7 @@ namespace Juego
 		{	
 			for (int i = 0; i < maxLayers; i++)
 			{
-				backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth * 2,(float)screenHeight };
+				backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth*2,(float)screenHeight };
 				parallaxLayersPosition[i] -= parallaxLayersSpeed[i] * GetFrameTime();
 
 				if (parallaxLayersPosition[i] < 0 - screenWidth)
@@ -398,7 +402,6 @@ namespace Juego
 
 		void DrawGameplay()
 		{
-
 			for (int i = maxLayers - 1; i >= 0; i--)
 			{
 				if (i == 1)
@@ -408,7 +411,6 @@ namespace Juego
 				DrawTexturePro(backgroundLayers[i], backgroundGameSource, backgroundGameDestinationLayers[i], backgroundGameOrigin, 0, WHITE);
 			}
 			DrawTexturePro(backgroundOpacity, backgroundGameSource, backgroundGameDestinationLayers[0], backgroundGameOrigin, 0, WHITE);
-			
 
 			playerDraw();
 			EnemyDraw();

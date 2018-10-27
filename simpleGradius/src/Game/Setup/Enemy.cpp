@@ -19,7 +19,7 @@ namespace Juego
 		{
 			enemy01.position = { (float)screenWidth + enemy01.size.x, (float)screenHeight / 2 };
 			enemy01.position.y = GetRandomValue(0, screenHeight);
-			enemy01.size = { 180, 30 };
+			enemy01.size = { 180, 45 };
 			enemy01.defaultSpeed = 700.0f;
 			enemy01.isAlive = true;
 			enemy01.inputActive = false;
