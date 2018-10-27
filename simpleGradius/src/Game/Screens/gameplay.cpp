@@ -312,16 +312,6 @@ namespace Juego
 
 		void UpdateGameplayScreen()
 		{	
-			for (int i = 0; i < maxLayers; i++)
-			{
-				backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth*2,(float)screenHeight };
-				parallaxLayersPosition[i] -= parallaxLayersSpeed[i] * GetFrameTime();
-
-				if (parallaxLayersPosition[i] < 0 - screenWidth)
-				{
-					parallaxLayersPosition[i] = 0;
-				}
-			}
 			//UpdateMusicStream(ship_rocket01);
 
 			player.inputActive = false;
@@ -342,6 +332,17 @@ namespace Juego
 
 			if (gameON)
 			{
+				for (int i = 0; i < maxLayers; i++)
+				{
+					backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth * 2,(float)screenHeight };
+					parallaxLayersPosition[i] -= parallaxLayersSpeed[i] * GetFrameTime();
+
+					if (parallaxLayersPosition[i] < 0 - screenWidth)
+					{
+						parallaxLayersPosition[i] = 0;
+					}
+				}
+
 				if(CheckCollisionRecs({player.position.x,player.position.y,player.size.x,player.size.y}, {enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y}))
 				{
 					gameON = false;
