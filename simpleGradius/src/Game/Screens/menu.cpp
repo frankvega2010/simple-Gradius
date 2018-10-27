@@ -162,8 +162,8 @@ namespace Juego
 					switch (i)
 					{
 					case 0:
-						DrawText("null", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("null", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawText("Start playing!", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
+						DrawText("", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
 						break;
 					case 1:
 						DrawText("Learn how to play ", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
