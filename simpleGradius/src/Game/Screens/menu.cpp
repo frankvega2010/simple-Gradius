@@ -223,7 +223,7 @@ namespace Juego
 			DrawTextEx(sideFont, "Welcome to..", { buttons[0].position.x - 80, screenHeight / 20.0f }, defaultFontSize / 2, 2, GREEN);
 			DrawTextEx(mainFont, "Simple Gradius", { buttons[0].position.x - 80, screenHeight / 10.0f }, defaultFontSize + 20.0f, 2, RAYWHITE);
 			DrawTextEx(sideFont, "By frankvega", { buttons[0].position.x * 3.4f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
-			DrawTextEx(sideFont, "Version 0.2", { buttons[0].position.x - 80, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(sideFont, "Version 0.5", { buttons[0].position.x - 80, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
 			DrawTextEx(mainFont, "PLAY", { buttons[0].position.x + 40, buttons[0].position.y + 10 }, defaultFontSize/1.5f, 2, buttons[0].defaultColor);
 			DrawTextEx(mainFont, "TUTORIAL", { buttons[1].position.x + 5, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[1].defaultColor);
 			DrawTextEx(mainFont, "SETTINGS", { buttons[2].position.x + 15, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[2].defaultColor);

@@ -163,7 +163,7 @@ namespace Juego
 			}
 
 			DrawTextEx(mainFont, "Simple Gradius", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 10.0f }, defaultFontSize + 20.0f, 2, RAYWHITE);
-			DrawTextEx(sideFont, "Version 0.2", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(sideFont, "Version 0.5", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
 
 			if (!moreCredits)
 			{
