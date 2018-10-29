@@ -29,6 +29,13 @@ namespace Juego
 		Color defaultColor;
 	};
 
+	extern Rectangle backgroundMenuSource;
+	extern Vector2 backgroundMenuOrigin;
+	extern Rectangle backgroundMenuDestination;
+
+	extern Texture2D backgroundMenu;
+	extern Texture2D backgroundMenuBroken;
+
 	#ifdef AUDIO
 
 	extern Sound ship_explode01;
@@ -54,6 +61,9 @@ namespace Juego
 	extern int defaultFontSize;
 
 	extern bool isScreenFinished;
+
+	extern Font mainFont;
+	extern Font sideFont;
 
 	void resolutionBackground();
 	void checkAsteroidSprite();

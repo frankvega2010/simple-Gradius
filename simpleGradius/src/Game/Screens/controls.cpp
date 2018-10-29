@@ -5,21 +5,26 @@
 #include "Setup/Game.h"
 #include "Screens/gameplay.h"
 #include "Screens/settings.h"
+#include "Screens\menu.h"
 
 using namespace Juego;
 using namespace Gameplay_Section;
+using namespace Menu_Section;
 
 namespace Juego
 {
 	static Image controlSchemeImage;
 	static Texture2D controlScheme;
 
-	static const int maxButtonsControls = 2;
+	static const int maxButtonsControls = 5;
+	static const int maxButtonsControlsKeys = 3;
 	static Buttons buttonsControls[maxButtonsControls];
 	static int buttonSelect = 0;
-	static int buttonDistance_Controls = 0;
+	static int buttonDistanceControls = 0;
+	static int buttonDistanceControlsKeys = 0;
 
 	static bool moreControls = false;
+	static const int resolutionControlsFontSize = defaultFontSize / 2.2f;
 
 	static bool isButtonSoundPlaying = false;
 	static int buttonSelectSaveNumber = 0;
@@ -30,14 +35,28 @@ namespace Juego
 		{
 			for (int i = 0; i < maxButtonsControls; i++)
 			{
-				buttonsControls[i].position.x = (float)screenWidth / 90.0f;
-				buttonsControls[i].position.y = (float)screenHeight / 1.4f + buttonDistance_Controls;
+				buttonsControls[i].position.x = (float)screenWidth / 25.0f;
+				buttonsControls[i].position.y = (float)screenHeight / 1.4f + buttonDistanceControls;
 				buttonsControls[i].width = (float)screenWidth / 5.0f;
 				buttonsControls[i].height = (float)screenHeight / 12.0f;
 				buttonsControls[i].selected = false;
-				buttonsControls[i].defaultColor = RED;
+				buttonsControls[i].defaultColor = DARKGREEN;
 				buttonsControls[i].messageColor = BLANK;
-				buttonDistance_Controls = buttonDistance_Controls + 100;
+
+				if (i > 1)
+				{
+					buttonsControls[i].position.x = (float)screenWidth / 2.5f;
+					buttonsControls[i].position.y = (float)screenHeight / 1.55f + buttonDistanceControlsKeys;
+					buttonDistanceControlsKeys = buttonDistanceControlsKeys + 100;
+				}
+
+				if (i > 3)
+				{
+					buttonsControls[i].position.x = (float)screenWidth / 1.5f;
+					buttonsControls[i].position.y = (float)screenHeight / 1.2f;
+				}
+
+				buttonDistanceControls = buttonDistanceControls + 100;
 			}
 		}
 
@@ -45,7 +64,7 @@ namespace Juego
 		{
 			createControlsButtons();
 
-			controlSchemeImage = LoadImage("res/textures/controlscheme01.png");
+			controlSchemeImage = LoadImage("res/assets/textures/controlscheme01.png");
 			ImageResize(&controlSchemeImage, screenWidth, screenHeight);
 			controlScheme = LoadTextureFromImage(controlSchemeImage);
 			UnloadImage(controlSchemeImage);
@@ -84,13 +103,14 @@ namespace Juego
 
 			for (int i = 0; i < maxButtonsControls; i++)
 			{
-				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonsControls[i].selected || IsKeyPressed(KEY_ENTER) && buttonsControls[i].selected)
+				if (moreControls && i > 1) i = maxButtonsControls;
+				else if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonsControls[i].selected || IsKeyPressed(KEY_ENTER) && buttonsControls[i].selected)
 				{
-				//	PlaySound(button_select01);
+					//	PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
-						moreControls =! moreControls;
+						moreControls = !moreControls;
 						break;
 					case 1:
 						buttonOption = buttonGoMenu;
@@ -99,6 +119,7 @@ namespace Juego
 					}
 					buttonsControls[i].selected = false;
 				}
+				
 			}
 		}
 
@@ -117,13 +138,14 @@ namespace Juego
 				if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttonsControls[i].position.x, buttonsControls[i].position.y, buttonsControls[i].width, buttonsControls[i].height }) || buttonSelect == i)
 				{
 					buttonSelect = i;
-					buttonsControls[i].defaultColor = WHITE;
+					buttonsControls[i].defaultColor = GREEN;
 					buttonsControls[i].selected = true;
 				}
 				else
 				{
-					buttonsControls[i].defaultColor = RED;
+					buttonsControls[i].defaultColor = DARKGREEN;
 					buttonsControls[i].selected = false;
+					buttonSelect = -1;
 				}
 
 				if (buttonSelect != buttonSelectSaveNumber)
@@ -146,22 +168,16 @@ namespace Juego
 		void DrawControls()
 		{
 			//asteroidDraw();
+			DrawBackground();
 
 			for (int i = 0; i < maxButtonsControls; i++)
 			{
-				DrawRectangleLines(buttonsControls[i].position.x, buttonsControls[i].position.y, buttonsControls[i].width, buttonsControls[i].height, buttonsControls[i].defaultColor);
+				if (moreControls && i > 1) i = maxButtonsControls;
+				else DrawRectangleLines(buttonsControls[i].position.x, buttonsControls[i].position.y, buttonsControls[i].width, buttonsControls[i].height, buttonsControls[i].defaultColor);
 
 				if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttonsControls[i].position.x, buttonsControls[i].position.y, buttonsControls[i].width, buttonsControls[i].height }) || buttonSelect == i)
 				{
-					buttonsControls[i].messageColor = WHITE;
-
-					switch (i)
-					{
-					case 1:
-						DrawText("Click or Enter ", buttonsControls[i].position.x + (screenWidth / 4.5), buttonsControls[i].position.y, defaultFontSize / 2, buttonsControls[i].messageColor);
-						DrawText("to go back!", buttonsControls[i].position.x + (screenWidth / 4.5), buttonsControls[i].position.y + 50, defaultFontSize / 2, buttonsControls[i].messageColor);
-						break;
-					}
+					buttonsControls[i].messageColor = GREEN;
 				}
 				else
 				{
@@ -172,20 +188,28 @@ namespace Juego
 			//More Controls Text
 			if (moreControls)
 			{
-				DrawText(FormatText("How to Play"), screenWidth / 18, 20, defaultFontSize, WHITE);
-				DrawText(FormatText("Destroy all asteroids in the least amount of time!"), screenWidth / 18, screenHeight / 8, defaultFontSize / 1.8, WHITE);
-				DrawText(FormatText("You can get up to 10500 points at the end of the match."), screenWidth / 18, screenHeight / 6, defaultFontSize / 1.8, WHITE);
-				DrawText(FormatText("Powerups"), screenWidth / 18, screenHeight / 4.5, defaultFontSize, WHITE);
-				DrawText(FormatText("There are 2 powerups which will help you get a highscore"), screenWidth / 18, screenHeight / 3, defaultFontSize / 1.8, WHITE);
-				DrawText(FormatText("Invincibility Powerup"), screenWidth / 18, screenHeight / 2.5, defaultFontSize / 1.8, RED);
-				DrawText(FormatText("Makes you invincible to any asteroid for 5 seconds."), screenWidth / 18, screenHeight / 2.2, defaultFontSize / 1.8, RED);
-				DrawText(FormatText("Max Rapid Fire Powerup"), screenWidth / 18, screenHeight / 1.9, defaultFontSize / 1.8, GOLD);
-				DrawText(FormatText("You will be able to shoot more quickly for 5 seconds."), screenWidth / 18, screenHeight / 1.7, defaultFontSize / 1.8, GOLD);
+				DrawTextEx(mainFont, "Objetive", { screenWidth / 18.0f, 60 }, defaultFontSize, 1.0f, WHITE);
+				DrawTextEx(sideFont, "Complete the mission by destroying", { screenWidth / 18.0f, screenHeight / 6.0f }, defaultFontSize / 1.8, 1.0f, GREEN);
+				DrawTextEx(sideFont, "the designated amount of targets.", { screenWidth / 18.0f, screenHeight / 5.0f }, defaultFontSize / 1.8, 1.0f, GREEN);
+
+				DrawTextEx(mainFont, "Enemies", { screenWidth / 18.0f,screenHeight / 3.0f }, defaultFontSize/1.5f, 1.0f, WHITE);
+				DrawTextEx(sideFont, "You will be facing slow and fast enemies,", { screenWidth / 18.0f, screenHeight / 2.5f }, defaultFontSize / 1.8, 1.0f, GREEN);
+				DrawTextEx(sideFont, "some of them may shoot back at you.", { screenWidth / 18.0f, screenHeight / 2.2f }, defaultFontSize / 1.8, 1.0f, GREEN);
+				DrawTextEx(sideFont, "We haven't located any enemy Commander yet....", { screenWidth / 18.0f, screenHeight / 1.9f }, defaultFontSize / 1.8, 1.0f, GREEN);
+			}
+			else
+			{
+				DrawTexturePro(controlScheme, backgroundMenuSource, backgroundMenuDestination, backgroundMenuOrigin, 0, WHITE);
+				for (int i = 2; i < maxButtonsControls; i++)
+				{
+					DrawTextEx(sideFont, "Default-UP",    { buttonsControls[2].position.x + 5, buttonsControls[2].position.y + 10 }, resolutionControlsFontSize, 1.0f, buttonsControls[2].defaultColor);
+					DrawTextEx(sideFont, "Default-DOWN",  { buttonsControls[3].position.x + 5, buttonsControls[3].position.y + 10 }, resolutionControlsFontSize, 1.0f, buttonsControls[3].defaultColor);
+					DrawTextEx(sideFont, "Default-SPACE", { buttonsControls[4].position.x + 5, buttonsControls[4].position.y + 10 }, resolutionControlsFontSize, 1.0f, buttonsControls[4].defaultColor);
+				}
 			}
 
-			DrawText(FormatText("MORE"), buttonsControls[0].position.x + 50, buttonsControls[0].position.y + 5, defaultFontSize, buttonsControls[0].defaultColor);
-			DrawText(FormatText("MENU"), buttonsControls[1].position.x + 50, buttonsControls[1].position.y + 5, defaultFontSize, buttonsControls[1].defaultColor);
-			
+			DrawTextEx(mainFont, "MORE", { buttonsControls[0].position.x + 35, buttonsControls[0].position.y + 10 }, defaultFontSize / 1.5f, 1.0f, buttonsControls[0].defaultColor);
+			DrawTextEx(mainFont, "MENU", { buttonsControls[1].position.x + 35, buttonsControls[1].position.y + 10 }, defaultFontSize / 1.5f, 1.0f, buttonsControls[1].defaultColor);
 		}
 
 		bool FinishControlsScreen()
@@ -196,7 +220,9 @@ namespace Juego
 		void DeInitControlsResources()
 		{
 			UnloadTexture(controlScheme);
-			buttonDistance_Controls = 0;
+			buttonDistanceControls = 0;
+			buttonDistanceControlsKeys = 0;
+			moreControls = false;
 		}
 	}
 }

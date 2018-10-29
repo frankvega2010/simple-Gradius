@@ -34,7 +34,7 @@ namespace Juego
 		{
 			shootInput();
 
-			if (IsKeyDown(KEY_UP))
+			if (IsKeyDown(playerKeys[UP]))
 			{
 				if (player.position.y < 0) player.position.y = 0;
 				else
@@ -44,7 +44,7 @@ namespace Juego
 					currentFrame = 1;
 				}					
 			}
-			else if (IsKeyDown(KEY_DOWN))
+			else if (IsKeyDown(playerKeys[DOWN]))
 			{
 				if (player.position.y + player.size.y > screenHeight) player.position.y = screenHeight - player.size.y;
 				else

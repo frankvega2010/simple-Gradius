@@ -22,7 +22,7 @@ namespace Juego
 
 	int gameScore = 0;
 	int destroyedAsteroidsCount = 0;
-	int asteroidsLeft = 28;
+	int targetsLeft = 3;
 
 	static int midAsteroidsCount = 0;
 	static int smallAsteroidsCount = 0;
@@ -63,7 +63,7 @@ namespace Juego
 		void shootInput()
 		{
 			// Player shoot logic
-			if (IsKeyDown(KEY_SPACE))
+			if (IsKeyDown(playerKeys[SHOOT]))
 			{
 				rapidFireTimer += 1 * GetFrameTime();
 
@@ -152,6 +152,9 @@ namespace Juego
 					if (CheckCollisionRecs({ shoots[i].position.x,shoots[i].position.y,shoots[i].size.x,shoots[i].size.y }, { enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y }))
 					{
 						enemy01.isAlive = false;
+						shoots[i].active = false;
+						shoots2[i].active = false;
+						targetsLeft--;	
 					}
 				}
 
@@ -160,6 +163,9 @@ namespace Juego
 					if (CheckCollisionRecs({ shoots2[i].position.x,shoots2[i].position.y,shoots2[i].size.x,shoots2[i].size.y }, { enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y }))
 					{
 						enemy01.isAlive = false;
+						shoots[i].active = false;
+						shoots2[i].active = false;
+						targetsLeft--;
 					}
 				}
 			}

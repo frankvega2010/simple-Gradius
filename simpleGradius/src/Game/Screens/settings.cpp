@@ -5,9 +5,11 @@
 #include "Screens/gameplay.h"
 #include "Screens\controls.h"
 #include "Setup\Player.h"
+#include "Screens\menu.h"
 
 using namespace Juego;
 using namespace Gameplay_Section;
+using namespace Menu_Section;
 
 namespace Juego
 {
@@ -24,7 +26,7 @@ namespace Juego
 		Effects
 	};
 
-	struct volumeLine 
+	struct volumeLine
 	{
 		Vector2 PosStart;
 		Vector2 PosEnd;
@@ -39,14 +41,24 @@ namespace Juego
 		bool Selected;
 	};
 
-	static const int maxButtons = 8;
+	static const int maxButtons = 11;
 	static const int maxButtonsRight = 4;
 	static const int maxSliders = 2;
+
+	static const int resolutionSettingsFontSize = defaultFontSize / 1.25f;
+
 
 	static Buttons buttonsSettings[maxButtons];
 
 	static int buttonSelect = 0;
 	static int buttonDistanceSettings = 0;
+	static int buttonDistanceKeys = 0;
+
+	static bool assignKeyUp = false;
+	static bool assignKeyDown = false;
+	static bool assignKeyShoot = false;
+
+	static bool assignKeys[MAX] = { false };
 
 	static int musicLineCounter = 0;
 	static float musicLineCounterVolume = 0.8;
@@ -93,7 +105,7 @@ namespace Juego
 
 			for (int i = 0; i < maxButtons; i++)
 			{
-				buttonsSettings[i].position.x = (float)screenWidth / 90.0f;
+				buttonsSettings[i].position.x = (float)screenWidth / 30.0f;
 				buttonsSettings[i].position.y = (float)screenHeight / 10.0f + buttonDistanceSettings;
 				if (resolutionNormal)
 				{
@@ -111,9 +123,19 @@ namespace Juego
 
 				if (i == 7)
 				{
-					buttonsSettings[i].position.y = (float)screenHeight / 1.1f;
+					buttonsSettings[i].position.x = (float)screenWidth / 25.0f;
+					buttonsSettings[i].position.y = (float)screenHeight / 1.15f;
 					buttonsSettings[i].width = (float)screenWidth / 5.0f;
 				}
+
+				if (i > 7)
+				{
+					buttonsSettings[i].position.x = (float)screenWidth / 3.3f + buttonDistanceKeys;
+					buttonsSettings[i].position.y = (float)screenHeight / 1.35f;
+					buttonsSettings[i].width = (float)screenWidth / 5.0f;
+					buttonDistanceKeys = buttonDistanceKeys + 300;
+				}
+
 
 				
 				if (resolutionNormal && !(resolutionBig))
@@ -142,6 +164,11 @@ namespace Juego
 			SetSoundVolume(button_select01, soundVolume);
 			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
+
+			for (int i = 0; i < MAX ; i++)
+			{
+				assignKeys[i] = false;
+			}
 
 			checkAsteroidSprite();
 			createSettingsButtons();
@@ -241,6 +268,48 @@ namespace Juego
 			{
 			}
 
+			for (int i = 0; i < MAX; i++)
+			{
+				if (assignKeys[i])
+				{
+					if (IsKeyPressed(GetKeyPressed()))
+					{
+						playerKeys[i] = GetKeyPressed();
+						assignKeys[i] = false;
+					}
+
+					else if (IsKeyPressed(KEY_UP))
+					{
+						playerKeys[i] = KEY_UP;
+						assignKeys[i] = false;
+					}
+
+					else if (IsKeyPressed(KEY_DOWN))
+					{
+						playerKeys[i] = KEY_DOWN;
+						assignKeys[i] = false;
+					}
+
+					else if (IsKeyPressed(KEY_RIGHT))
+					{
+						playerKeys[i] = KEY_RIGHT;
+						assignKeys[i] = false;
+					}
+
+					else if (IsKeyPressed(KEY_LEFT))
+					{
+						playerKeys[i] = KEY_LEFT;
+						assignKeys[i] = false;
+					}
+
+					else if (IsKeyPressed(KEY_SPACE))
+					{
+						playerKeys[i] = KEY_SPACE;
+						assignKeys[i] = false;
+					}
+				}
+			}
+
 			for (int i = 0; i < maxButtons; i++)
 			{
 
@@ -272,6 +341,16 @@ namespace Juego
 					case 7:
 						buttonOption = buttonGoMenu;
 						isScreenFinished = true;
+						for (int i = 0; i < MAX; i++) assignKeys[i] = false;
+						break;
+					case 8:
+						assignKeys[UP] = true;
+						break;
+					case 9:
+						assignKeys[DOWN] = true;
+						break;
+					case 10:
+						assignKeys[SHOOT] = true;
 						break;
 					}
 					buttonsSettings[i].selected = false;
@@ -310,13 +389,18 @@ namespace Juego
 					if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttonsSettings[i].position.x, buttonsSettings[i].position.y, buttonsSettings[i].width, buttonsSettings[i].height }) || buttonSelect == i && !(volumeSliders[Effects].Selected) && !(volumeSliders[Music].Selected))
 					{
 						buttonSelect = i;
-						buttonsSettings[i].defaultColor = WHITE;
+						if(assignKeys[UP]) buttonsSettings[i].defaultColor = WHITE;
+						else if (assignKeys[DOWN]) buttonsSettings[i].defaultColor = WHITE;
+						else if (assignKeys[SHOOT]) buttonsSettings[i].defaultColor = WHITE;
+						else buttonsSettings[i].defaultColor = GREEN;
+						
 						buttonsSettings[i].selected = true;
 					}
 					else
 					{
-						buttonsSettings[i].defaultColor = RED;
+						buttonsSettings[i].defaultColor = DARKGREEN;
 						buttonsSettings[i].selected = false;
+						buttonSelect = -1;
 					}
 
 					if (buttonSelect != buttonSelectSaveNumber)
@@ -332,12 +416,15 @@ namespace Juego
 							buttonSelectSaveNumber = i;
 						}
 					}
+
+					//if(assignKey) buttonsSettings[buttonSelect].defaultColor = WHITE;
 				}
 			
 		}
 
 		void DrawSettings()
 		{
+			DrawBackground();
 
 			DrawLineEx(musicLine.PosStart, musicLine.PosEnd, musicLine.Thick, musicLine.Color);
 			DrawLineEx(effectsLine.PosStart, effectsLine.PosEnd, effectsLine.Thick, effectsLine.Color);
@@ -350,15 +437,7 @@ namespace Juego
 
 				if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttonsSettings[i].position.x, buttonsSettings[i].position.y, buttonsSettings[i].width, buttonsSettings[i].height }) || buttonSelect == i)
 				{
-					buttonsSettings[i].messageColor = WHITE;
-
-					switch (i)
-					{
-					case 7:
-						DrawText("Click or Enter to go back!", buttonsSettings[i].position.x + (screenWidth / 4.5), buttonsSettings[i].position.y, defaultFontSize / 2, buttonsSettings[i].messageColor);
-						DrawText("", buttonsSettings[i].position.x + (screenWidth / 4.5), buttonsSettings[i].position.y + 50, defaultFontSize / 2, buttonsSettings[i].messageColor);
-						break;
-					}
+					buttonsSettings[i].messageColor = GREEN;
 				}
 				else
 				{
@@ -366,31 +445,66 @@ namespace Juego
 				}
 			}
 
-			DrawText(FormatText("1920x1080"), buttonsSettings[0].position.x + 10, buttonsSettings[0].position.y + 5, defaultFontSize, buttonsSettings[0].defaultColor);
-			DrawText(FormatText("1680x1050"), buttonsSettings[1].position.x + 10, buttonsSettings[1].position.y + 5, defaultFontSize, buttonsSettings[1].defaultColor);
-			DrawText(FormatText("1600x900"), buttonsSettings[2].position.x + 10, buttonsSettings[2].position.y + 5, defaultFontSize, buttonsSettings[2].defaultColor);
-			DrawText(FormatText("1440x900"), buttonsSettings[3].position.x + 10, buttonsSettings[3].position.y + 5, defaultFontSize, buttonsSettings[3].defaultColor);
-			DrawText(FormatText("1300x800"), buttonsSettings[4].position.x + 10, buttonsSettings[4].position.y + 5, defaultFontSize, buttonsSettings[4].defaultColor);
-			DrawText(FormatText("1024x768"), buttonsSettings[5].position.x + 10, buttonsSettings[5].position.y + 5, defaultFontSize, buttonsSettings[5].defaultColor);
-			DrawText(FormatText("800x600"), buttonsSettings[6].position.x + 10, buttonsSettings[6].position.y + 5, defaultFontSize, buttonsSettings[6].defaultColor);
+			DrawTextEx(sideFont, "1920x1080", { buttonsSettings[0].position.x + 10, buttonsSettings[0].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[0].defaultColor);
+			DrawTextEx(sideFont, "1680x1050", { buttonsSettings[1].position.x + 10, buttonsSettings[1].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[1].defaultColor);
+			DrawTextEx(sideFont, "1600x900",  { buttonsSettings[2].position.x + 10, buttonsSettings[2].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[2].defaultColor);
+			DrawTextEx(sideFont, "1440x900",  { buttonsSettings[3].position.x + 10, buttonsSettings[3].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[3].defaultColor);
+			DrawTextEx(sideFont, "1300x800",  { buttonsSettings[4].position.x + 10, buttonsSettings[4].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[4].defaultColor);
+			DrawTextEx(sideFont, "1024x768",  { buttonsSettings[5].position.x + 10, buttonsSettings[5].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[5].defaultColor);
+			DrawTextEx(sideFont, "800x600",   { buttonsSettings[6].position.x + 10, buttonsSettings[6].position.y + 5 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[6].defaultColor);
+			DrawTextEx(mainFont, "MENU",	  { buttonsSettings[7].position.x + 35, buttonsSettings[7].position.y + 10 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[7].defaultColor);
 
-			DrawText(FormatText("MENU"), buttonsSettings[7].position.x + 25, buttonsSettings[7].position.y + 5, defaultFontSize, buttonsSettings[7].defaultColor);
 
-			DrawText(FormatText("Music Volume"), musicLine.PosStart.x + 50, musicLine.PosStart.y - 100, defaultFontSize, volumeSliders[Music].color);
-			DrawText(FormatText("%f",songVolume), musicLine.PosStart.x + 100, musicLine.PosStart.y + 50, defaultFontSize, volumeSliders[Music].color);
+			DrawTextEx(sideFont, "Music Volume", { musicLine.PosStart.x + 50, musicLine.PosStart.y - 100 }, resolutionSettingsFontSize, 1.0f, volumeSliders[Music].color);
+			DrawTextEx(sideFont, FormatText("%f", songVolume), { musicLine.PosStart.x + 100, musicLine.PosStart.y + 50 }, resolutionSettingsFontSize, 1.0f, volumeSliders[Music].color);
 
-			DrawText(FormatText("Sound Volume"), effectsLine.PosStart.x + 50, effectsLine.PosStart.y - 100, defaultFontSize, volumeSliders[Effects].color);
-			DrawText(FormatText("%f", soundVolume), effectsLine.PosStart.x + 100, effectsLine.PosStart.y + 50, defaultFontSize, volumeSliders[Effects].color);
+			DrawTextEx(sideFont, "Sound Volume", { effectsLine.PosStart.x + 50, effectsLine.PosStart.y - 100 }, resolutionSettingsFontSize, 1.0f, volumeSliders[Effects].color);
+			DrawTextEx(sideFont, FormatText("%f", soundVolume), { effectsLine.PosStart.x + 100, effectsLine.PosStart.y + 50 }, resolutionSettingsFontSize, 1.0f, volumeSliders[Effects].color);
+
+
+			DrawTextEx(sideFont, "PLAYER CONTROLS CONFIG", { buttonsSettings[8].position.x + 120, buttonsSettings[8].position.y - 50 }, defaultFontSize / 1.5f, 1.0f, GREEN);
+			
+			for (int i = 0; i < MAX; i++)
+			{
+				switch (playerKeys[i])
+				{
+				case KEY_UP:
+					DrawTextEx(sideFont, "UP", { buttonsSettings[i].position.x + 35, buttonsSettings[i].position.y + 10 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[i].defaultColor);
+					break;
+				case KEY_DOWN:
+					DrawTextEx(sideFont, "DOWN", { buttonsSettings[i].position.x + 35, buttonsSettings[i].position.y + 10 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[i].defaultColor);
+					break;
+				case KEY_LEFT:
+					DrawTextEx(sideFont, "LEFT", { buttonsSettings[i].position.x + 35, buttonsSettings[i].position.y + 10 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[i].defaultColor);
+					break;
+				case KEY_RIGHT:
+					DrawTextEx(sideFont, "RIGHT", { buttonsSettings[i].position.x + 35, buttonsSettings[i].position.y + 10 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[i].defaultColor);
+					break;
+				case KEY_SPACE:
+					DrawTextEx(sideFont, "SPACE", { buttonsSettings[i].position.x + 35, buttonsSettings[i].position.y + 10 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[i].defaultColor);
+					break;
+				default:
+					DrawTextEx(sideFont, FormatText("%c", playerKeys[i]), { buttonsSettings[i].position.x + 35, buttonsSettings[i].position.y + 10 }, resolutionSettingsFontSize, 1.0f, buttonsSettings[i].defaultColor);
+					break;
+				}
+			}
+
+			DrawTextEx(sideFont, "MOVE UP", { buttonsSettings[8].position.x + 35, buttonsSettings[8].position.y + 70 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[8].defaultColor);
+			DrawTextEx(sideFont, "MOVE DOWN", { buttonsSettings[9].position.x + 5, buttonsSettings[9].position.y + 70 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[9].defaultColor);
+			DrawTextEx(sideFont, "SHOOT", { buttonsSettings[10].position.x + 60, buttonsSettings[10].position.y + 70 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[10].defaultColor);
+
+			DrawTextEx(sideFont, "ONLY UPPERCASE", { buttonsSettings[8].position.x + 200, buttonsSettings[8].position.y + 120 }, defaultFontSize / 1.5f, 1.0f, GREEN);
 		}
 
 		bool FinishSettingsScreen()
 		{
-			buttonDistanceSettings = 0;
 			return isScreenFinished;
 		}
 
 		void DeInitSettingsResources()
 		{
+			buttonDistanceSettings = 0;
+			buttonDistanceKeys = 0;
 			#ifdef AUDIO
 			StopMusicStream(ship_rocket01);
 			UnloadMusicStream(ship_rocket01);

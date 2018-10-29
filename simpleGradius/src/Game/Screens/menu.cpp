@@ -14,6 +14,7 @@ namespace Juego
 
 	static Buttons buttons[maxButtons];
 	static int buttonDistance = 0;
+	static int buttonDistanceBelow = 0;
 	static int buttonSelect = 0;
 	static Color optionColor = RED;
 
@@ -26,8 +27,19 @@ namespace Juego
 		{
 			for (int i = 0; i < maxButtons; i++)
 			{
-				buttons[i].position.x = (float)screenWidth / 2.5f; //3.8f
-				buttons[i].position.y = (float)screenHeight / 3.0f + buttonDistance;
+				
+				if (i <= 2)
+				{
+					buttons[i].position.x = (float)screenWidth / 6 + buttonDistance; //3.8f
+					buttons[i].position.y = (float)screenHeight / 3.0f;
+				}
+				else
+				{
+					buttons[i].position.x = (float)screenWidth / 3.5f + buttonDistanceBelow; //3.8f
+					buttons[i].position.y = (float)screenHeight / 1.8f;
+					buttonDistanceBelow = buttonDistanceBelow + 300;
+				}
+				
 				buttons[i].width = (float)screenWidth / 5.0f;
 
 				if(resolutionNormal) buttons[i].height = (float)screenHeight / 12.0f;
@@ -37,8 +49,8 @@ namespace Juego
 				buttons[i].defaultColor = RED;
 				buttons[i].messageColor = BLANK;
 				
-
-				if (resolutionNormal && !(resolutionBig)) buttonDistance = buttonDistance + 100;
+				
+				if (resolutionNormal && !(resolutionBig)) buttonDistance = buttonDistance + 300;
 				else if (resolutionSmall) buttonDistance = buttonDistance + 60;
 				else if (resolutionBig && resolutionNormal) buttonDistance = buttonDistance + 125;
 			}
@@ -70,6 +82,8 @@ namespace Juego
 
 			if (IsKeyPressed(KEY_UP))
 			{
+				
+
 				mouse.selected = false;
 				buttonSelect--;
 				if (buttonSelect < 0)
@@ -120,15 +134,15 @@ namespace Juego
 				if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height }) || buttonSelect == i)
 				{
 						buttonSelect = i;
-						buttons[i].defaultColor = WHITE;
+						buttons[i].defaultColor = GREEN;
 						buttons[i].selected = true;
 						
 				}
 				else
 				{
-					buttons[i].defaultColor = RED;
+					buttons[i].defaultColor = DARKGREEN;
 					buttons[i].selected = false;
-					
+					buttonSelect = -1;
 				}
 				
 				if (buttonSelect != buttonSelectSaveNumber)
@@ -148,8 +162,24 @@ namespace Juego
 			
 		}
 
+		void DrawBackground()
+		{
+			backgroundMenuDestination = { 0,0, (float)screenWidth,(float)screenHeight };
+
+			DrawTexturePro(backgroundMenu, backgroundMenuSource, backgroundMenuDestination, backgroundMenuOrigin, 0, WHITE);		
+		}
+
+		void DrawBackgroundBroken()
+		{
+			backgroundMenuDestination = { 0,0, (float)screenWidth,(float)screenHeight };
+
+			DrawTexturePro(backgroundMenuBroken, backgroundMenuSource, backgroundMenuDestination, backgroundMenuOrigin, 0, WHITE);
+
+		}
+
 		void DrawMenu()
 		{
+			DrawBackground();
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -157,29 +187,27 @@ namespace Juego
 
 				if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height }) || buttonSelect == i)
 				{
-					buttons[i].messageColor = WHITE;
+					buttons[i].messageColor = GREEN;
 
 					switch (i)
 					{
 					case 0:
-						DrawText("Start playing!", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawTextEx(sideFont, "Start playing!", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
 						break;
 					case 1:
-						DrawText("Learn how to play ", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("here!", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawTextEx(sideFont, "Learn how to play", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
+						DrawTextEx(sideFont, "here!", { buttons[i].position.x, buttons[i].position.y + 50 + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
 						break;
 					case 2:
-						DrawText("Change different settings", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("to your liking", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawTextEx(sideFont, "Change different ", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
+						DrawTextEx(sideFont, "settings to your liking", { buttons[i].position.x, buttons[i].position.y + 50 + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
 						break;
 					case 3:
-						DrawText("Get to know who made", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("this game!", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawTextEx(sideFont, "Get to know who made", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.18f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
+						DrawTextEx(sideFont, "this game!", { buttons[i].position.x, buttons[i].position.y + 50 + (buttons[i].position.y * 0.18f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
 						break;
 					case 4:
-						DrawText("Stop playing the game", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y, defaultFontSize / 2, buttons[i].messageColor);
-						DrawText("", buttons[i].position.x + (buttons[i].position.x * 0.55), buttons[i].position.y + 50, defaultFontSize / 2, buttons[i].messageColor);
+						DrawTextEx(sideFont, "Closes the game", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.18f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
 						break;
 					}
 				}
@@ -189,21 +217,38 @@ namespace Juego
 				}
 			}
 
-			DrawText(FormatText("Welcome to.."), buttons[0].position.x + 10, screenHeight / 20, defaultFontSize / 2, WHITE);
-			DrawText(FormatText("Simple! Gradius"), buttons[0].position.x * 0.63f, screenHeight / 10, defaultFontSize + 20, WHITE);
-			DrawText(FormatText("By frankvega"), buttons[0].position.x * 1.4f, screenHeight / 5, defaultFontSize / 2, WHITE);
-			DrawText(FormatText("Version 0.2"), buttons[0].position.x * 0.63f, screenHeight / 5, defaultFontSize / 2, WHITE);
-			DrawText(FormatText("PLAY"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize, buttons[0].defaultColor);
-			DrawText(FormatText("CONTROLS"), buttons[1].position.x + 8, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
-			DrawText(FormatText("SETTINGS"), buttons[2].position.x + 10, buttons[2].position.y + 5, defaultFontSize / 1.3, buttons[2].defaultColor);
-			DrawText(FormatText("CREDITS"), buttons[3].position.x + 10, buttons[3].position.y + 5, defaultFontSize / 1.1, buttons[3].defaultColor);
-			DrawText(FormatText("QUIT"), buttons[4].position.x + 10, buttons[4].position.y + 5, defaultFontSize, buttons[4].defaultColor);
+			DrawTextEx(sideFont, "Welcome to..", { buttons[0].position.x - 80, screenHeight / 20.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(mainFont, "Simple Gradius", { buttons[0].position.x - 80, screenHeight / 10.0f }, defaultFontSize + 20.0f, 2, RAYWHITE);
+			DrawTextEx(sideFont, "By frankvega", { buttons[0].position.x * 3.4f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(sideFont, "Version 0.2", { buttons[0].position.x - 80, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(mainFont, "PLAY", { buttons[0].position.x + 40, buttons[0].position.y + 10 }, defaultFontSize/1.5f, 2, buttons[0].defaultColor);
+			DrawTextEx(mainFont, "TUTORIAL", { buttons[1].position.x + 5, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[1].defaultColor);
+			DrawTextEx(mainFont, "SETTINGS", { buttons[2].position.x + 15, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[2].defaultColor);
+			DrawTextEx(mainFont, "CREDITS", { buttons[3].position.x + 30, buttons[3].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[3].defaultColor);
+			DrawTextEx(mainFont, "QUIT", { buttons[4].position.x + 60, buttons[4].position.y + 10 }, defaultFontSize / 1.5f, 2, buttons[4].defaultColor);
 		}
 
 		bool FinishMenuScreen()
 		{
-			buttonDistance = 0;
+			
 			return isScreenFinished;
+		}
+
+		void DeInitMenuResources()
+		{
+			buttonDistance = 0;
+			buttonDistanceBelow = 0;
+			
+#ifdef AUDIO
+			StopSound(asteroid_explode01);
+			StopSound(ship_shoot01);
+			StopSound(powerup01);
+			StopMusicStream(ship_rocket01);
+			UnloadSound(asteroid_explode01);
+			UnloadSound(ship_shoot01);
+			UnloadSound(powerup01);
+			UnloadMusicStream(ship_rocket01);
+#endif
 		}
 	}
 }

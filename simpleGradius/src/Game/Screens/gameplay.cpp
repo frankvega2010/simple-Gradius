@@ -5,12 +5,14 @@
 #include "Setup\Enemy.h"
 #include "Setup\PlayerShoot.h"
 #include "Screens/settings.h"
+#include "Screens\menu.h"
 
 namespace Juego
 {
-	static const int maxLayers = 6;
 
 	bool gameON = true;
+
+	int playerKeys[MAX];
 
 	int scoreMultiplier = 5;
 	bool isExplosionActive = false;
@@ -52,6 +54,8 @@ namespace Juego
 	static Image backgroundLayerWaterEffectImage;
 	static Image backgroundOpacityImage;
 
+	static Image pauseMenuImage;
+
 	static Image shipImage;
 	static Image enemyShipImage;
 
@@ -65,6 +69,7 @@ namespace Juego
 	Texture2D backgroundLayers[maxLayers];
 	Texture2D backgroundOpacity;
 	Texture2D backgroundLayerWaterEffect;
+	Texture2D pauseMenu;
 	Texture2D ship;
 	Texture2D enemyShip;
 
@@ -107,7 +112,7 @@ namespace Juego
 			}
 
 			pauseButton.selected = false;
-			pauseButton.defaultColor = GOLD;
+			pauseButton.defaultColor = DARKGREEN;
 			pauseButton.messageColor = BLANK;
 		}
 
@@ -122,40 +127,40 @@ namespace Juego
 			createShoot();
 		}
 
-		void InitGameplayScreen()
+		void InitGameplayParallax()
 		{
 			if (resolutionNormal)
 			{
 				backgroundLayer1Image = LoadImage("res/assets/textures/background_layer1v2.png");
-				ImageResize(&backgroundLayer1Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer1Image, screenWidth * 2, screenHeight);
 				backgroundLayers[0] = LoadTextureFromImage(backgroundLayer1Image);
 
 				backgroundLayer2Image = LoadImage("res/assets/textures/background_layer2v2.png");
-				ImageResize(&backgroundLayer2Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer2Image, screenWidth * 2, screenHeight);
 				backgroundLayers[1] = LoadTextureFromImage(backgroundLayer2Image);
 
 				backgroundLayer3Image = LoadImage("res/assets/textures/background_layer3.png");
-				ImageResize(&backgroundLayer3Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer3Image, screenWidth * 2, screenHeight);
 				backgroundLayers[2] = LoadTextureFromImage(backgroundLayer3Image);
 
 				backgroundLayer4Image = LoadImage("res/assets/textures/background_layer4.png");
-				ImageResize(&backgroundLayer4Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer4Image, screenWidth * 2, screenHeight);
 				backgroundLayers[3] = LoadTextureFromImage(backgroundLayer4Image);
 
 				backgroundLayer5Image = LoadImage("res/assets/textures/background_layer5.png");
-				ImageResize(&backgroundLayer5Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer5Image, screenWidth * 2, screenHeight);
 				backgroundLayers[4] = LoadTextureFromImage(backgroundLayer5Image);
 
 				backgroundLayer6Image = LoadImage("res/assets/textures/background_layer6.png");
-				ImageResize(&backgroundLayer6Image, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayer6Image, screenWidth * 2, screenHeight);
 				backgroundLayers[5] = LoadTextureFromImage(backgroundLayer6Image);
 
 				backgroundLayerWaterEffectImage = LoadImage("res/assets/textures/background_layer2v2effect.png");
-				ImageResize(&backgroundLayerWaterEffectImage, screenWidth*2, screenHeight);
+				ImageResize(&backgroundLayerWaterEffectImage, screenWidth * 2, screenHeight);
 				backgroundLayerWaterEffect = LoadTextureFromImage(backgroundLayerWaterEffectImage);
 
 				backgroundOpacityImage = LoadImage("res/assets/textures/background_opacity.png");
-				ImageResize(&backgroundOpacityImage, screenWidth*2, screenHeight);
+				ImageResize(&backgroundOpacityImage, screenWidth * 2, screenHeight);
 				backgroundOpacity = LoadTextureFromImage(backgroundOpacityImage);
 
 				shipImage = LoadImage("res/assets/textures/player_ship01v2.png");
@@ -166,6 +171,10 @@ namespace Juego
 				ImageResize(&enemyShipImage, 180, 70);
 				enemyShip = LoadTextureFromImage(enemyShipImage);
 
+				pauseMenuImage = LoadImage("res/assets/textures/pausemenu.png");
+				ImageResize(&pauseMenuImage, pauseBoxRec.width, pauseBoxRec.height);
+				pauseMenu = LoadTextureFromImage(pauseMenuImage);
+
 				UnloadImage(backgroundLayer1Image);
 				UnloadImage(backgroundLayer2Image);
 				UnloadImage(backgroundLayer3Image);
@@ -174,6 +183,7 @@ namespace Juego
 				UnloadImage(backgroundLayer6Image);
 				UnloadImage(backgroundLayerWaterEffectImage);
 				UnloadImage(backgroundOpacityImage);
+				UnloadImage(pauseMenuImage);
 				UnloadImage(shipImage);
 				UnloadImage(enemyShipImage);
 
@@ -182,7 +192,7 @@ namespace Juego
 				for (int i = maxLayers - 1; i >= 0; i--)
 				{
 					parallaxLayersPosition[i] = 0;
-					backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth*2,(float)screenHeight };
+					backgroundGameDestinationLayers[i] = { parallaxLayersPosition[i],0, (float)screenWidth * 2,(float)screenHeight };
 				}
 
 				for (int i = maxLayers - 1; i >= 0; i--)
@@ -196,12 +206,39 @@ namespace Juego
 					}
 				}
 
-				backgroundGameSource = { 0.0f,0.0f, (float)screenWidth*2,(float)screenHeight };
+				backgroundGameSource = { 0.0f,0.0f, (float)screenWidth * 2,(float)screenHeight };
 				backgroundGameOrigin = { 0,0 };
 			}
 			else if (resolutionSmall)
 			{
 			}
+		}
+
+		void InitGameplayScreen()
+		{
+			if (resolutionNormal)
+			{
+				shipImage = LoadImage("res/assets/textures/player_ship01v2.png");
+				ImageResize(&shipImage, 300, 70);// 150 70
+				ship = LoadTextureFromImage(shipImage);
+
+				enemyShipImage = LoadImage("res/assets/textures/enemy01.png");
+				ImageResize(&enemyShipImage, 180, 70);
+				enemyShip = LoadTextureFromImage(enemyShipImage);
+
+				pauseMenuImage = LoadImage("res/assets/textures/pausemenu.png");
+				ImageResize(&pauseMenuImage, pauseBoxRec.width, pauseBoxRec.height);
+				pauseMenu = LoadTextureFromImage(pauseMenuImage);
+
+				UnloadImage(pauseMenuImage);
+				UnloadImage(shipImage);
+				UnloadImage(enemyShipImage);
+
+			}
+			else if (resolutionSmall)
+			{
+			}
+			//InitGameplayParallax();
 
 			#ifdef AUDIO
 			ship_shoot01 = LoadSound("res/sounds/ship_shoot01.wav");
@@ -321,12 +358,12 @@ namespace Juego
 
 			if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { pauseButton.position.x, pauseButton.position.y, pauseButton.width, pauseButton.height }))
 			{
-				pauseButton.defaultColor = WHITE;
+				pauseButton.defaultColor = GREEN;
 				pauseButton.selected = true;
 			}
 			else
 			{
-				pauseButton.defaultColor = GOLD;
+				pauseButton.defaultColor = DARKGREEN;
 				pauseButton.selected = false;
 			} 
 
@@ -346,6 +383,7 @@ namespace Juego
 				if(CheckCollisionRecs({player.position.x,player.position.y,player.size.x,player.size.y}, {enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y}))
 				{
 					gameON = false;
+					player.isAlive = false;
 					buttonOption = buttonGameOver;
 					isScreenFinished = true;
 				}
@@ -365,13 +403,14 @@ namespace Juego
 					if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height }) || buttonSelect == i)
 					{
 						buttonSelect = i;
-						buttons[i].defaultColor = WHITE;
+						buttons[i].defaultColor = GREEN;
 						buttons[i].selected = true;
 					}
 					else
 					{
-						buttons[i].defaultColor = GOLD;
+						buttons[i].defaultColor = DARKGREEN;
 						buttons[i].selected = false;
+						buttonSelect = -1;
 					}
 
 					if (buttonSelect != buttonSelectSaveNumber)
@@ -391,18 +430,19 @@ namespace Juego
 			}
 
 
-	/*		if (destroyedAsteroidsCount >= (asteroidsSmallLimit + asteroidsMediumLimit + asteroidsBigLimit) && asteroidsLeft == 0)
+			if (targetsLeft == 0)
 			{
 				gameON = false;
 				timerON = false;
 				matchTimer = 0;
 				buttonOption = buttonGameOver;
 				isScreenFinished = true;
-			}*/
+			}
 		}
 
 		void DrawGameplay()
 		{
+
 			for (int i = maxLayers - 1; i >= 0; i--)
 			{
 				if (i == 1)
@@ -419,73 +459,35 @@ namespace Juego
 
 			DrawRectangleLines(pauseButton.position.x, pauseButton.position.y, pauseButton.width, pauseButton.height, pauseButton.defaultColor);
 
-			if (resolutionNormal && !(resolutionBig)) DrawText(FormatText(" ||"), pauseButton.position.x, pauseButton.position.y + 5, defaultFontSize, pauseButton.defaultColor);
-			else if (resolutionSmall) DrawText(FormatText(" ||"), pauseButton.position.x + 2, pauseButton.position.y + 5, defaultFontSize, pauseButton.defaultColor);
-			else if (resolutionBig && resolutionNormal) DrawText(FormatText(" ||"), pauseButton.position.x + 12, pauseButton.position.y + 15, defaultFontSize, pauseButton.defaultColor);
+			DrawTextEx(sideFont, FormatText("Targets:%i", targetsLeft), { 20, 20 }, defaultFontSize / 1.5f, 1.0f, GREEN);
+
+			DrawTextEx(mainFont,"II", { pauseButton.position.x + 13, pauseButton.position.y + 7 }, defaultFontSize, 1.0f, pauseButton.defaultColor);
+			//if (resolutionNormal && !(resolutionBig)) DrawText(FormatText(" ||"), pauseButton.position.x, pauseButton.position.y + 5, defaultFontSize, pauseButton.defaultColor);
+			//else if (resolutionSmall) DrawText(FormatText(" ||"), pauseButton.position.x + 2, pauseButton.position.y + 5, defaultFontSize, pauseButton.defaultColor);
+			//else if (resolutionBig && resolutionNormal) DrawText(FormatText(" ||"), pauseButton.position.x + 12, pauseButton.position.y + 15, defaultFontSize, pauseButton.defaultColor);
 			
 
 			if (!(gameON))
 			{
 				if (gamePaused)
 				{
-					DrawRectangleRec(pauseBoxRec, DARKPURPLE);
+					DrawTexturePro(pauseMenu, { 0, 0, (float)screenWidth / 4.2f, (float)screenHeight / 2.5f }, pauseBoxRec, { 0,0 }, 0, WHITE);
 					for (int i = 0; i < maxButtons; i++)
 					{
 						DrawRectangleLines(buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height, buttons[i].defaultColor);
 					}
-					DrawText("PAUSED", buttons[0].position.x + (screenWidth * 0.02), buttons[0].position.y - (screenHeight * 0.1), defaultFontSize / 1.2, GOLD);
-					DrawText(FormatText("CONTINUE"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize / 1.3, buttons[0].defaultColor);
-					DrawText(FormatText("RESTART"), buttons[1].position.x + 8, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
-					DrawText(FormatText("MENU"), buttons[2].position.x + 10, buttons[2].position.y + 5, defaultFontSize / 1.3, buttons[2].defaultColor);
+					DrawTextEx(mainFont, "PAUSED", { buttons[0].position.x - (screenWidth * 0.04f), 20 }, defaultFontSize, 1.0f, GREEN);
+					DrawTextEx(sideFont, "CONTINUE", { buttons[0].position.x + 10, buttons[0].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[0].defaultColor);
+					DrawTextEx(sideFont, "RESTART", { buttons[1].position.x + 8, buttons[1].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[1].defaultColor);
+					DrawTextEx(sideFont, "MENU", { buttons[2].position.x + 10, buttons[2].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[2].defaultColor);
 				}
-			}
-		}
-
-		void DrawTimer(float widthvalue1, float widthvalue2, float heightvalue1)
-		{
-			if (matchHours > 0)
-			{
-				DrawText(FormatText("%i:", matchHours), screenWidth / (widthvalue1 + 0.25), screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-			}
-
-			if (matchMinutes > 0)
-			{
-				if (matchMinutes > 9)
-				{
-					DrawText(FormatText("%i:", matchMinutes), screenWidth / widthvalue1, screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-				}
-				else
-				{
-					DrawText(FormatText("0"), screenWidth / widthvalue1, screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-					DrawText(FormatText("%i:", matchMinutes), screenWidth / (widthvalue2 + 0.15), screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-				}
-			}
-			else
-			{
-				DrawText(FormatText("00:"), screenWidth / widthvalue1, screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-			}
-
-			if (matchSeconds > 0)
-			{
-				if (matchSeconds > 9)
-				{
-					DrawText(FormatText("%i", matchSeconds), screenWidth / widthvalue2, screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-				}
-				else
-				{
-					DrawText(FormatText("0"), screenWidth / widthvalue2, screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-					DrawText(FormatText("%i", matchSeconds), screenWidth / (widthvalue2 - 0.10), screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
-				}
-			}
-			else
-			{
-				DrawText(FormatText("00"), screenWidth / widthvalue2, screenHeight / heightvalue1, defaultFontSize / 1.2, YELLOW);
 			}
 		}
 
 		void RestartPhase()
 		{
 			InitGameplayVariables();
+			player.isAlive = true;
 			buttonDistance = 0;
 			gameON = true;
 			timerON = true;
@@ -493,6 +495,7 @@ namespace Juego
 			matchMinutes = 0;
 			matchHours = 0;
 			scoreMultiplier = 5;
+			targetsLeft = 3;
 		}
 
 		bool FinishGameplayScreen()
@@ -501,14 +504,20 @@ namespace Juego
 			return isScreenFinished;
 		}
 
-		void DeInitGameplayResources()
+		void DeInitGameplayParallax()
 		{
 			for (int i = 0; i < maxLayers; i++)
 			{
 				UnloadTexture(backgroundLayers[i]);
 			}
+		}
+
+		void DeInitGameplayResources()
+		{
 			UnloadTexture(ship);
 			UnloadTexture(enemyShip);
+			UnloadTexture(pauseMenu);
+
 			#ifdef AUDIO
 			StopSound(asteroid_explode01);
 			StopSound(ship_shoot01);

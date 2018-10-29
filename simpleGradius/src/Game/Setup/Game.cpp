@@ -28,6 +28,18 @@ namespace Juego
 	int defaultFontSize = 60;
 	bool isScreenFinished;
 
+	Rectangle backgroundMenuSource;
+	Vector2 backgroundMenuOrigin;
+	Rectangle backgroundMenuDestination;
+
+	static Image backgroundMenuImage;
+	static Image backgroundMenuBrokenImage;
+	Texture2D backgroundMenu;
+	Texture2D backgroundMenuBroken;
+
+	Font mainFont;
+	Font sideFont;
+
 	#ifdef AUDIO
 
 	Sound ship_explode01;
@@ -75,9 +87,30 @@ namespace Juego
 
 		createMouse();
 
-		InitWindow(screenWidth, screenHeight, "Simple! Asteroids");
+		InitWindow(screenWidth, screenHeight, "Simple! Gradius");
+
+		mainFont = LoadFont("res/assets/fonts/bigmacca.ttf");
+		sideFont = LoadFont("res/assets/fonts/Reality_Pursuit_NC.ttf");
+
+		backgroundMenuImage = LoadImage("res/assets/textures/backgroundmenu.png");
+		ImageResize(&backgroundMenuImage, screenWidth, screenHeight);
+		backgroundMenu = LoadTextureFromImage(backgroundMenuImage);
+		UnloadImage(backgroundMenuImage);
+
+		backgroundMenuBrokenImage = LoadImage("res/assets/textures/backgroundmenubroken.png");
+		ImageResize(&backgroundMenuBrokenImage, screenWidth, screenHeight);
+		backgroundMenuBroken = LoadTextureFromImage(backgroundMenuBrokenImage);
+		UnloadImage(backgroundMenuBrokenImage);
+
+		backgroundMenuSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
+		backgroundMenuOrigin = { 0,0 };
+
 
 		resolutionBackground();
+
+		playerKeys[UP] = KEY_UP;
+		playerKeys[DOWN] = KEY_DOWN;
+		playerKeys[SHOOT] = KEY_SPACE;
 
 		#ifdef AUDIO
 		InitAudioDevice();
@@ -109,8 +142,8 @@ namespace Juego
 				{
 				case buttonQuitToMenu:
 				{
+					DeInitGameplayParallax();
 					gameScreen = Menu;
-					
 					InitMenuScreen();
 					break;
 				}
@@ -130,7 +163,7 @@ namespace Juego
 
 			if (FinishMenuScreen())
 			{
-
+				DeInitMenuResources();
 				switch (buttonOption)
 				{
 				case buttonPlay:
@@ -138,6 +171,7 @@ namespace Juego
 					#ifdef AUDIO
 					StopMusicStream(song_alert);
 					#endif
+					InitGameplayParallax();
 					RestartPhase();
 					gameScreen = Play;
 					InitGameplayScreen();
@@ -228,6 +262,7 @@ namespace Juego
 				}
 				case buttonQuitToMenu:
 				{
+					DeInitGameplayParallax();
 					gameScreen = Menu;
 					InitMenuScreen();
 					break;
@@ -268,6 +303,10 @@ namespace Juego
 		UnloadSound(button_select01);
 		CloseAudioDevice();
 #endif
+		UnloadFont(mainFont);
+		UnloadFont(sideFont);
+		UnloadTexture(backgroundMenu);
+		UnloadTexture(backgroundMenuBroken);
 		CloseWindow();
 	}
 

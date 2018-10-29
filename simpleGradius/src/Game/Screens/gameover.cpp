@@ -4,9 +4,12 @@
 #include "Screens/gameplay.h"
 #include "Setup/Player.h"
 #include "Screens/settings.h"
+#include "Setup\PlayerShoot.h"
+#include "Screens\menu.h"
 
 using namespace Juego;
 using namespace Gameplay_Section;
+using namespace Menu_Section;
 
 namespace Juego
 {
@@ -57,7 +60,7 @@ namespace Juego
 				else if (resolutionSmall) buttons[i].height = (float)screenHeight / 14.0f;
 
 				buttons[i].selected = false;
-				buttons[i].defaultColor = RED;
+				buttons[i].defaultColor = GREEN;
 				buttons[i].messageColor = BLANK;
 
 				if (resolutionNormal && !(resolutionBig)) buttonDistance = buttonDistance + 100;
@@ -153,13 +156,14 @@ namespace Juego
 				if (CheckCollisionRecs({ mouse.position.x,  mouse.position.y, mouse.width, mouse.height }, { buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height }) || buttonSelect == i)
 				{
 					buttonSelect = i;
-					buttons[i].defaultColor = WHITE;
+					buttons[i].defaultColor = GREEN;
 					buttons[i].selected = true;
 				}
 				else
 				{
-					buttons[i].defaultColor = RED;
+					buttons[i].defaultColor = DARKGREEN;
 					buttons[i].selected = false;
+					buttonSelect = -1;
 				}
 
 				if (buttonSelect != buttonSelectSaveNumber)
@@ -219,28 +223,35 @@ namespace Juego
 
 		void DrawGameOver()
 		{
+			if (player.isAlive) DrawBackground();
+			else DrawBackgroundBroken();
+			
 
 			for (int i = 0; i < maxButtons; i++)
 			{
 				DrawRectangleLines(buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height, buttons[i].defaultColor);
 			}
 
-			DrawText(FormatText("RESTART"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize / 1.3, buttons[0].defaultColor);
-			DrawText(FormatText("MENU"), buttons[1].position.x + 10, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
+			DrawTextEx(sideFont, "RESTART", { buttons[0].position.x + 10, buttons[0].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[0].defaultColor);
+			DrawTextEx(sideFont, "MENU", { buttons[1].position.x + 10, buttons[1].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[1].defaultColor);
+			//DrawText(FormatText("RESTART"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize / 1.3, buttons[0].defaultColor);
+			//DrawText(FormatText("MENU"), buttons[1].position.x + 10, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
 
-			/*if (destroyedAsteroidsCount >= (asteroidsSmallLimit + asteroidsMediumLimit + asteroidsBigLimit) && player.isAlive)
+			if (targetsLeft == 0 && player.isAlive)
 			{
-				DrawText("YOU WON!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, YELLOW);
+				DrawTextEx(mainFont, "MISSION SUCCESSFUL", { buttons[0].position.x - 220, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GOLD);
+				//DrawText("YOU WON!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, YELLOW);
 			}
 			else
 			{
-				DrawText("YOU LOST!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, RED);
-			}*/
+				DrawTextEx(mainFont, "MISSION FAILED", { buttons[0].position.x - 160, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GREEN);
+				//DrawText("YOU LOST!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, RED);
+			}
 
-			DrawText(FormatText("Final Score: %i", increasingFinalScore), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 90, defaultFontSize / 1.2, YELLOW);
-			DrawText(FormatText("Final Time:"), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 135, defaultFontSize / 1.2, YELLOW);
-			if(resolutionNormal) DrawTimer(2.2f, 1.9f, 1.45);
-			else if(resolutionSmall) DrawTimer(2.2f, 1.9f, 1.25);
+			//DrawText(FormatText("Final Score: %i", increasingFinalScore), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 90, defaultFontSize / 1.2, YELLOW);
+			//DrawText(FormatText("Final Time:"), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 135, defaultFontSize / 1.2, YELLOW);
+			//if(resolutionNormal) DrawTimer(2.2f, 1.9f, 1.45);
+			//else if(resolutionSmall) DrawTimer(2.2f, 1.9f, 1.25);
 
 			if (isExplosionActive && !(player.isAlive))
 			{

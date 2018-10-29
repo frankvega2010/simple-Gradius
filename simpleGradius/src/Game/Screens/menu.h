@@ -14,8 +14,11 @@ namespace Juego
 	{
 		void InitMenuScreen();
 		void UpdateMenuScreen();
+		void DrawBackground();
+		void DrawBackgroundBroken();
 		void DrawMenu();
 		bool FinishMenuScreen();
+		void DeInitMenuResources();
 	}
 }
 #endif // MENU_H
