@@ -28,12 +28,6 @@ namespace Juego
 	
 	static bool timerON = true;
 
-	static float matchTimer = 0.0f;
-	static int matchHours = 0;
-	static int matchMinutes = 0;
-	static int matchSeconds = 0;
-	static Color crosshairColor = WHITE;
-
 	static Rectangle pauseBoxRec;
 
 	static bool isButtonSoundPlaying = false;
@@ -264,7 +258,7 @@ namespace Juego
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && pauseButton.selected)
 			{
 				//PlaySound(button_select01);
-				crosshairColor = BLANK;
+				//crosshairColor = BLANK;
 				gamePaused = true;
 				gameON = false;
 			}
@@ -273,7 +267,7 @@ namespace Juego
 			if (gameON)
 			{
 				timerON = true;
-				crosshairColor = WHITE;
+				//crosshairColor = WHITE;
 				//HideCursor();
 				playerInput();
 			}
@@ -284,7 +278,7 @@ namespace Juego
 				if (IsKeyPressed(KEY_ESCAPE))
 				{
 					//PlaySound(button_select01);
-					crosshairColor = BLANK;
+					//crosshairColor = BLANK;
 					gamePaused = true;
 					gameON = false;
 				}
@@ -401,7 +395,7 @@ namespace Juego
 			else if (gamePaused)
 			{
 				timerON = false;
-				matchTimer = 0;
+				//matchTimer = 0;
 
 				for (int i = 0; i < maxButtons; i++)
 				{
@@ -439,7 +433,7 @@ namespace Juego
 			{
 				gameON = false;
 				timerON = false;
-				matchTimer = 0;
+				//matchTimer = 0;
 				buttonOption = buttonGameOver;
 				isScreenFinished = true;
 			}
@@ -497,9 +491,9 @@ namespace Juego
 			buttonDistance = 0;
 			gameON = true;
 			timerON = true;
-			matchSeconds = 0;
-			matchMinutes = 0;
-			matchHours = 0;
+			//matchSeconds = 0;
+			//matchMinutes = 0;
+			//matchHours = 0;
 			scoreMultiplier = 5;
 			targetsLeft = 50;
 		}

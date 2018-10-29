@@ -22,29 +22,8 @@ namespace Juego
 	static int buttonSelect = 0;
 	static Color optionColor = RED;
 
-	static bool timerON = true;
-
-	static int finalScore;
-	static float finalScoreTimer = 0;
-	static int increasingFinalScore = 0;
-
-	static float explosionTimer = 0;
-	static float increasingExplosionSize = 0;
-	static float increasingExplosionFade = 1;
-	static bool timerExplosionON = true;
-
-	static Rectangle shipExplosionSource = { 0.0f,0.0f, 60,60 };
-	static Rectangle shipExplosionSourceSmall = { 0.0f,0.0f,60/2,60/2 };
-
-	static Rectangle shipExplosionDestination;
-	static Vector2 shipExplosionOrigin = { 0,0 };
-
 	static bool isButtonSoundPlaying = false;
 	static int buttonSelectSaveNumber = 0;
-
-	static const float shipExplosionFadeAmount = 0.005;
-	static const int finalScoreIncreaseAmount = 100;
-	static const int shipMaxExplosionSize = 200;
 
 	namespace GameOver_Section
 	{
@@ -89,15 +68,6 @@ namespace Juego
 			SetSoundVolume(button_select01, soundVolume);
 			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
-
-			increasingFinalScore = 0;
-			finalScoreTimer = 0;
-
-			increasingExplosionSize = 0;
-			increasingExplosionFade = 1;
-
-			timerON = true;
-			timerExplosionON = true;
 
 			ShowCursor();
 			createGameOverButtons();
@@ -180,45 +150,6 @@ namespace Juego
 					}
 				}
 			}
-
-			if (timerON)
-			{
-				finalScoreTimer += 1 * GetFrameTime();
-			}
-
-			if (timerExplosionON)
-			{
-				explosionTimer += 1 * GetFrameTime();
-			}
-
-			if (explosionTimer > 0.01)
-			{
-				explosionTimer = 0;
-				increasingExplosionSize++;
-				increasingExplosionFade = increasingExplosionFade - shipExplosionFadeAmount;
-			}
-
-			if (finalScoreTimer > 0.08)
-			{
-				finalScoreTimer = 0;
-				increasingFinalScore = increasingFinalScore + finalScoreIncreaseAmount;
-				#ifdef AUDIO
-				PlaySound(points01);
-				#endif			
-			}
-
-			if (increasingFinalScore >= finalScore)
-			{
-				timerON = false;
-				finalScoreTimer = 0;
-				increasingFinalScore = finalScore;
-			}
-
-			if (increasingExplosionSize >= shipMaxExplosionSize)
-			{
-				timerExplosionON = false;
-				explosionTimer = 0;
-			}
 		}
 
 		void DrawGameOver()
@@ -244,13 +175,13 @@ namespace Juego
 				DrawTextEx(mainFont, "MISSION FAILED", { buttons[0].position.x - 160, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GREEN);
 			}
 
-			if (isExplosionActive && !(player.isAlive))
-			{
-				shipExplosionDestination = { player.position.x,player.position.y, increasingExplosionSize,increasingExplosionSize };
+			//if (isExplosionActive && !(player.isAlive))
+			//{
+			//	shipExplosionDestination = { player.position.x,player.position.y, increasingExplosionSize,increasingExplosionSize };
 
-				if(resolutionNormal) DrawTexturePro(shipExplosion, shipExplosionSource, shipExplosionDestination, shipExplosionOrigin, 0, Fade(WHITE, increasingExplosionFade));
-				else if(resolutionSmall ) DrawTexturePro(shipExplosion, shipExplosionSourceSmall, shipExplosionDestination, shipExplosionOrigin, 0, Fade(WHITE, increasingExplosionFade));
-			}
+			//	if(resolutionNormal) DrawTexturePro(shipExplosion, shipExplosionSource, shipExplosionDestination, shipExplosionOrigin, 0, Fade(WHITE, increasingExplosionFade));
+			//	else if(resolutionSmall ) DrawTexturePro(shipExplosion, shipExplosionSourceSmall, shipExplosionDestination, shipExplosionOrigin, 0, Fade(WHITE, increasingExplosionFade));
+			//}
 			
 		}
 

@@ -26,15 +26,12 @@ namespace Juego
 			for (int i = 0; i < maxEnemies;i++)
 			{
 				enemies[i].size = { 180, 45 };
-				//enemies[i].position = { (float)screenWidth + enemies[i].size.x, (float)screenHeight / 2 };
 				enemies[i].position.y = GetRandomValue(0, screenHeight - (enemies[i].size.y/2));
 				enemies[i].position.x = GetRandomValue((float)screenWidth + enemies[i].size.x, (float)screenWidth + (enemies[i].size.x * 10));
 				enemies[i].defaultSpeed = GetRandomValue(400,700);
 				enemies[i].isAlive = true;
 				enemies[i].inputActive = false;
 				enemies[i].textureTint = { 0, 0, 0, 0 };
-
-				//GetRandomValue((float)screenWidth + enemies[i].size.x, (float)screenWidth + enemies[i].size.x*3);
 			}
 			
 		}
