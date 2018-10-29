@@ -6,7 +6,10 @@
 
 namespace Juego
 {
+	const int maxEnemies = 5;
+
 	extern rocketShip enemy01;
+	extern rocketShip enemies[maxEnemies];
 
 	namespace Gameplay_Section
 	{

@@ -380,13 +380,18 @@ namespace Juego
 					}
 				}
 
-				if(CheckCollisionRecs({player.position.x,player.position.y,player.size.x,player.size.y}, {enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y}))
+				for (int i = 0; i < maxEnemies; i++)
 				{
-					gameON = false;
-					player.isAlive = false;
-					buttonOption = buttonGameOver;
-					isScreenFinished = true;
+					if (CheckCollisionRecs({ player.position.x,player.position.y,player.size.x,player.size.y }, { enemies[i].position.x,enemies[i].position.y,enemies[i].size.x,enemies[i].size.y }))
+					{
+						gameON = false;
+						player.isAlive = false;
+						buttonOption = buttonGameOver;
+						isScreenFinished = true;
+					}
 				}
+
+				
 
 				playerUpdate();
 				EnemyUpdate();
@@ -496,7 +501,7 @@ namespace Juego
 			matchMinutes = 0;
 			matchHours = 0;
 			scoreMultiplier = 5;
-			targetsLeft = 3;
+			targetsLeft = 50;
 		}
 
 		bool FinishGameplayScreen()

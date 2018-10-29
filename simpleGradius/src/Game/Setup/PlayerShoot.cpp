@@ -22,7 +22,7 @@ namespace Juego
 
 	int gameScore = 0;
 	int destroyedAsteroidsCount = 0;
-	int targetsLeft = 3;
+	int targetsLeft = 50;
 
 	static int midAsteroidsCount = 0;
 	static int smallAsteroidsCount = 0;
@@ -145,29 +145,34 @@ namespace Juego
 			}
 
 			// Collision logic: player-shoots vs meteors
-			for (int i = 0; i < maxShoots; i++)
+			for (int f = 0; f < maxShoots; f++)
 			{
-				if ((shoots[i].active))
-				{	
-					if (CheckCollisionRecs({ shoots[i].position.x,shoots[i].position.y,shoots[i].size.x,shoots[i].size.y }, { enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y }))
-					{
-						enemy01.isAlive = false;
-						shoots[i].active = false;
-						shoots2[i].active = false;
-						targetsLeft--;	
-					}
-				}
-
-				if ((shoots2[i].active))
+				//enemies[i]
+				for (int i = 0; i < maxEnemies; i++)
 				{
-					if (CheckCollisionRecs({ shoots2[i].position.x,shoots2[i].position.y,shoots2[i].size.x,shoots2[i].size.y }, { enemy01.position.x,enemy01.position.y,enemy01.size.x,enemy01.size.y }))
+					if ((shoots[f].active))
 					{
-						enemy01.isAlive = false;
-						shoots[i].active = false;
-						shoots2[i].active = false;
-						targetsLeft--;
+						if (CheckCollisionRecs({ shoots[f].position.x,shoots[f].position.y,shoots[f].size.x,shoots[f].size.y }, { enemies[i].position.x,enemies[i].position.y,enemies[i].size.x,enemies[i].size.y }))
+						{
+							enemies[i].isAlive = false;
+							shoots[f].active = false;
+							shoots2[f].active = false;
+							targetsLeft--;
+						}
+					}
+
+					if ((shoots2[f].active))
+					{
+						if (CheckCollisionRecs({ shoots2[f].position.x,shoots2[f].position.y,shoots2[f].size.x,shoots2[f].size.y }, { enemies[i].position.x,enemies[i].position.y,enemies[i].size.x,enemies[i].size.y }))
+						{
+							enemies[i].isAlive = false;
+							shoots[f].active = false;
+							shoots2[f].active = false;
+							targetsLeft--;
+						}
 					}
 				}
+				
 			}
 		}
 
