@@ -1,3 +1,24 @@
+## v0.5 [2018-10-28]
+### Added
+- New Sprite for enemies.
+- Customizable player controls on the Settings Screen.
+- Victory Condition.
+- The Player can now shoot the enemies.
+
+### Changed
+- Improved player sprite with 2 frames of animation.
+- Enemies now spawn in random positions and have different speed values.
+- New Improved GUI.
+- New Art.
+- "Controls" button is now "Tutorial".
+
+### Fixed
+- Fixed game crash when selecting "Controls" option on the menu.
+- Fixed wrong text display when selecting "Play" option on the menu.
+- Player collision not working with the screen borders.
+- Parallax Effect still active during pause state.
+
+
 ## v0.2 [2018-10-25]
 ### Added
 - Parallax Effect with placeholder art.
@@ -25,5 +46,6 @@
 	
 	
 ### Unreleased
-- Fix all the screens.
+- Fix all resolutions settings.
 - Delete all obsolete code.
+- Add Sounds/Music.
