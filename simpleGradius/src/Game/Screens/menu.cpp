@@ -4,6 +4,7 @@
 #include "Setup/Game.h"
 #include "Setup/Player.h"
 #include "Screens/settings.h"
+#include "Screens\gameplay.h"
 
 using namespace Juego;
 using namespace Gameplay_Section;
@@ -96,6 +97,7 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 				{
+
 					switch (i)
 					{
 					case 0:
@@ -125,6 +127,7 @@ namespace Juego
 			#ifdef AUDIO
 			UpdateMusicStream(song_alert);
 			#endif
+
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			MenuInput();
@@ -180,7 +183,6 @@ namespace Juego
 		void DrawMenu()
 		{
 			DrawBackground();
-
 			for (int i = 0; i < maxButtons; i++)
 			{
 				DrawRectangleLines(buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height, buttons[i].defaultColor);
@@ -193,6 +195,7 @@ namespace Juego
 					{
 					case 0:
 						DrawTextEx(sideFont, "Start playing!", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
+						DrawTextEx(sideFont, "New Assets will be loaded", { buttons[i].position.x, buttons[i].position.y + 50 + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
 						break;
 					case 1:
 						DrawTextEx(sideFont, "Learn how to play", { buttons[i].position.x, buttons[i].position.y + (buttons[i].position.y * 0.28f) }, defaultFontSize / 2, 0.1f, buttons[i].messageColor);
@@ -226,11 +229,11 @@ namespace Juego
 			DrawTextEx(mainFont, "SETTINGS", { buttons[2].position.x + 15, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[2].defaultColor);
 			DrawTextEx(mainFont, "CREDITS", { buttons[3].position.x + 30, buttons[3].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[3].defaultColor);
 			DrawTextEx(mainFont, "QUIT", { buttons[4].position.x + 60, buttons[4].position.y + 10 }, defaultFontSize / 1.5f, 2, buttons[4].defaultColor);
+
 		}
 
 		bool FinishMenuScreen()
 		{
-			
 			return isScreenFinished;
 		}
 

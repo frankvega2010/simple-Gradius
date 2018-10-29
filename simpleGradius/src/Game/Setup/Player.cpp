@@ -8,7 +8,6 @@
 namespace Juego
 {
 	rocketShip player;
-	//Circle collisionCircle;
 
 	static Rectangle shipSource = { 0.0f,0.0f, 150,70 };
 	static Rectangle shipDestination;

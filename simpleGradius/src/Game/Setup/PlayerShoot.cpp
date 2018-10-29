@@ -177,7 +177,7 @@ namespace Juego
 			for (int i = 0; i < maxShoots; i++)
 			{
 				if (shoots[i].active)DrawRectangle(shoots[i].position.x,shoots[i].position.y,shoots[i].size.x,shoots[i].size.y, shoots[i].color);
-				if (shoots2[i].active)DrawRectangle(shoots2[i].position.x, shoots2[i].position.y, shoots2[i].size.x, shoots2[i].size.y, shoots2[i].color);// DrawCircleV(shoots[i].position, shoots[i].radius, WHITE);
+				if (shoots2[i].active)DrawRectangle(shoots2[i].position.x, shoots2[i].position.y, shoots2[i].size.x, shoots2[i].size.y, shoots2[i].color);
 			}
 		}
 	}

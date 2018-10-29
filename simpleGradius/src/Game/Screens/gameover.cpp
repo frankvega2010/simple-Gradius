@@ -234,24 +234,15 @@ namespace Juego
 
 			DrawTextEx(sideFont, "RESTART", { buttons[0].position.x + 10, buttons[0].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[0].defaultColor);
 			DrawTextEx(sideFont, "MENU", { buttons[1].position.x + 10, buttons[1].position.y + 5 }, defaultFontSize / 1.3, 1.0f, buttons[1].defaultColor);
-			//DrawText(FormatText("RESTART"), buttons[0].position.x + 10, buttons[0].position.y + 5, defaultFontSize / 1.3, buttons[0].defaultColor);
-			//DrawText(FormatText("MENU"), buttons[1].position.x + 10, buttons[1].position.y + 5, defaultFontSize / 1.3, buttons[1].defaultColor);
 
 			if (targetsLeft == 0 && player.isAlive)
 			{
 				DrawTextEx(mainFont, "MISSION SUCCESSFUL", { buttons[0].position.x - 220, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GOLD);
-				//DrawText("YOU WON!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, YELLOW);
 			}
 			else
 			{
 				DrawTextEx(mainFont, "MISSION FAILED", { buttons[0].position.x - 160, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GREEN);
-				//DrawText("YOU LOST!", buttons[0].position.x, buttons[0].position.y - 60, defaultFontSize / 1.2, RED);
 			}
-
-			//DrawText(FormatText("Final Score: %i", increasingFinalScore), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 90, defaultFontSize / 1.2, YELLOW);
-			//DrawText(FormatText("Final Time:"), buttons[0].position.x - (screenWidth * 0.02), buttons[1].position.y + 135, defaultFontSize / 1.2, YELLOW);
-			//if(resolutionNormal) DrawTimer(2.2f, 1.9f, 1.45);
-			//else if(resolutionSmall) DrawTimer(2.2f, 1.9f, 1.25);
 
 			if (isExplosionActive && !(player.isAlive))
 			{

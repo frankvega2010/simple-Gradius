@@ -442,7 +442,6 @@ namespace Juego
 
 		void DrawGameplay()
 		{
-
 			for (int i = maxLayers - 1; i >= 0; i--)
 			{
 				if (i == 1)
@@ -453,9 +452,11 @@ namespace Juego
 			}
 			DrawTexturePro(backgroundOpacity, backgroundGameSource, backgroundGameDestinationLayers[0], backgroundGameOrigin, 0, WHITE);
 
+
+			shootDraw();
 			playerDraw();
 			EnemyDraw();
-			shootDraw();
+			
 
 			DrawRectangleLines(pauseButton.position.x, pauseButton.position.y, pauseButton.width, pauseButton.height, pauseButton.defaultColor);
 

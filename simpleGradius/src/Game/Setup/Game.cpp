@@ -290,6 +290,7 @@ namespace Juego
 		case Credits: Credits_Section::DrawCredits(); break;
 		case Settings: Settings_Section::DrawSettings(); break;
 		}
+
 		
 		EndDrawing();
 	}
