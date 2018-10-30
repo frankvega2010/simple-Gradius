@@ -168,11 +168,11 @@ namespace Juego
 
 			if (targetsLeft == 0 && player.isAlive)
 			{
-				DrawTextEx(mainFont, "MISSION SUCCESSFUL", { buttons[0].position.x - 220, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GOLD);
+				DrawTextEx(mainFont, "MISSION SUCCESSFUL", { buttons[0].position.x - screenWidth/5.0f, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GOLD);
 			}
 			else
 			{
-				DrawTextEx(mainFont, "MISSION FAILED", { buttons[0].position.x - 160, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GREEN);
+				DrawTextEx(mainFont, "MISSION FAILED", { buttons[0].position.x - screenWidth / 10.0f, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GREEN);
 			}
 
 			//if (isExplosionActive && !(player.isAlive))

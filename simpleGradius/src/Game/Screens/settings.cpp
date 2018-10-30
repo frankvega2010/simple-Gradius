@@ -45,7 +45,7 @@ namespace Juego
 	static const int maxButtonsRight = 4;
 	static const int maxSliders = 2;
 
-	static const int resolutionSettingsFontSize = defaultFontSize / 1.25f;
+	static int resolutionSettingsFontSize = defaultFontSize / 1.25f;
 
 
 	static Buttons buttonsSettings[maxButtons];
@@ -53,6 +53,12 @@ namespace Juego
 	static int buttonSelect = 0;
 	static int buttonDistanceSettings = 0;
 	static int buttonDistanceKeys = 0;
+
+	int resolutionPositionFix = 0;
+	int gameTitleSizeFix = 0;
+	bool is800x600ResActive = false;
+	bool is1920x1080ResActive = false;
+	bool is1600x900ResActive = false;
 
 	static bool assignKeyUp = false;
 	static bool assignKeyDown = false;
@@ -133,7 +139,21 @@ namespace Juego
 					buttonsSettings[i].position.x = (float)screenWidth / 3.3f + buttonDistanceKeys;
 					buttonsSettings[i].position.y = (float)screenHeight / 1.35f;
 					buttonsSettings[i].width = (float)screenWidth / 5.0f;
-					buttonDistanceKeys = buttonDistanceKeys + 300;
+					if (resolutionNormal && !(resolutionBig))
+					{
+						if(is1600x900ResActive) buttonDistanceKeys = buttonDistanceKeys + 360;
+						else buttonDistanceKeys = buttonDistanceKeys + 300;
+					}
+					else if (resolutionSmall)
+					{
+						if(is800x600ResActive) buttonDistanceKeys = buttonDistanceKeys + 170;//170
+						else buttonDistanceKeys = buttonDistanceKeys + 220;//170
+					}
+					else if (resolutionBig && resolutionNormal)
+					{
+						if (is1920x1080ResActive) buttonDistanceKeys = buttonDistanceKeys + 400;
+						else buttonDistanceKeys = buttonDistanceKeys + 350;
+					}
 				}
 
 
@@ -178,6 +198,9 @@ namespace Juego
 
 		static void ChangeResolutionSmall(int screenW,int screenH)
 		{
+			resolutionPositionFix = 0;
+			buttonDistanceSettings = 0;
+			buttonDistanceKeys = 0;
 			resolutionSmall = true;
 			resolutionNormal = false;
 			resolutionBig = false;
@@ -185,6 +208,17 @@ namespace Juego
 			screenHeight = screenH;
 			resolutionBackground();
 			defaultFontSize = 60 / 1.6;
+			resolutionSettingsFontSize = defaultFontSize / 1.3f;
+			if (is800x600ResActive)
+			{
+				gameTitleSizeFix = 5;
+				resolutionControlsFontSize = defaultFontSize / 2.2f;
+			}
+			else
+			{
+				gameTitleSizeFix = 0;
+				resolutionControlsFontSize = defaultFontSize / 1.8f;
+			}
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
 			checkAsteroidSprite();
@@ -192,6 +226,10 @@ namespace Juego
 
 		static void ChangeResolutionNormal(int screenW, int screenH)
 		{
+			//is800x600ResActive = false;
+			resolutionPositionFix = 0;
+			buttonDistanceSettings = 0;
+			buttonDistanceKeys = 0;
 			resolutionSmall = false;
 			resolutionNormal = true;
 			resolutionBig = false;
@@ -199,6 +237,8 @@ namespace Juego
 			screenHeight = screenH;
 			resolutionBackground();
 			defaultFontSize = 60;
+			resolutionSettingsFontSize = defaultFontSize / 1.25f;
+			resolutionControlsFontSize = defaultFontSize / 2.2f;
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
 			checkAsteroidSprite();
@@ -206,13 +246,19 @@ namespace Juego
 
 		static void ChangeResolutionBig(int screenW, int screenH)
 		{
+			//is800x600ResActive = false;
+			resolutionPositionFix = 30;
+			buttonDistanceSettings = 0;
+			buttonDistanceKeys = 0;
 			resolutionSmall = false;
 			resolutionNormal = true;
 			resolutionBig = true;
 			screenWidth = screenW;
 			screenHeight = screenH;
 			resolutionBackground();
-			defaultFontSize = 60;
+			defaultFontSize = 70;
+			resolutionSettingsFontSize = defaultFontSize / 1.25f;
+			resolutionControlsFontSize = defaultFontSize / 2.2f;
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
 			checkAsteroidSprite();
@@ -318,24 +364,31 @@ namespace Juego
 					switch (i)
 					{
 					case 0:
+						is1920x1080ResActive = true;
 						ChangeResolutionBig(1920, 1080);
 						break;
 					case 1:
+						is1920x1080ResActive = false;
 						ChangeResolutionBig(1680, 1050);
 						break;
 					case 2:
+						is1600x900ResActive = true;
 						ChangeResolutionNormal(1600, 900);
 						break;
 					case 3:
+						is1600x900ResActive = false;
 						ChangeResolutionNormal(1440, 900);
 						break;
 					case 4:
+						is1600x900ResActive = false;
 						ChangeResolutionNormal(1300, 800);
 						break;
 					case 5:
+						is800x600ResActive = false;
 						ChangeResolutionSmall(1024, 768);
 						break;
 					case 6:
+						is800x600ResActive = true;
 						ChangeResolutionSmall(800, 600);
 						break;
 					case 7:
@@ -462,7 +515,7 @@ namespace Juego
 			DrawTextEx(sideFont, FormatText("%f", soundVolume), { effectsLine.PosStart.x + 100, effectsLine.PosStart.y + 50 }, resolutionSettingsFontSize, 1.0f, volumeSliders[Effects].color);
 
 
-			DrawTextEx(sideFont, "PLAYER CONTROLS CONFIG", { buttonsSettings[8].position.x + 120, buttonsSettings[8].position.y - 50 }, defaultFontSize / 1.5f, 1.0f, GREEN);
+			DrawTextEx(sideFont, "PLAYER CONTROLS CONFIG", { buttonsSettings[8].position.x + 120, buttonsSettings[8].position.y - 40 - resolutionPositionFix }, defaultFontSize / 1.5f, 1.0f, GREEN);
 			
 			for (int i = 0; i < MAX; i++)
 			{
@@ -489,11 +542,11 @@ namespace Juego
 				}
 			}
 
-			DrawTextEx(sideFont, "MOVE UP", { buttonsSettings[8].position.x + 35, buttonsSettings[8].position.y + 70 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[8].defaultColor);
-			DrawTextEx(sideFont, "MOVE DOWN", { buttonsSettings[9].position.x + 5, buttonsSettings[9].position.y + 70 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[9].defaultColor);
-			DrawTextEx(sideFont, "SHOOT", { buttonsSettings[10].position.x + 60, buttonsSettings[10].position.y + 70 }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[10].defaultColor);
+			DrawTextEx(sideFont, "MOVE UP", { buttonsSettings[8].position.x + 35, buttonsSettings[8].position.y + 70 + resolutionPositionFix }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[8].defaultColor);
+			DrawTextEx(sideFont, "MOVE DOWN", { buttonsSettings[9].position.x + 5, buttonsSettings[9].position.y + 70 + resolutionPositionFix }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[9].defaultColor);
+			DrawTextEx(sideFont, "SHOOT", { buttonsSettings[10].position.x + 60, buttonsSettings[10].position.y + 70 + resolutionPositionFix }, defaultFontSize / 1.5f, 1.0f, buttonsSettings[10].defaultColor);
 
-			DrawTextEx(sideFont, "ONLY UPPERCASE", { buttonsSettings[8].position.x + 200, buttonsSettings[8].position.y + 120 }, defaultFontSize / 1.5f, 1.0f, GREEN);
+			DrawTextEx(sideFont, "ONLY UPPERCASE", { buttonsSettings[8].position.x + 200, buttonsSettings[8].position.y + 100 + resolutionPositionFix }, defaultFontSize / 1.5f, 1.0f, GREEN);
 		}
 
 		bool FinishSettingsScreen()

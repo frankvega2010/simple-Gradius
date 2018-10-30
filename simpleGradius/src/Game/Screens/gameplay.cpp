@@ -94,16 +94,9 @@ namespace Juego
 			pauseButton.position.y = (float)screenHeight / 14.0f;
 			pauseButton.width = (float)screenWidth / 18.0f;
 
-			if (resolutionNormal)
-			{
-				pauseBoxRec = { buttons[0].position.x - (screenWidth / 50), buttons[0].position.y - (screenHeight / 30), (float)screenWidth / 4.2f, (float)screenHeight / 2.5f };
-				pauseButton.height = (float)screenHeight / 12.0f;
-			}
-			else if (resolutionSmall)
-			{
-				pauseBoxRec = { buttons[0].position.x - (screenWidth / 50), buttons[0].position.y - (screenHeight / 30), (float)screenWidth / 4.2f, (float)screenHeight / 3.3f };
-				pauseButton.height = (float)screenHeight / 14.0f;
-			}
+
+			pauseBoxRec = { buttons[0].position.x - (screenWidth / 50), buttons[0].position.y - (screenHeight / 30), (float)screenWidth / 4.2f, (float)screenHeight / 2.5f };
+			pauseButton.height = (float)screenHeight / 12.0f;
 
 			pauseButton.selected = false;
 			pauseButton.defaultColor = DARKGREEN;
@@ -123,8 +116,6 @@ namespace Juego
 
 		void InitGameplayParallax()
 		{
-			if (resolutionNormal)
-			{
 				backgroundLayer1Image = LoadImage("res/assets/textures/background_layer1v2.png");
 				ImageResize(&backgroundLayer1Image, screenWidth * 2, screenHeight);
 				backgroundLayers[0] = LoadTextureFromImage(backgroundLayer1Image);
@@ -202,10 +193,7 @@ namespace Juego
 
 				backgroundGameSource = { 0.0f,0.0f, (float)screenWidth * 2,(float)screenHeight };
 				backgroundGameOrigin = { 0,0 };
-			}
-			else if (resolutionSmall)
-			{
-			}
+
 		}
 
 		void InitGameplayScreen()
@@ -231,6 +219,21 @@ namespace Juego
 			}
 			else if (resolutionSmall)
 			{
+				shipImage = LoadImage("res/assets/textures/player_ship01v2.png");
+				ImageResize(&shipImage, 300/1.5f, 70/1.5f);// 150 70
+				ship = LoadTextureFromImage(shipImage);
+
+				enemyShipImage = LoadImage("res/assets/textures/enemy01.png");
+				ImageResize(&enemyShipImage, 180 / 1.5f, 70 / 1.5f);
+				enemyShip = LoadTextureFromImage(enemyShipImage);
+
+				pauseMenuImage = LoadImage("res/assets/textures/pausemenu.png");
+				ImageResize(&pauseMenuImage, pauseBoxRec.width, pauseBoxRec.height);
+				pauseMenu = LoadTextureFromImage(pauseMenuImage);
+
+				UnloadImage(pauseMenuImage);
+				UnloadImage(shipImage);
+				UnloadImage(enemyShipImage);
 			}
 			//InitGameplayParallax();
 
@@ -471,7 +474,11 @@ namespace Juego
 			{
 				if (gamePaused)
 				{
-					DrawTexturePro(pauseMenu, { 0, 0, (float)screenWidth / 4.2f, (float)screenHeight / 2.5f }, pauseBoxRec, { 0,0 }, 0, WHITE);
+					//pauseBoxRec = { buttons[0].position.x - (screenWidth / 50), buttons[0].position.y - (screenHeight / 30), (float)screenWidth / 4.2f, (float)screenHeight / 2.5f };
+					//((float)screenWidth / 4.2f)/(1.5f), ((float)screenHeight / 3.3f)/ (1.5f)
+					if(resolutionNormal) DrawTexturePro(pauseMenu, { 0, 0, (float)screenWidth / 4.2f, (float)screenHeight / 2.5f }, pauseBoxRec, { 0,0 }, 0, WHITE);
+					else if(resolutionSmall) DrawTexturePro(pauseMenu, { 0, 0, (float)screenWidth / 4.2f, (float)screenHeight / 2.5f }, pauseBoxRec, { 0,0 }, 0, WHITE);
+					
 					for (int i = 0; i < maxButtons; i++)
 					{
 						DrawRectangleLines(buttons[i].position.x, buttons[i].position.y, buttons[i].width, buttons[i].height, buttons[i].defaultColor);
@@ -495,7 +502,7 @@ namespace Juego
 			//matchMinutes = 0;
 			//matchHours = 0;
 			scoreMultiplier = 5;
-			targetsLeft = 50;
+			targetsLeft = 50; // 50
 		}
 
 		bool FinishGameplayScreen()

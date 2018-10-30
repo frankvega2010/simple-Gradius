@@ -20,8 +20,16 @@ namespace Juego
 		void createPlayer()
 		{
 			player.position = { (float)screenWidth / 30, (float)screenHeight / 2 };
-			player.size = { 150, 50 };
-			player.defaultSpeed = 500.0f;
+			if (resolutionNormal) 
+			{
+				player.size = { 150, 50 };
+				player.defaultSpeed = 500.0f;
+			}
+			else if (resolutionSmall) 
+			{
+				player.size = { 150 / 1.5f, 50 / 1.5f };
+				player.defaultSpeed = 500.0f / 1.5f;
+			}
 			player.isAlive = true;
 			player.inputActive = false;
 			player.rotation = 0;
@@ -88,16 +96,21 @@ namespace Juego
 
 		void playerDraw()
 		{
-			shipDestination = { player.position.x,player.position.y, 150,70 };
-			
-			DrawRectangle(player.position.x, player.position.y, player.size.x, player.size.y, player.textureTint);
-			DrawTexturePro(ship, shipSource, shipDestination, shipOrigin, player.rotation, WHITE);
-
 			if (resolutionNormal)
 			{
+				shipSource = { 0.0f,0.0f, 150,70 };
+				shipDestination = { player.position.x,player.position.y, 150,70 };
+
+				DrawRectangle(player.position.x, player.position.y, player.size.x, player.size.y, player.textureTint);
+				DrawTexturePro(ship, shipSource, shipDestination, shipOrigin, player.rotation, WHITE);
 			}
 			else if (resolutionSmall)
 			{
+				shipSource = { 0.0f,0.0f, 150 / 1.5f,70 / 1.5f };
+				shipDestination = { player.position.x,player.position.y, 150 / 1.5f,70 / 1.5f };
+
+				DrawRectangle(player.position.x, player.position.y, player.size.x, player.size.y, player.textureTint);
+				DrawTexturePro(ship, shipSource, shipDestination, shipOrigin, player.rotation, WHITE);
 			}
 
 			if (player.inputActive)

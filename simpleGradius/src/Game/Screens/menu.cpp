@@ -38,7 +38,21 @@ namespace Juego
 				{
 					buttons[i].position.x = (float)screenWidth / 3.5f + buttonDistanceBelow; //3.8f
 					buttons[i].position.y = (float)screenHeight / 1.8f;
-					buttonDistanceBelow = buttonDistanceBelow + 300;
+					if (resolutionNormal && !(resolutionBig))
+					{
+						if (is1600x900ResActive)buttonDistanceBelow = buttonDistanceBelow + 400;
+						else buttonDistanceBelow = buttonDistanceBelow + 300;
+					}
+					else if (resolutionSmall)
+					{
+						if (is800x600ResActive)buttonDistance = buttonDistanceBelow = buttonDistanceBelow + 200;
+						else buttonDistance = buttonDistanceBelow = buttonDistanceBelow + 250;
+					}
+					else if (resolutionBig && resolutionNormal)
+					{
+						buttonDistanceBelow = buttonDistanceBelow + 400;
+					}
+					
 				}
 				
 				buttons[i].width = (float)screenWidth / 5.0f;
@@ -51,9 +65,21 @@ namespace Juego
 				buttons[i].messageColor = BLANK;
 				
 				
-				if (resolutionNormal && !(resolutionBig)) buttonDistance = buttonDistance + 300;
-				else if (resolutionSmall) buttonDistance = buttonDistance + 60;
-				else if (resolutionBig && resolutionNormal) buttonDistance = buttonDistance + 125;
+				if (resolutionNormal && !(resolutionBig))
+				{
+					if (is1600x900ResActive)buttonDistance = buttonDistance + 400;
+					else buttonDistance = buttonDistance + 300;
+				}//buttonDistance = buttonDistance + 300;
+				else if (resolutionSmall)
+				{
+					if (is800x600ResActive)buttonDistance = buttonDistance + 200;
+					else buttonDistance = buttonDistance + 250;
+				}
+				else if (resolutionBig && resolutionNormal)
+				{
+					buttonDistance = buttonDistance + 400;
+				}
+				//else if (resolutionBig && resolutionNormal) buttonDistance = buttonDistance + 400;
 			}
 		}
 
@@ -167,14 +193,18 @@ namespace Juego
 
 		void DrawBackground()
 		{
+			backgroundMenuSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
 			backgroundMenuDestination = { 0,0, (float)screenWidth,(float)screenHeight };
+			backgroundMenuOrigin = { 0,0 };
 
 			DrawTexturePro(backgroundMenu, backgroundMenuSource, backgroundMenuDestination, backgroundMenuOrigin, 0, WHITE);		
 		}
 
 		void DrawBackgroundBroken()
 		{
+			backgroundMenuSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
 			backgroundMenuDestination = { 0,0, (float)screenWidth,(float)screenHeight };
+			backgroundMenuOrigin = { 0,0 };
 
 			DrawTexturePro(backgroundMenuBroken, backgroundMenuSource, backgroundMenuDestination, backgroundMenuOrigin, 0, WHITE);
 
@@ -224,11 +254,11 @@ namespace Juego
 			DrawTextEx(mainFont, "Simple Gradius", { buttons[0].position.x - 80, screenHeight / 10.0f }, defaultFontSize + 20.0f, 2, RAYWHITE);
 			DrawTextEx(sideFont, "By frankvega", { buttons[0].position.x * 3.4f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
 			DrawTextEx(sideFont, "Version 0.5", { buttons[0].position.x - 80, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
-			DrawTextEx(mainFont, "PLAY", { buttons[0].position.x + 40, buttons[0].position.y + 10 }, defaultFontSize/1.5f, 2, buttons[0].defaultColor);
+			DrawTextEx(mainFont, "PLAY", { buttons[0].position.x + 20, buttons[0].position.y + 10 }, defaultFontSize/1.5f, 2, buttons[0].defaultColor);
 			DrawTextEx(mainFont, "TUTORIAL", { buttons[1].position.x + 5, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[1].defaultColor);
 			DrawTextEx(mainFont, "SETTINGS", { buttons[2].position.x + 15, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[2].defaultColor);
 			DrawTextEx(mainFont, "CREDITS", { buttons[3].position.x + 30, buttons[3].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[3].defaultColor);
-			DrawTextEx(mainFont, "QUIT", { buttons[4].position.x + 60, buttons[4].position.y + 10 }, defaultFontSize / 1.5f, 2, buttons[4].defaultColor);
+			DrawTextEx(mainFont, "QUIT", { buttons[4].position.x + 30, buttons[4].position.y + 10 }, defaultFontSize / 1.5f, 2, buttons[4].defaultColor);
 
 		}
 

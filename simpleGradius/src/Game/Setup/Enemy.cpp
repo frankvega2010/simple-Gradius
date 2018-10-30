@@ -15,7 +15,7 @@ namespace Juego
 	static Rectangle enemyShipSource = { 0.0f,0.0f, 180,70 };
 	static Rectangle enemyShipDestination;
 
-	static Rectangle enemyShipDestinations[maxEnemies];
+	//static Rectangle enemyShipDestinations[maxEnemies];
 
 	static Vector2 enemyShipOrigin = { 0,15 };
 
@@ -25,10 +25,18 @@ namespace Juego
 		{
 			for (int i = 0; i < maxEnemies;i++)
 			{
-				enemies[i].size = { 180, 45 };
+				if (resolutionNormal) 
+				{
+					enemies[i].defaultSpeed = GetRandomValue(400, 700);
+					enemies[i].size = { 180, 45 };
+				}
+				else if (resolutionSmall) 
+				{
+					enemies[i].defaultSpeed = GetRandomValue(400 / 1.5f, 700 / 1.5f);
+					enemies[i].size = { 180 / 1.5f, 45 / 1.5f };
+				}
 				enemies[i].position.y = GetRandomValue(0, screenHeight - (enemies[i].size.y/2));
-				enemies[i].position.x = GetRandomValue((float)screenWidth + enemies[i].size.x, (float)screenWidth + (enemies[i].size.x * 10));
-				enemies[i].defaultSpeed = GetRandomValue(400,700);
+				enemies[i].position.x = GetRandomValue((float)screenWidth, (float)screenWidth + (enemies[i].size.x * 10));
 				enemies[i].isAlive = true;
 				enemies[i].inputActive = false;
 				enemies[i].textureTint = { 0, 0, 0, 0 };
@@ -55,7 +63,16 @@ namespace Juego
 		{
 			for (int i = 0; i < maxEnemies; i++)
 			{
-				enemyShipDestination = { enemies[i].position.x,enemies[i].position.y, 180,70 };
+				if(resolutionNormal)
+				{
+					enemyShipSource = { 0.0f,0.0f, 180,70 };
+					enemyShipDestination = { enemies[i].position.x,enemies[i].position.y, 180,70 };
+				}
+				else if (resolutionSmall)
+				{
+					enemyShipSource = { 0.0f,0.0f, 180/1.5f,70 / 1.5f };
+					enemyShipDestination = { enemies[i].position.x,enemies[i].position.y, 180 / 1.5f,70 / 1.5f };
+				}
 
 				if (enemies[i].isAlive)
 				{

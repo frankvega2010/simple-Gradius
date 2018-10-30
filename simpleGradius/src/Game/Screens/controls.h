@@ -4,6 +4,7 @@
 namespace Juego
 {
 	const int buttonGoMenu = 12;
+	extern int resolutionControlsFontSize;
 
 	namespace Controls_Section
 	{

@@ -6,6 +6,11 @@ namespace Juego
 	extern bool resolutionNormal;
 	extern bool resolutionBig;
 
+	extern int resolutionPositionFix;
+	extern int gameTitleSizeFix;
+	extern bool is800x600ResActive;
+	extern bool is1920x1080ResActive;
+	extern bool is1600x900ResActive;
 	extern float songVolume;
 	extern float soundVolume;
 

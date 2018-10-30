@@ -162,7 +162,7 @@ namespace Juego
 				}
 			}
 
-			DrawTextEx(mainFont, "Simple Gradius", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 10.0f }, defaultFontSize + 20.0f, 2, RAYWHITE);
+			DrawTextEx(mainFont, "Simple Gradius", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 10.0f }, defaultFontSize + 20.0f - gameTitleSizeFix, 2, RAYWHITE);
 			DrawTextEx(sideFont, "Version 0.5", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
 
 			if (!moreCredits)
@@ -190,7 +190,7 @@ namespace Juego
 
 
 				DrawTextEx(mainFont, "Testers", { (float)screenWidth / 2.6f, screenHeight / 1.7f }, defaultFontSize / 1.5, 2, WHITE);
-				DrawTextEx(sideFont, "default name", { (float)screenWidth / 2.8f, screenHeight / 1.57f }, defaultFontSize / 1.5, 2, GREEN);
+				DrawTextEx(sideFont, "Dylan Piserchia", { (float)screenWidth / 2.8f, screenHeight / 1.57f }, defaultFontSize / 1.5, 2, GREEN);
 			}
 
 			DrawTextEx(mainFont, "MENU", { buttons[0].position.x + 35, buttons[0].position.y + 10 }, defaultFontSize / 1.5f, 2, buttons[0].defaultColor);

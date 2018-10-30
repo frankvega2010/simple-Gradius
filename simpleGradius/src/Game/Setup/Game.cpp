@@ -66,6 +66,15 @@ namespace Juego
 
 	void resolutionBackground()
 	{
+		backgroundMenuBrokenImage = LoadImage("res/assets/textures/backgroundmenubroken.png");
+		ImageResize(&backgroundMenuBrokenImage, screenWidth, screenHeight);
+		backgroundMenuBroken = LoadTextureFromImage(backgroundMenuBrokenImage);
+		UnloadImage(backgroundMenuBrokenImage);
+
+		backgroundMenuImage = LoadImage("res/assets/textures/backgroundmenu.png");
+		ImageResize(&backgroundMenuImage, screenWidth, screenHeight);
+		backgroundMenu = LoadTextureFromImage(backgroundMenuImage);
+		UnloadImage(backgroundMenuImage);
 	}
 
 	void checkAsteroidSprite()
@@ -91,20 +100,6 @@ namespace Juego
 
 		mainFont = LoadFont("res/assets/fonts/bigmacca.ttf");
 		sideFont = LoadFont("res/assets/fonts/Reality_Pursuit_NC.ttf");
-
-		backgroundMenuImage = LoadImage("res/assets/textures/backgroundmenu.png");
-		ImageResize(&backgroundMenuImage, screenWidth, screenHeight);
-		backgroundMenu = LoadTextureFromImage(backgroundMenuImage);
-		UnloadImage(backgroundMenuImage);
-
-		backgroundMenuBrokenImage = LoadImage("res/assets/textures/backgroundmenubroken.png");
-		ImageResize(&backgroundMenuBrokenImage, screenWidth, screenHeight);
-		backgroundMenuBroken = LoadTextureFromImage(backgroundMenuBrokenImage);
-		UnloadImage(backgroundMenuBrokenImage);
-
-		backgroundMenuSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
-		backgroundMenuOrigin = { 0,0 };
-
 
 		resolutionBackground();
 
@@ -273,7 +268,6 @@ namespace Juego
 		break;
 		}
 	}
-
 
 	static void Draw()
 	{

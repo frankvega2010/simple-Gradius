@@ -37,8 +37,17 @@ namespace Juego
 			{
 				shoots[i].position.x = 0;
 				shoots[i].position.y = 0;
-				shoots[i].size.x = 60;
-				shoots[i].size.y = 5;
+				if (resolutionNormal)
+				{
+					shoots[i].size.x = 60;
+					shoots[i].size.y = 5;
+				}
+				else if (resolutionSmall)
+				{
+					shoots[i].size.x = 60 / 1.5f;
+					shoots[i].size.y = 5 / 1.5f;
+				}
+				
 				shoots[i].speed.x = 0;
 				shoots[i].speed.y = 0;
 				shoots[i].color = GREEN;
@@ -46,8 +55,16 @@ namespace Juego
 
 				shoots2[i].position.x = 0;
 				shoots2[i].position.y = 0;
-				shoots2[i].size.x = 60;
-				shoots2[i].size.y = 5;
+				if (resolutionNormal)
+				{
+					shoots2[i].size.x = 60;
+					shoots2[i].size.y = 5;
+				}
+				else if (resolutionSmall)
+				{
+					shoots2[i].size.x = 60 / 1.5f;
+					shoots2[i].size.y = 5 / 1.5f;
+				}
 				shoots2[i].speed.x = 0;
 				shoots2[i].speed.y = 0;
 				shoots2[i].color = GREEN;
@@ -85,17 +102,21 @@ namespace Juego
 								shoots[i].speed.y = 2.0*player.defaultSpeed;
 								shoots2[i].speed.x = 2.0*player.defaultSpeed;
 								shoots2[i].speed.y = 2.0*player.defaultSpeed;
-							}/*
+							}
 							else if (resolutionSmall)
 							{
-								shoots[i].speed.x = 1.5*sin(player.rotation)*player.defaultSpeed;
-								shoots[i].speed.y = 1.5*cos(player.rotation)*player.defaultSpeed;
+								shoots[i].speed.x = 1.5*player.defaultSpeed;
+								shoots[i].speed.y = 1.5*player.defaultSpeed;
+								shoots2[i].speed.x = 1.5*player.defaultSpeed;
+								shoots2[i].speed.y = 1.5*player.defaultSpeed;
 							}
 							else if (resolutionNormal && resolutionBig)
 							{
-								shoots[i].speed.x = 2.5*sin(player.rotation)*player.defaultSpeed;
-								shoots[i].speed.y = 2.5*cos(player.rotation)*player.defaultSpeed;
-							}*/
+								shoots[i].speed.x = 2.5*player.defaultSpeed;
+								shoots[i].speed.y = 2.5*player.defaultSpeed;
+								shoots2[i].speed.x = 2.5*player.defaultSpeed;
+								shoots2[i].speed.y = 2.5*player.defaultSpeed;
+							}
 							
 							//shoots[i].rotation = player.rotation;
 							rapidFireTimer = 0;

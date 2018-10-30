@@ -24,7 +24,7 @@ namespace Juego
 	static int buttonDistanceControlsKeys = 0;
 
 	static bool moreControls = false;
-	static const int resolutionControlsFontSize = defaultFontSize / 2.2f;
+	int resolutionControlsFontSize = defaultFontSize / 2.2f;
 
 	static bool isButtonSoundPlaying = false;
 	static int buttonSelectSaveNumber = 0;
@@ -193,12 +193,15 @@ namespace Juego
 				DrawTextEx(sideFont, "the designated amount of targets.", { screenWidth / 18.0f, screenHeight / 5.0f }, defaultFontSize / 1.8, 1.0f, GREEN);
 
 				DrawTextEx(mainFont, "Enemies", { screenWidth / 18.0f,screenHeight / 3.0f }, defaultFontSize/1.5f, 1.0f, WHITE);
-				DrawTextEx(sideFont, "You will be facing slow and fast enemies,", { screenWidth / 18.0f, screenHeight / 2.5f }, defaultFontSize / 1.8, 1.0f, GREEN);
-				DrawTextEx(sideFont, "some of them may shoot back at you.", { screenWidth / 18.0f, screenHeight / 2.2f }, defaultFontSize / 1.8, 1.0f, GREEN);
+				DrawTextEx(sideFont, "You will be facing slow and fast enemies.", { screenWidth / 18.0f, screenHeight / 2.5f }, defaultFontSize / 1.8, 1.0f, GREEN);
 				DrawTextEx(sideFont, "We haven't located any enemy Commander yet....", { screenWidth / 18.0f, screenHeight / 1.9f }, defaultFontSize / 1.8, 1.0f, GREEN);
 			}
 			else
 			{
+				backgroundMenuSource = { 0.0f,0.0f, (float)screenWidth,(float)screenHeight };
+				backgroundMenuDestination = { 0,0, (float)screenWidth,(float)screenHeight };
+				backgroundMenuOrigin = { 0,0 };
+
 				DrawTexturePro(controlScheme, backgroundMenuSource, backgroundMenuDestination, backgroundMenuOrigin, 0, WHITE);
 				for (int i = 2; i < maxButtonsControls; i++)
 				{
