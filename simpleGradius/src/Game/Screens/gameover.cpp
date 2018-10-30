@@ -59,14 +59,14 @@ namespace Juego
 			
 
 			#ifdef AUDIO
-			ship_explode01 = LoadSound("res/sounds/ship_explode01fix.wav");
-			SetSoundVolume(ship_explode01, soundVolume);
-			PlaySound(ship_explode01);
+			//ship_explode01 = LoadSound("res/sounds/ship_explode01fix.wav");
+			//SetSoundVolume(ship_explode01, soundVolume);
+			//PlaySound(ship_explode01);
 
-			points01 = LoadSound("res/sounds/points01.wav");
-			SetSoundVolume(points01, soundVolume);
-			SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);
+			//points01 = LoadSound("res/sounds/points01.wav");
+			//SetSoundVolume(points01, soundVolume);
+			//SetSoundVolume(button_select01, soundVolume);
+			//SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			ShowCursor();
@@ -194,10 +194,10 @@ namespace Juego
 		void DeInitGameOverResources()
 		{
 			#ifdef AUDIO
-			StopSound(points01);
-			StopSound(ship_explode01);
-			UnloadSound(ship_explode01);
-			UnloadSound(points01);
+			//StopSound(points01);
+			//StopSound(ship_explode01);
+			//UnloadSound(ship_explode01);
+			//UnloadSound(points01);
 			#endif
 		}
 	}

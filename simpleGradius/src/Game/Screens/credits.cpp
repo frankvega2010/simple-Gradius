@@ -48,8 +48,8 @@ namespace Juego
 		void InitCreditsScreen()
 		{
 			#ifdef AUDIO
-			SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);
+			/*SetSoundVolume(button_select01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);*/
 			#endif
 
 			createCreditsButtons();
@@ -103,7 +103,7 @@ namespace Juego
 		void UpdateCreditsScreen()
 		{
 			#ifdef AUDIO
-			UpdateMusicStream(song_alert);
+			UpdateMusicStream(song_invasion);
 			#endif
 			
 			

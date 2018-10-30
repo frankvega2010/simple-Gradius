@@ -70,8 +70,8 @@ namespace Juego
 			UnloadImage(controlSchemeImage);
 
 			#ifdef AUDIO
-			SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);
+			//SetSoundVolume(button_select01, soundVolume);
+			//SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			isScreenFinished = false;
@@ -126,7 +126,7 @@ namespace Juego
 		void UpdateControlsScreen()
 		{
 			#ifdef AUDIO
-			UpdateMusicStream(song_alert);
+			UpdateMusicStream(song_invasion);
 			#endif
 
 			//asteroidUpdate();

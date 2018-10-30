@@ -178,11 +178,11 @@ namespace Juego
 		void InitSettingsScreen()
 		{
 			#ifdef AUDIO
-			ship_rocket01 = LoadMusicStream("res/sounds/ship_rocket01.ogg");
-			SetMusicVolume(ship_rocket01, soundVolume);
+			//ship_rocket01 = LoadMusicStream("res/sounds/ship_rocket01.ogg");
+			//SetMusicVolume(ship_rocket01, soundVolume);
 
-			SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);
+			//SetSoundVolume(button_select01, soundVolume);
+			//SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			for (int i = 0; i < MAX ; i++)
@@ -414,8 +414,8 @@ namespace Juego
 		void UpdateSettingsScreen()
 		{
 			#ifdef AUDIO
-			UpdateMusicStream(song_alert);
-			UpdateMusicStream(ship_rocket01);
+			UpdateMusicStream(song_invasion);
+			//UpdateMusicStream(ship_rocket01);
 			#endif
 
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
@@ -559,8 +559,8 @@ namespace Juego
 			buttonDistanceSettings = 0;
 			buttonDistanceKeys = 0;
 			#ifdef AUDIO
-			StopMusicStream(ship_rocket01);
-			UnloadMusicStream(ship_rocket01);
+			//StopMusicStream(ship_rocket01);
+			//UnloadMusicStream(ship_rocket01);
 			#endif
 		}
 	}

@@ -91,7 +91,7 @@ namespace Juego
 						if (!shoots[i].active)
 						{
 							#ifdef AUDIO
-							PlaySound(ship_shoot01);
+							//PlaySound(ship_shoot01);
 							#endif
 							shoots[i].position = { player.position.x + player.size.x - 15, player.position.y + player.size.y/2 };
 							shoots2[i].position = { player.position.x + player.size.x - 10, player.position.y + player.size.y / 1.2f };

@@ -38,16 +38,16 @@ namespace Juego
 
 	#ifdef AUDIO
 
-	extern Sound ship_explode01;
-	extern Sound ship_shoot01;
-	extern Sound asteroid_explode01;
-	extern Sound powerup01;
-	extern Sound points01;
-	extern Sound button_navigate01;
-	extern Sound button_select01;
+	//extern Sound ship_explode01;
+	//extern Sound ship_shoot01;
+	//extern Sound asteroid_explode01;
+	//extern Sound powerup01;
+	//extern Sound points01;
+	//extern Sound button_navigate01;
+	//extern Sound button_select01;
 
-	extern Music ship_rocket01;
-	extern Music song_alert;
+	//extern Music ship_rocket01;
+	extern Music song_invasion;;
 
 	#endif
 

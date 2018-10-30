@@ -238,7 +238,7 @@ namespace Juego
 			//InitGameplayParallax();
 
 			#ifdef AUDIO
-			ship_shoot01 = LoadSound("res/sounds/ship_shoot01.wav");
+			/*ship_shoot01 = LoadSound("res/sounds/ship_shoot01.wav");
 			SetSoundVolume(ship_shoot01, soundVolume);
 
 			ship_rocket01 = LoadMusicStream("res/sounds/ship_rocket01.ogg");
@@ -251,7 +251,7 @@ namespace Juego
 			SetSoundVolume(powerup01, soundVolume);
 
 			SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);*/
 			#endif
 			isScreenFinished = false;
 		}
@@ -526,14 +526,14 @@ namespace Juego
 			UnloadTexture(pauseMenu);
 
 			#ifdef AUDIO
-			StopSound(asteroid_explode01);
+			/*StopSound(asteroid_explode01);
 			StopSound(ship_shoot01);
 			StopSound(powerup01);
 			StopMusicStream(ship_rocket01);
 			UnloadSound(asteroid_explode01);
 			UnloadSound(ship_shoot01);
 			UnloadSound(powerup01);
-			UnloadMusicStream(ship_rocket01);
+			UnloadMusicStream(ship_rocket01);*/
 			#endif
 		}
 	}

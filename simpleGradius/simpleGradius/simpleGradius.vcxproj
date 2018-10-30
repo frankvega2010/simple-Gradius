@@ -111,6 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)src/Game/;$(SolutionDir)src/Game/Setup/;$(SolutionDir)src/Game/Screens/;$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>AUDIO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -139,6 +140,7 @@ XCOPY "$(SolutionDir)res/assets" "$(TargetDir)res/assets" /E /Y /S</Command>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)src/Game/;$(SolutionDir)src/Game/Setup/;$(SolutionDir)src/Game/Screens/;$(SolutionDir)lib/raylib-2.0.0-Win32-msvc15/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>AUDIO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
