@@ -1,3 +1,14 @@
+## v1.0 [2018-10-29]
+### Added
+- Sounds
+- Music
+- New GUI
+
+
+### Fixed
+
+- All possible bugs were fixed and the game is now completed!
+
 ## v0.5 [2018-10-28]
 ### Added
 - New Sprite for enemies.
@@ -44,8 +55,3 @@
 	- Removed Asteroids files
 	- Removed All assets including textures and sounds.
 	
-	
-### Unreleased
-- Fix all resolutions settings.
-- Delete all obsolete code.
-- Add Sounds/Music.
