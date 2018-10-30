@@ -47,7 +47,6 @@ namespace Juego
 
 	static int resolutionSettingsFontSize = defaultFontSize / 1.25f;
 
-
 	static Buttons buttonsSettings[maxButtons];
 
 	static int buttonSelect = 0;
@@ -82,8 +81,6 @@ namespace Juego
 
 	static bool isButtonSoundPlaying = false;
 	static int buttonSelectSaveNumber = 0;
-
-	static Image asteroidImage;
 
 	namespace Settings_Section
 	{
@@ -178,8 +175,8 @@ namespace Juego
 		void InitSettingsScreen()
 		{
 			#ifdef AUDIO
-			//ship_rocket01 = LoadMusicStream("res/sounds/ship_rocket01.ogg");
-			//SetMusicVolume(ship_rocket01, soundVolume);
+			ship_rocket01 = LoadMusicStream("res/assets/sounds/soundtest.ogg");
+			SetMusicVolume(ship_rocket01, soundVolume);
 
 			SetSoundVolume(button_select01, soundVolume);
 			SetSoundVolume(button_navigate01, soundVolume);
@@ -190,7 +187,6 @@ namespace Juego
 				assignKeys[i] = false;
 			}
 
-			checkAsteroidSprite();
 			createSettingsButtons();
 
 			isScreenFinished = false;
@@ -221,7 +217,6 @@ namespace Juego
 			}
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
-			checkAsteroidSprite();
 		}
 
 		static void ChangeResolutionNormal(int screenW, int screenH)
@@ -241,7 +236,6 @@ namespace Juego
 			resolutionControlsFontSize = defaultFontSize / 2.2f;
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
-			checkAsteroidSprite();
 		}
 
 		static void ChangeResolutionBig(int screenW, int screenH)
@@ -261,30 +255,10 @@ namespace Juego
 			resolutionControlsFontSize = defaultFontSize / 2.2f;
 			SetWindowSize(screenWidth, screenHeight);
 			createSettingsButtons();
-			checkAsteroidSprite();
 		}
 
 		static void SettingsInput()
 		{
-			if (IsKeyPressed(KEY_DOWN))
-			{
-				mouse.selected = false;
-				buttonSelect++;
-				if (buttonSelect > maxButtons - 1)
-				{
-					buttonSelect--;
-				}
-			}
-
-			if (IsKeyPressed(KEY_UP))
-			{
-				mouse.selected = false;
-				buttonSelect--;
-				if (buttonSelect < 0)
-				{
-					buttonSelect++;
-				}
-			}
 
 			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && volumeSliders[Music].Selected)
 			{
@@ -309,9 +283,28 @@ namespace Juego
 			//Sound Effects Volume Settings
 			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && volumeSliders[Effects].Selected)
 			{
+				volumeSliders[Effects].shape.x = mouse.position.x;
+
+				for (int i = 0; i < maxVolumeValues; i++)
+				{
+					if (volumeSliders[Effects].shape.x >= effectsLine.PosStart.x + effectsLineCounter) soundVolume = effectsLineCounterVolume;
+					effectsLineCounter = effectsLineCounter + sliderDistance;
+					effectsLineCounterVolume = effectsLineCounterVolume + sliderVolumeAmount;
+					PlayMusicStream(ship_rocket01);
+					SetMusicVolume(ship_rocket01, soundVolume);
+				}
+				effectsLineCounter = 0;
+				effectsLineCounterVolume = 0.0;
+
+				SetSoundVolume(button_select01, soundVolume);
+				SetSoundVolume(button_navigate01, soundVolume);
+
+				if (volumeSliders[Effects].shape.x < effectsLine.PosStart.x) volumeSliders[Effects].shape.x = effectsLine.PosStart.x;
+				else if (volumeSliders[Effects].shape.x > effectsLine.PosEnd.x) volumeSliders[Effects].shape.x = effectsLine.PosEnd.x;
 			}
 			else
 			{
+				StopMusicStream(ship_rocket01);
 			}
 
 			for (int i = 0; i < MAX; i++)
@@ -395,6 +388,7 @@ namespace Juego
 					case 7:
 						buttonOption = buttonGoMenu;
 						isScreenFinished = true;
+
 						for (int i = 0; i < MAX; i++) assignKeys[i] = false;
 						break;
 					case 8:
@@ -416,7 +410,7 @@ namespace Juego
 		{
 			#ifdef AUDIO
 			UpdateMusicStream(song_invasion);
-			//UpdateMusicStream(ship_rocket01);
+			UpdateMusicStream(ship_rocket01);
 			#endif
 
 			volumeSliders[Music].shape.x = musicLine.PosStart.x + ((songVolume * 100) * 5);
@@ -474,8 +468,6 @@ namespace Juego
 							buttonSelectSaveNumber = i;
 						}
 					}
-
-					//if(assignKey) buttonsSettings[buttonSelect].defaultColor = WHITE;
 				}
 			
 		}
@@ -564,8 +556,8 @@ namespace Juego
 			buttonDistanceSettings = 0;
 			buttonDistanceKeys = 0;
 			#ifdef AUDIO
-			//StopMusicStream(ship_rocket01);
-			//UnloadMusicStream(ship_rocket01);
+			StopMusicStream(ship_rocket01);
+			UnloadMusicStream(ship_rocket01);
 			#endif
 		}
 	}

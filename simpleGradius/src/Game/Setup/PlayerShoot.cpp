@@ -1,12 +1,10 @@
 #include "PlayerShoot.h"
 
-//#include "Setup/Powerups.h"
 #include "Setup/Player.h"
 #include "Setup/Game.h"
 #include "Screens/gameplay.h"
 #include "Screens/settings.h"
 #include "Setup\Enemy.h"
-//#include "Setup/Asteroid.h"
 
 using namespace Juego;
 using namespace Gameplay_Section;
@@ -20,18 +18,12 @@ namespace Juego
 	float rapidFireTimer = 0;
 	float rapidFireRate = 0.2;
 
-	int gameScore = 0;
-	int destroyedAsteroidsCount = 0;
 	int targetsLeft = 50;
-
-	static int midAsteroidsCount = 0;
-	static int smallAsteroidsCount = 0;
 
 	namespace Gameplay_Section
 	{
 		void createShoot()
 		{
-			gameScore = 0;
 			
 			for (int i = 0; i < maxShoots; i++)
 			{
@@ -44,8 +36,8 @@ namespace Juego
 				}
 				else if (resolutionSmall)
 				{
-					shoots[i].size.x = 60 / 1.5f;
-					shoots[i].size.y = 5 / 1.5f;
+					shoots[i].size.x = 60 / resolutionSizeFix;
+					shoots[i].size.y = 5 / resolutionSizeFix;
 				}
 				
 				shoots[i].speed.x = 0;
@@ -62,19 +54,14 @@ namespace Juego
 				}
 				else if (resolutionSmall)
 				{
-					shoots2[i].size.x = 60 / 1.5f;
-					shoots2[i].size.y = 5 / 1.5f;
+					shoots2[i].size.x = 60 / resolutionSizeFix;
+					shoots2[i].size.y = 5 / resolutionSizeFix;
 				}
 				shoots2[i].speed.x = 0;
 				shoots2[i].speed.y = 0;
 				shoots2[i].color = GREEN;
 				shoots2[i].active = false;
 			}
-
-			/*midAsteroidsCount = 0;
-			smallAsteroidsCount = 0;
-			destroyedAsteroidsCount = 0;
-			asteroidsLeft = 28;*/
 		}
 
 		void shootInput()
@@ -117,8 +104,7 @@ namespace Juego
 								shoots2[i].speed.x = 2.5*player.defaultSpeed;
 								shoots2[i].speed.y = 2.5*player.defaultSpeed;
 							}
-							
-							//shoots[i].rotation = player.rotation;
+
 							rapidFireTimer = 0;
 							shoots[i].active = true;
 							shoots2[i].active = true;
@@ -139,7 +125,6 @@ namespace Juego
 					// Movement
 					shoots[i].position.x += shoots[i].speed.x * GetFrameTime();
 					shoots2[i].position.x += shoots[i].speed.x * GetFrameTime();
-					//shoots[i].position.y -= shoots[i].speed.y * GetFrameTime();
 
 					// Collision logic: shoot vs walls
 					if (shoots[i].position.x > screenWidth)
@@ -147,10 +132,6 @@ namespace Juego
 						shoots[i].active = false;
 						shoots2[i].active = false;
 					}
-					/*else if (shoots[i].position.x < 0 - shoots[i].radius)
-					{
-						shoots[i].active = false;
-					}*/
 
 					if (shoots[i].position.y > screenHeight)
 					{
@@ -168,7 +149,6 @@ namespace Juego
 			// Collision logic: player-shoots vs meteors
 			for (int f = 0; f < maxShoots; f++)
 			{
-				//enemies[i]
 				for (int i = 0; i < maxEnemies; i++)
 				{
 					if ((shoots[f].active))

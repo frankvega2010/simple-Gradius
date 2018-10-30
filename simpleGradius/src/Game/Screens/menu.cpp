@@ -69,7 +69,7 @@ namespace Juego
 				{
 					if (is1600x900ResActive)buttonDistance = buttonDistance + 400;
 					else buttonDistance = buttonDistance + 300;
-				}//buttonDistance = buttonDistance + 300;
+				}
 				else if (resolutionSmall)
 				{
 					if (is800x600ResActive)buttonDistance = buttonDistance + 200;
@@ -79,7 +79,7 @@ namespace Juego
 				{
 					buttonDistance = buttonDistance + 400;
 				}
-				//else if (resolutionBig && resolutionNormal) buttonDistance = buttonDistance + 400;
+				
 			}
 		}
 
@@ -87,8 +87,8 @@ namespace Juego
 		{
 			#ifdef AUDIO
 			PlayMusicStream(song_invasion);
-			//SetSoundVolume(button_select01, soundVolume);
-			//SetSoundVolume(button_navigate01, soundVolume);
+			SetSoundVolume(button_select01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			createMenuButtons();
@@ -97,27 +97,6 @@ namespace Juego
 
 		static void MenuInput()
 		{
-			if (IsKeyPressed(KEY_DOWN))
-			{
-				mouse.selected = false;
-				buttonSelect++;
-				if (buttonSelect > maxButtons - 1)
-				{
-					buttonSelect--;
-				}
-			}
-
-			if (IsKeyPressed(KEY_UP))
-			{
-				
-
-				mouse.selected = false;
-				buttonSelect--;
-				if (buttonSelect < 0)
-				{
-					buttonSelect++;
-				}
-			}
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -254,7 +233,7 @@ namespace Juego
 			DrawTextEx(sideFont, "Welcome to..", { buttons[0].position.x - 80, screenHeight / 20.0f }, defaultFontSize / 2, 2, GREEN);
 			DrawTextEx(mainFont, "Simple Gradius", { buttons[0].position.x - 80, screenHeight / 10.0f }, defaultFontSize + 20.0f, 2, RAYWHITE);
 			DrawTextEx(sideFont, "By frankvega", { buttons[0].position.x * 3.4f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
-			DrawTextEx(sideFont, "Version 0.5", { buttons[0].position.x - 80, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(sideFont, "Version 1.0", { buttons[0].position.x - 80, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
 			DrawTextEx(mainFont, "PLAY", { buttons[0].position.x + 20, buttons[0].position.y + 10 }, defaultFontSize/1.5f, 2, buttons[0].defaultColor);
 			DrawTextEx(mainFont, "TUTORIAL", { buttons[1].position.x + 5, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[1].defaultColor);
 			DrawTextEx(mainFont, "SETTINGS", { buttons[2].position.x + 15, buttons[2].position.y + 15 }, defaultFontSize / 2.05f, 2, buttons[2].defaultColor);
@@ -272,17 +251,6 @@ namespace Juego
 		{
 			buttonDistance = 0;
 			buttonDistanceBelow = 0;
-			
-#ifdef AUDIO
-			/*StopSound(asteroid_explode01);
-			StopSound(ship_shoot01);
-			StopSound(powerup01);
-			StopMusicStream(ship_rocket01);
-			UnloadSound(asteroid_explode01);
-			UnloadSound(ship_shoot01);
-			UnloadSound(powerup01);
-			UnloadMusicStream(ship_rocket01);*/
-#endif
 		}
 	}
 }

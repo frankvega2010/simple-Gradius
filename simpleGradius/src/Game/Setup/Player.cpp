@@ -27,13 +27,12 @@ namespace Juego
 			}
 			else if (resolutionSmall) 
 			{
-				player.size = { 150 / 1.5f, 50 / 1.5f };
-				player.defaultSpeed = 500.0f / 1.5f;
+				player.size = { 150 / resolutionSizeFix, 50 / resolutionSizeFix };
+				player.defaultSpeed = 500.0f / resolutionSizeFix;
 			}
 			player.isAlive = true;
 			player.inputActive = false;
 			player.rotation = 0;
-			//player.textureTint = {255, 0, 0, 150};
 			player.textureTint = { 0, 0, 0, 0 };
 		}
 		
@@ -71,27 +70,6 @@ namespace Juego
 		void playerUpdate()
 		{
 			shipSource.x = (float)currentFrame*(float)ship.width / 2;
-			//player.rotation = rotationAngle;
-
-			// Player logic: movement
-			//player.position.x = player.position.x + player.acceleration.x * GetFrameTime();
-			//player.position.y = player.position.y + player.acceleration.y * GetFrameTime();
-			//player.position.y = player.position.y + player.defaultSpeed * GetFrameTime();
-		}
-
-		void collisionCircleUpdate()
-		{
-			// Players Collision Circle logic: movement
-			if (resolutionNormal)
-			{
-				//collisionCircle.position.x = player.position.x + sinf(player.rotation)*(shipHeightCircle);
-				//collisionCircle.position.y = player.position.y - cosf(player.rotation)*(shipHeightCircle);
-			}
-			else if (resolutionSmall)
-			{
-				//collisionCircle.position.x = player.position.x + sinf(player.rotation)*(shipHeightCircleSmall);
-				//collisionCircle.position.y = player.position.y - cosf(player.rotation)*(shipHeightCircleSmall);
-			}
 		}
 
 		void playerDraw()
@@ -106,63 +84,12 @@ namespace Juego
 			}
 			else if (resolutionSmall)
 			{
-				shipSource = { 0.0f,0.0f, 150 / 1.5f,70 / 1.5f };
-				shipDestination = { player.position.x,player.position.y, 150 / 1.5f,70 / 1.5f };
+				shipSource = { 0.0f,0.0f, 150 / resolutionSizeFix,70 / resolutionSizeFix };
+				shipDestination = { player.position.x,player.position.y, 150 / resolutionSizeFix,70 / resolutionSizeFix };
 
 				DrawRectangle(player.position.x, player.position.y, player.size.x, player.size.y, player.textureTint);
 				DrawTexturePro(ship, shipSource, shipDestination, shipOrigin, player.rotation, WHITE);
 			}
-
-			if (player.inputActive)
-			{
-				if (resolutionSmall)
-				{
-					//DrawTexturePro(shipMoving, shipMovingSourceSmall, shipMovingDestinationSmall, shipOriginSmall, rotationAngle*RAD2DEG, player.textureTint);
-				}
-				else if (resolutionNormal)
-				{//
-					//DrawTexturePro(shipMoving, shipMovingSource, shipMovingDestination, shipOrigin, rotationAngle*RAD2DEG, player.textureTint);
-				}
-			}
-			else
-			{
-				if (resolutionSmall)
-				{
-					//DrawTexturePro(ship, shipSourceSmall, shipDestinationSmall, shipOriginSmall, rotationAngle*RAD2DEG, player.textureTint);
-				}
-				else if (resolutionNormal)
-				{
-					//DrawTexturePro(ship, shipSource, shipDestination, shipOrigin, rotationAngle*RAD2DEG, player.textureTint);
-				}
-			}
 		}
-
-		#ifdef TESTING
-				void collisionCircleDraw() // only in DEBUG mode
-				{
-					if (resolutionNormal)
-					{
-						DrawCircleV({ player.position.x + sinf(player.rotation)*(shipHeightCircle), player.position.y - cosf(player.rotation)*(shipHeightCircle) }, collisionCircle.radius, { 100, 0, 0, 200 });
-					}
-					else if (resolutionSmall)
-					{
-						DrawCircleV({ player.position.x + sinf(player.rotation)*(shipHeightCircleSmall), player.position.y - cosf(player.rotation)*(shipHeightCircleSmall) }, collisionCircle.radius, { 100, 0, 0, 200 });
-					}
-					DrawLineEx(player.position, mouse.position, 1, YELLOW);
-				}
-		#endif
-		#ifdef RELEASE
-				void collisionCircleDraw() // only in RELEASE mode
-				{
-					if (resolutionNormal)
-					{
-						DrawCircleV({ player.position.x + sinf(player.rotation)*(shipHeightCircle), player.position.y - cosf(player.rotation)*(shipHeightCircle) }, collisionCircle.radius, { 0, 0, 0,0 });
-					}
-					else if (resolutionSmall)
-					{
-						DrawCircleV({ player.position.x + sinf(player.rotation)*(shipHeightCircleSmall), player.position.y - cosf(player.rotation)*(shipHeightCircleSmall) }, collisionCircle.radius, { 0, 0, 0, 0 });
-					}
-				}
-		#endif
 	}
 }

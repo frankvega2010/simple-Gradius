@@ -58,27 +58,6 @@ namespace Juego
 
 		static void CreditosInput()
 		{
-			if (IsKeyPressed(KEY_DOWN))
-			{
-				mouse.selected = false;
-				buttonSelect++;
-				PlaySound(button_navigate01);
-				if (buttonSelect > maxButtons - 1)
-				{
-					buttonSelect--;
-				}
-			}
-
-			if (IsKeyPressed(KEY_UP))
-			{
-				mouse.selected = false;
-				buttonSelect--;
-				PlaySound(button_navigate01);
-				if (buttonSelect < 0)
-				{
-					buttonSelect++;
-				}
-			}
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -105,9 +84,7 @@ namespace Juego
 			#ifdef AUDIO
 			UpdateMusicStream(song_invasion);
 			#endif
-			
-			
-			//asteroidUpdate();
+
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			CreditosInput();
@@ -145,7 +122,6 @@ namespace Juego
 		
 		void DrawCredits()
 		{
-			//asteroidDraw();
 			DrawBackground();
 
 			for (int i = 0; i < maxButtons; i++)
@@ -163,7 +139,7 @@ namespace Juego
 			}
 
 			DrawTextEx(mainFont, "Simple Gradius", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 10.0f }, defaultFontSize + 20.0f - gameTitleSizeFix, 2, RAYWHITE);
-			DrawTextEx(sideFont, "Version 0.5", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
+			DrawTextEx(sideFont, "Version 1.0", { (float)screenWidth / 2.5f * 0.263f, screenHeight / 5.0f }, defaultFontSize / 2, 2, GREEN);
 
 			if (!moreCredits)
 			{
@@ -191,6 +167,7 @@ namespace Juego
 
 				DrawTextEx(mainFont, "Testers", { (float)screenWidth / 2.6f, screenHeight / 1.7f }, defaultFontSize / 1.5, 2, WHITE);
 				DrawTextEx(sideFont, "Dylan Piserchia", { (float)screenWidth / 2.8f, screenHeight / 1.57f }, defaultFontSize / 1.5, 2, GREEN);
+				DrawTextEx(sideFont, "Patricio Perrin  aka orly", { (float)screenWidth / 4.0f, screenHeight / 1.47f }, defaultFontSize / 1.5, 2, GREEN);
 			}
 
 			DrawTextEx(mainFont, "MENU", { buttons[0].position.x + 35, buttons[0].position.y + 10 }, defaultFontSize / 1.5f, 2, buttons[0].defaultColor);

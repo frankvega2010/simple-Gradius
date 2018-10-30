@@ -49,14 +49,7 @@ namespace Juego
 		}
 
 		void InitGameOverScreen()
-		{
-			if (resolutionNormal)
-			{
-			}
-			else if (resolutionSmall)
-			{
-			}
-			
+		{			
 
 			#ifdef AUDIO
 			ship_explode01 = LoadSound("res/assets/sounds/explosionlong.wav");
@@ -64,9 +57,6 @@ namespace Juego
 
 			if(!player.isAlive)PlaySound(ship_explode01);
 			
-
-			//points01 = LoadSound("res/sounds/points01.wav");
-			//SetSoundVolume(points01, soundVolume);
 			SetSoundVolume(button_select01, soundVolume);
 			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
@@ -78,25 +68,6 @@ namespace Juego
 
 		static void GameOverInput()
 		{
-			if (IsKeyPressed(KEY_DOWN))
-			{
-				mouse.selected = false;
-				buttonSelect++;
-				if (buttonSelect > maxButtons - 1)
-				{
-					buttonSelect--;
-				}
-			}
-
-			if (IsKeyPressed(KEY_UP))
-			{
-				mouse.selected = false;
-				buttonSelect--;
-				if (buttonSelect < 0)
-				{
-					buttonSelect++;
-				}
-			}
 
 			for (int i = 0; i < maxButtons; i++)
 			{
@@ -178,14 +149,6 @@ namespace Juego
 			{
 				DrawTextEx(mainFont, "MISSION FAILED", { buttons[0].position.x - screenWidth / 10.0f, buttons[0].position.y - 60 }, defaultFontSize / 1.2, 1.0f, GREEN);
 			}
-
-			//if (isExplosionActive && !(player.isAlive))
-			//{
-			//	shipExplosionDestination = { player.position.x,player.position.y, increasingExplosionSize,increasingExplosionSize };
-
-			//	if(resolutionNormal) DrawTexturePro(shipExplosion, shipExplosionSource, shipExplosionDestination, shipExplosionOrigin, 0, Fade(WHITE, increasingExplosionFade));
-			//	else if(resolutionSmall ) DrawTexturePro(shipExplosion, shipExplosionSourceSmall, shipExplosionDestination, shipExplosionOrigin, 0, Fade(WHITE, increasingExplosionFade));
-			//}
 			
 		}
 
@@ -198,10 +161,8 @@ namespace Juego
 		void DeInitGameOverResources()
 		{
 			#ifdef AUDIO
-			//StopSound(points01);
 			StopSound(ship_explode01);
 			UnloadSound(ship_explode01);
-			//UnloadSound(points01);
 			#endif
 		}
 	}

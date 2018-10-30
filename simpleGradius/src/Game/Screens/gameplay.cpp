@@ -14,9 +14,6 @@ namespace Juego
 
 	int playerKeys[MAX];
 
-	int scoreMultiplier = 5;
-	bool isExplosionActive = false;
-
 	static const int maxButtons = 3;
 	static Buttons buttons[maxButtons];
 	static Buttons pauseButton;
@@ -53,17 +50,15 @@ namespace Juego
 	static Image shipImage;
 	static Image enemyShipImage;
 
-
 	static float parallaxLayersPosition[maxLayers];
 	static float parallaxLayersSpeed[maxLayers];
 
 	static int parallaxLayersSpeedDecreaser;
 
-
-	Texture2D backgroundLayers[maxLayers];
-	Texture2D backgroundOpacity;
-	Texture2D backgroundLayerWaterEffect;
-	Texture2D pauseMenu;
+	static Texture2D backgroundLayers[maxLayers];
+	static Texture2D backgroundOpacity;
+	static Texture2D backgroundLayerWaterEffect;
+	static Texture2D pauseMenu;
 	Texture2D ship;
 	Texture2D enemyShip;
 
@@ -106,8 +101,6 @@ namespace Juego
 		void InitGameplayVariables()
 		{
 			timerON = true;
-
-			//HideCursor();
 			createPauseButtons();
 			createPlayer();
 			createEnemy();
@@ -148,18 +141,6 @@ namespace Juego
 				ImageResize(&backgroundOpacityImage, screenWidth * 2, screenHeight);
 				backgroundOpacity = LoadTextureFromImage(backgroundOpacityImage);
 
-				shipImage = LoadImage("res/assets/textures/player_ship01v2.png");
-				ImageResize(&shipImage, 300, 70);// 150 70
-				ship = LoadTextureFromImage(shipImage);
-
-				enemyShipImage = LoadImage("res/assets/textures/enemy01.png");
-				ImageResize(&enemyShipImage, 180, 70);
-				enemyShip = LoadTextureFromImage(enemyShipImage);
-
-				pauseMenuImage = LoadImage("res/assets/textures/pausemenu.png");
-				ImageResize(&pauseMenuImage, pauseBoxRec.width, pauseBoxRec.height);
-				pauseMenu = LoadTextureFromImage(pauseMenuImage);
-
 				UnloadImage(backgroundLayer1Image);
 				UnloadImage(backgroundLayer2Image);
 				UnloadImage(backgroundLayer3Image);
@@ -168,9 +149,6 @@ namespace Juego
 				UnloadImage(backgroundLayer6Image);
 				UnloadImage(backgroundLayerWaterEffectImage);
 				UnloadImage(backgroundOpacityImage);
-				UnloadImage(pauseMenuImage);
-				UnloadImage(shipImage);
-				UnloadImage(enemyShipImage);
 
 				parallaxLayersSpeedDecreaser = 0;
 
@@ -182,7 +160,6 @@ namespace Juego
 
 				for (int i = maxLayers - 1; i >= 0; i--)
 				{
-					//parallaxLayersSpeed[i] = 0;
 					parallaxLayersSpeed[i] = 50 + parallaxLayersSpeedDecreaser;
 					parallaxLayersSpeedDecreaser = parallaxLayersSpeedDecreaser + 25; //250
 					if (i == 0)
@@ -235,7 +212,6 @@ namespace Juego
 				UnloadImage(shipImage);
 				UnloadImage(enemyShipImage);
 			}
-			//InitGameplayParallax();
 
 			#ifdef AUDIO
 			ship_shoot01 = LoadSound("res/assets/sounds/shoot01.wav");
@@ -255,7 +231,6 @@ namespace Juego
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && pauseButton.selected)
 			{
 				PlaySound(button_select01);
-				//crosshairColor = BLANK;
 				gamePaused = true;
 				gameON = false;
 			}
@@ -264,8 +239,6 @@ namespace Juego
 			if (gameON)
 			{
 				timerON = true;
-				//crosshairColor = WHITE;
-				//HideCursor();
 				playerInput();
 			}
 			else ShowCursor();
@@ -282,27 +255,6 @@ namespace Juego
 			}
 			else
 			{
-				if (IsKeyPressed(KEY_DOWN))
-				{
-					mouse.selected = false;
-					buttonSelect++;
-					//PlaySound(button_navigate01);
-					if (buttonSelect > maxButtons - 1)
-					{
-						buttonSelect--;
-					}
-				}
-
-				if (IsKeyPressed(KEY_UP))
-				{
-					mouse.selected = false;
-					buttonSelect--;
-					//PlaySound(button_navigate01);
-					if (buttonSelect < 0)
-					{
-						buttonSelect++;
-					}
-				}
 
 				for (int i = 0; i < maxButtons; i++)
 				{
@@ -330,7 +282,7 @@ namespace Juego
 
 				if (IsKeyPressed(KEY_ESCAPE))
 				{
-					//PlaySound(button_select01);
+					PlaySound(button_select01);
 					gamePaused = false;
 					timerON = true;
 					gameON = true;
@@ -340,8 +292,6 @@ namespace Juego
 
 		void UpdateGameplayScreen()
 		{	
-			//UpdateMusicStream(ship_rocket01);
-
 			player.inputActive = false;
 
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
@@ -392,7 +342,6 @@ namespace Juego
 			else if (gamePaused)
 			{
 				timerON = false;
-				//matchTimer = 0;
 
 				for (int i = 0; i < maxButtons; i++)
 				{
@@ -431,7 +380,6 @@ namespace Juego
 			{
 				gameON = false;
 				timerON = false;
-				//matchTimer = 0;
 				buttonOption = buttonGameOver;
 				isScreenFinished = true;
 			}
@@ -460,17 +408,12 @@ namespace Juego
 			DrawTextEx(sideFont, FormatText("Targets:%i", targetsLeft), { 20, 20 }, defaultFontSize / 1.5f, 1.0f, GREEN);
 
 			DrawTextEx(mainFont,"II", { pauseButton.position.x + 13, pauseButton.position.y + 7 }, defaultFontSize, 1.0f, pauseButton.defaultColor);
-			//if (resolutionNormal && !(resolutionBig)) DrawText(FormatText(" ||"), pauseButton.position.x, pauseButton.position.y + 5, defaultFontSize, pauseButton.defaultColor);
-			//else if (resolutionSmall) DrawText(FormatText(" ||"), pauseButton.position.x + 2, pauseButton.position.y + 5, defaultFontSize, pauseButton.defaultColor);
-			//else if (resolutionBig && resolutionNormal) DrawText(FormatText(" ||"), pauseButton.position.x + 12, pauseButton.position.y + 15, defaultFontSize, pauseButton.defaultColor);
 			
 
 			if (!(gameON))
 			{
 				if (gamePaused)
 				{
-					//pauseBoxRec = { buttons[0].position.x - (screenWidth / 50), buttons[0].position.y - (screenHeight / 30), (float)screenWidth / 4.2f, (float)screenHeight / 2.5f };
-					//((float)screenWidth / 4.2f)/(1.5f), ((float)screenHeight / 3.3f)/ (1.5f)
 					if(resolutionNormal) DrawTexturePro(pauseMenu, { 0, 0, (float)screenWidth / 4.2f, (float)screenHeight / 2.5f }, pauseBoxRec, { 0,0 }, 0, WHITE);
 					else if(resolutionSmall) DrawTexturePro(pauseMenu, { 0, 0, (float)screenWidth / 4.2f, (float)screenHeight / 2.5f }, pauseBoxRec, { 0,0 }, 0, WHITE);
 					
@@ -493,11 +436,7 @@ namespace Juego
 			buttonDistance = 0;
 			gameON = true;
 			timerON = true;
-			//matchSeconds = 0;
-			//matchMinutes = 0;
-			//matchHours = 0;
-			scoreMultiplier = 5;
-			targetsLeft = 50; // 50
+			targetsLeft = 50;
 		}
 
 		bool FinishGameplayScreen()

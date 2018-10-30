@@ -41,7 +41,6 @@ namespace Juego
 	Font sideFont;
 
 	#ifdef AUDIO
-
 	Sound ship_explode01;
 	Sound ship_shoot01;
 	Sound enemy_explode01;
@@ -73,16 +72,6 @@ namespace Juego
 		ImageResize(&backgroundMenuImage, screenWidth, screenHeight);
 		backgroundMenu = LoadTextureFromImage(backgroundMenuImage);
 		UnloadImage(backgroundMenuImage);
-	}
-
-	void checkAsteroidSprite()
-	{
-		if (resolutionNormal)
-		{
-		}
-		else if (resolutionSmall)
-		{
-		}
 	}
 
 	static void Init()
@@ -191,7 +180,7 @@ namespace Juego
 				case buttonQuit:
 				{
 					#ifdef AUDIO
-					StopMusicStream(song_invasion);		//StopMusicStream(pong_menu_song);
+					StopMusicStream(song_invasion);
 					#endif
 
 					gameScreen = 0;

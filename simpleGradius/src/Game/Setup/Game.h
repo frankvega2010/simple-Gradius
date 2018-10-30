@@ -29,26 +29,7 @@ namespace Juego
 		Color defaultColor;
 	};
 
-	extern Rectangle backgroundMenuSource;
-	extern Vector2 backgroundMenuOrigin;
-	extern Rectangle backgroundMenuDestination;
-
-	extern Texture2D backgroundMenu;
-	extern Texture2D backgroundMenuBroken;
-
-	#ifdef AUDIO
-
-	extern Sound ship_explode01;
-	extern Sound ship_shoot01;
-	extern Sound enemy_explode01;
-	extern Sound button_navigate01;
-	extern Sound button_select01;
-
-	extern Music ship_rocket01;
-	extern Music song_invasion;
-
-	#endif
-
+	const float resolutionSizeFix = 1.5f;
 
 	extern Buttons mouse;
 	extern int buttonOption;
@@ -60,11 +41,30 @@ namespace Juego
 
 	extern bool isScreenFinished;
 
+	extern Rectangle backgroundMenuSource;
+	extern Vector2 backgroundMenuOrigin;
+	extern Rectangle backgroundMenuDestination;
+
+	extern Texture2D backgroundMenu;
+	extern Texture2D backgroundMenuBroken;
+
 	extern Font mainFont;
 	extern Font sideFont;
 
+#ifdef AUDIO
+
+	extern Sound ship_explode01;
+	extern Sound ship_shoot01;
+	extern Sound enemy_explode01;
+	extern Sound button_navigate01;
+	extern Sound button_select01;
+
+	extern Music ship_rocket01;
+	extern Music song_invasion;
+
+#endif
+
 	void resolutionBackground();
-	void checkAsteroidSprite();
 	void Execute();
 }
 #endif // GAME_H
