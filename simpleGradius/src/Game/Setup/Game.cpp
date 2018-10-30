@@ -42,15 +42,13 @@ namespace Juego
 
 	#ifdef AUDIO
 
-	/*Sound ship_explode01;
+	Sound ship_explode01;
 	Sound ship_shoot01;
-	Sound asteroid_explode01;
-	Sound powerup01;
-	Sound points01;
+	Sound enemy_explode01;
 	Sound button_navigate01;
 	Sound button_select01;
 
-	Music ship_rocket01;*/
+	Music ship_rocket01;
 	Music song_invasion;
 
 	#endif
@@ -112,11 +110,11 @@ namespace Juego
 		song_invasion = LoadMusicStream("res/assets/music/invasion.ogg");
 		SetMusicVolume(song_invasion , songVolume);
 
-		//button_navigate01 = LoadSound("res/sounds/button_navigate01.wav");
-		//SetSoundVolume(button_navigate01, soundVolume);
+		button_navigate01 = LoadSound("res/assets/sounds/select1.wav");
+		SetSoundVolume(button_navigate01, soundVolume);
 
-		//button_select01 = LoadSound("res/sounds/button_select01.wav");
-		//SetSoundVolume(button_select01, soundVolume);
+		button_select01 = LoadSound("res/assets/sounds/select2.wav");
+		SetSoundVolume(button_select01, soundVolume);
 		#endif
 
 		InitMenuScreen();
@@ -292,10 +290,10 @@ namespace Juego
 	static void DeInit()
 	{
 #ifdef AUDIO
-		//StopSound(button_navigate01);
-		//StopSound(button_select01);
-		//UnloadSound(button_navigate01);
-		//UnloadSound(button_select01);
+		StopSound(button_navigate01);
+		StopSound(button_select01);
+		UnloadSound(button_navigate01);
+		UnloadSound(button_select01);
 		UnloadMusicStream(song_invasion);
 		CloseAudioDevice();
 #endif

@@ -238,20 +238,14 @@ namespace Juego
 			//InitGameplayParallax();
 
 			#ifdef AUDIO
-			/*ship_shoot01 = LoadSound("res/sounds/ship_shoot01.wav");
+			ship_shoot01 = LoadSound("res/assets/sounds/shoot01.wav");
 			SetSoundVolume(ship_shoot01, soundVolume);
 
-			ship_rocket01 = LoadMusicStream("res/sounds/ship_rocket01.ogg");
-			SetMusicVolume(ship_rocket01, soundVolume);
-
-			asteroid_explode01 = LoadSound("res/sounds/asteroid_explode01.wav");
-			SetSoundVolume(asteroid_explode01, soundVolume);
-
-			powerup01 = LoadSound("res/sounds/powerup01.wav");
-			SetSoundVolume(powerup01, soundVolume);
+			enemy_explode01 = LoadSound("res/assets/sounds/explosion1.wav");
+			SetSoundVolume(enemy_explode01, soundVolume);
 
 			SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);*/
+			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 			isScreenFinished = false;
 		}
@@ -260,7 +254,7 @@ namespace Juego
 		{
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && pauseButton.selected)
 			{
-				//PlaySound(button_select01);
+				PlaySound(button_select01);
 				//crosshairColor = BLANK;
 				gamePaused = true;
 				gameON = false;
@@ -280,7 +274,7 @@ namespace Juego
 			{
 				if (IsKeyPressed(KEY_ESCAPE))
 				{
-					//PlaySound(button_select01);
+					PlaySound(button_select01);
 					//crosshairColor = BLANK;
 					gamePaused = true;
 					gameON = false;
@@ -314,7 +308,7 @@ namespace Juego
 				{
 					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 					{
-						//PlaySound(button_select01);
+						PlaySound(button_select01);
 						switch (i)
 						{
 						case 0:
@@ -415,7 +409,7 @@ namespace Juego
 						buttonSelect = -1;
 					}
 
-					if (buttonSelect != buttonSelectSaveNumber)
+					if (buttonSelect != buttonSelectSaveNumber && buttonSelect != -1)
 					{
 						isButtonSoundPlaying = false;
 					}
@@ -424,6 +418,7 @@ namespace Juego
 					{
 						if (!(isButtonSoundPlaying))
 						{
+							PlaySound(button_navigate01);
 							isButtonSoundPlaying = true;
 							buttonSelectSaveNumber = i;
 						}
@@ -526,14 +521,10 @@ namespace Juego
 			UnloadTexture(pauseMenu);
 
 			#ifdef AUDIO
-			/*StopSound(asteroid_explode01);
+			StopSound(enemy_explode01);
 			StopSound(ship_shoot01);
-			StopSound(powerup01);
-			StopMusicStream(ship_rocket01);
-			UnloadSound(asteroid_explode01);
+			UnloadSound(enemy_explode01);
 			UnloadSound(ship_shoot01);
-			UnloadSound(powerup01);
-			UnloadMusicStream(ship_rocket01);*/
 			#endif
 		}
 	}

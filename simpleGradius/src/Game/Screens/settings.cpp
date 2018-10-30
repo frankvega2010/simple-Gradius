@@ -181,8 +181,8 @@ namespace Juego
 			//ship_rocket01 = LoadMusicStream("res/sounds/ship_rocket01.ogg");
 			//SetMusicVolume(ship_rocket01, soundVolume);
 
-			//SetSoundVolume(button_select01, soundVolume);
-			//SetSoundVolume(button_navigate01, soundVolume);
+			SetSoundVolume(button_select01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			for (int i = 0; i < MAX ; i++)
@@ -286,11 +286,11 @@ namespace Juego
 				}
 			}
 
-			//Music Volume Settings
 			if (IsMouseButtonDown(MOUSE_LEFT_BUTTON) && volumeSliders[Music].Selected)
 			{
 				volumeSliders[Music].shape.x = mouse.position.x;
 
+				SetMusicVolume(song_invasion, songVolume);
 				for (int i = 0; i < maxVolumeValues; i++)
 				{
 					if (volumeSliders[Music].shape.x >= musicLine.PosStart.x + musicLineCounter) songVolume = musicLineCounterVolume;
@@ -299,7 +299,7 @@ namespace Juego
 				}
 				musicLineCounter = 0;
 				musicLineCounterVolume = 0.0;
-				
+
 
 				if (volumeSliders[Music].shape.x < musicLine.PosStart.x) volumeSliders[Music].shape.x = musicLine.PosStart.x;
 				else if (volumeSliders[Music].shape.x > musicLine.PosEnd.x) volumeSliders[Music].shape.x = musicLine.PosEnd.x;
@@ -361,6 +361,7 @@ namespace Juego
 
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonsSettings[i].selected || IsKeyPressed(KEY_ENTER) && buttonsSettings[i].selected && !(volumeSliders[Effects].Selected) && !(volumeSliders[Music].Selected))
 				{
+					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -418,6 +419,9 @@ namespace Juego
 			//UpdateMusicStream(ship_rocket01);
 			#endif
 
+			volumeSliders[Music].shape.x = musicLine.PosStart.x + ((songVolume * 100) * 5);
+			volumeSliders[Effects].shape.x = effectsLine.PosStart.x + ((soundVolume * 100) * 5);
+
 			mouse.position = { (float)GetMouseX(),(float)GetMouseY() };
 
 			SettingsInput();
@@ -456,7 +460,7 @@ namespace Juego
 						buttonSelect = -1;
 					}
 
-					if (buttonSelect != buttonSelectSaveNumber)
+					if (buttonSelect != buttonSelectSaveNumber && buttonSelect != -1)
 					{
 						isButtonSoundPlaying = false;
 					}
@@ -465,6 +469,7 @@ namespace Juego
 					{
 						if (!(isButtonSoundPlaying))
 						{
+							PlaySound(button_navigate01);
 							isButtonSoundPlaying = true;
 							buttonSelectSaveNumber = i;
 						}

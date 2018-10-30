@@ -48,8 +48,8 @@ namespace Juego
 		void InitCreditsScreen()
 		{
 			#ifdef AUDIO
-			/*SetSoundVolume(button_select01, soundVolume);
-			SetSoundVolume(button_navigate01, soundVolume);*/
+			SetSoundVolume(button_select01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			createCreditsButtons();
@@ -62,7 +62,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				//PlaySound(button_navigate01);
+				PlaySound(button_navigate01);
 				if (buttonSelect > maxButtons - 1)
 				{
 					buttonSelect--;
@@ -73,7 +73,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				//PlaySound(button_navigate01);
+				PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -84,7 +84,7 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 				{
-					//PlaySound(button_select01);
+					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -126,7 +126,7 @@ namespace Juego
 					buttonSelect = -1;
 				}
 
-				if (buttonSelect != buttonSelectSaveNumber)
+				if (buttonSelect != buttonSelectSaveNumber && buttonSelect != -1)
 				{
 					isButtonSoundPlaying = false;
 				}
@@ -135,7 +135,7 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
-						//PlaySound(button_navigate01);
+						PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}

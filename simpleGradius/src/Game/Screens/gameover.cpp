@@ -59,14 +59,16 @@ namespace Juego
 			
 
 			#ifdef AUDIO
-			//ship_explode01 = LoadSound("res/sounds/ship_explode01fix.wav");
-			//SetSoundVolume(ship_explode01, soundVolume);
-			//PlaySound(ship_explode01);
+			ship_explode01 = LoadSound("res/assets/sounds/explosionlong.wav");
+			SetSoundVolume(ship_explode01, soundVolume);
+
+			if(!player.isAlive)PlaySound(ship_explode01);
+			
 
 			//points01 = LoadSound("res/sounds/points01.wav");
 			//SetSoundVolume(points01, soundVolume);
-			//SetSoundVolume(button_select01, soundVolume);
-			//SetSoundVolume(button_navigate01, soundVolume);
+			SetSoundVolume(button_select01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			ShowCursor();
@@ -100,6 +102,7 @@ namespace Juego
 			{
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttons[i].selected || IsKeyPressed(KEY_ENTER) && buttons[i].selected)
 				{
+					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -136,7 +139,7 @@ namespace Juego
 					buttonSelect = -1;
 				}
 
-				if (buttonSelect != buttonSelectSaveNumber)
+				if (buttonSelect != buttonSelectSaveNumber && buttonSelect != -1)
 				{
 					isButtonSoundPlaying = false;
 				}
@@ -145,6 +148,7 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
+						PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}
@@ -195,8 +199,8 @@ namespace Juego
 		{
 			#ifdef AUDIO
 			//StopSound(points01);
-			//StopSound(ship_explode01);
-			//UnloadSound(ship_explode01);
+			StopSound(ship_explode01);
+			UnloadSound(ship_explode01);
 			//UnloadSound(points01);
 			#endif
 		}

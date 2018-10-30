@@ -91,7 +91,7 @@ namespace Juego
 						if (!shoots[i].active)
 						{
 							#ifdef AUDIO
-							//PlaySound(ship_shoot01);
+							PlaySound(ship_shoot01);
 							#endif
 							shoots[i].position = { player.position.x + player.size.x - 15, player.position.y + player.size.y/2 };
 							shoots2[i].position = { player.position.x + player.size.x - 10, player.position.y + player.size.y / 1.2f };
@@ -175,6 +175,9 @@ namespace Juego
 					{
 						if (CheckCollisionRecs({ shoots[f].position.x,shoots[f].position.y,shoots[f].size.x,shoots[f].size.y }, { enemies[i].position.x,enemies[i].position.y,enemies[i].size.x,enemies[i].size.y }))
 						{
+							#ifdef AUDIO
+							PlaySound(enemy_explode01);
+							#endif
 							enemies[i].isAlive = false;
 							shoots[f].active = false;
 							shoots2[f].active = false;
@@ -186,6 +189,9 @@ namespace Juego
 					{
 						if (CheckCollisionRecs({ shoots2[f].position.x,shoots2[f].position.y,shoots2[f].size.x,shoots2[f].size.y }, { enemies[i].position.x,enemies[i].position.y,enemies[i].size.x,enemies[i].size.y }))
 						{
+							#ifdef AUDIO
+							PlaySound(enemy_explode01);
+							#endif
 							enemies[i].isAlive = false;
 							shoots[f].active = false;
 							shoots2[f].active = false;

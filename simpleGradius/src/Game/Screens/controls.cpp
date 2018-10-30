@@ -70,8 +70,8 @@ namespace Juego
 			UnloadImage(controlSchemeImage);
 
 			#ifdef AUDIO
-			//SetSoundVolume(button_select01, soundVolume);
-			//SetSoundVolume(button_navigate01, soundVolume);
+			SetSoundVolume(button_select01, soundVolume);
+			SetSoundVolume(button_navigate01, soundVolume);
 			#endif
 
 			isScreenFinished = false;
@@ -83,7 +83,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect++;
-				//PlaySound(button_navigate01);
+				PlaySound(button_navigate01);
 				if (buttonSelect > maxButtonsControls - 1)
 				{
 					buttonSelect--;
@@ -94,7 +94,7 @@ namespace Juego
 			{
 				mouse.selected = false;
 				buttonSelect--;
-				//PlaySound(button_navigate01);
+				PlaySound(button_navigate01);
 				if (buttonSelect < 0)
 				{
 					buttonSelect++;
@@ -106,7 +106,7 @@ namespace Juego
 				if (moreControls && i > 1) i = maxButtonsControls;
 				else if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && buttonsControls[i].selected || IsKeyPressed(KEY_ENTER) && buttonsControls[i].selected)
 				{
-					//	PlaySound(button_select01);
+					PlaySound(button_select01);
 					switch (i)
 					{
 					case 0:
@@ -148,7 +148,7 @@ namespace Juego
 					buttonSelect = -1;
 				}
 
-				if (buttonSelect != buttonSelectSaveNumber)
+				if (buttonSelect != buttonSelectSaveNumber && buttonSelect != -1)
 				{
 					isButtonSoundPlaying = false;
 				}
@@ -157,7 +157,7 @@ namespace Juego
 				{
 					if (!(isButtonSoundPlaying))
 					{
-						//PlaySound(button_navigate01);
+						PlaySound(button_navigate01);
 						isButtonSoundPlaying = true;
 						buttonSelectSaveNumber = i;
 					}
