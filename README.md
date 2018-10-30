@@ -1,15 +1,18 @@
+![alt text](https://github.com/frankvega2010/simple-Gradius/blob/master/simpleGradius/logo/LOGO01.jpg)
 # Simple! Gradius
 ## Student Proyect by Franco Vega
 
 
 ## Whats "Simple! Gradius" ?
 
-Work In Progress
+Simple Gradius is the third game of the Simple! series! as you can see it includes improvements from the other games such as new GUI and game art.
 
 
 ## Release
 
-Work in Progress
+https://frankvega.itch.io/simple-gradius
+
+https://github.com/frankvega2010/simple-Gradius/releases/tag/v1.0
 
 ## Bio
 
