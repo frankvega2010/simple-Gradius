@@ -35,8 +35,8 @@ namespace Juego
 	extern int buttonOption;
 
 	extern int gameScreen;
-	extern int screenWidth;
-	extern int screenHeight;
+	extern float screenWidth;
+	extern float screenHeight;
 	extern int defaultFontSize;
 
 	extern bool isScreenFinished;

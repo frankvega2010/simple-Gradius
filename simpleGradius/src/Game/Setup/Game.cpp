@@ -20,8 +20,8 @@ namespace Juego
 {
 	int gameScreen = Menu;
 
-	int screenWidth;
-	int screenHeight;
+	float screenWidth;
+	float screenHeight;
 
 	Buttons mouse;
 	int buttonOption = 0;
